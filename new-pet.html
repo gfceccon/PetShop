@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria - Novo Serviço</title>
+    <title>Petzzaria - Novo Animal</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <!-- Favicon tags -->
@@ -50,17 +50,17 @@
       </nav>
 
       <section>
-        <form class="new-service-form" method="get">
+        <form class="new-pet-form" method="get">
           <fieldset>
-            <legend>Dados do Serviço:</legend>
-            <label>Nome:</label><input id="service-name" type="text" name="service-name" autofocus><br>
-            <label>Identificador:</label><input id="service-id" type="text" name="service-id"><br>
-            <label>Foto:</label><input id="service-img" type="file" name="service-img" accept="image/*"><br>
-            <label>Descrição:</label><input id="service-description" type="text" name="service-description"><br>
-            <label>Preço:</label><input id="service-price" type="number" name="service-price" step="0.01" value="0.00" min="0.00"><br>
+            <legend>Dados do Animal:</legend>
+            <label>Nome:</label><input id="pet-name" type="text" name="pet-name" autofocus><br>
+            <label>Usuário:</label><input id="pet-user" type="text" name="pet-user"><br>
+            <label>Foto:</label><input id="pet-img" type="file" name="pet-img" accept="image/*"><br>
+            <label>Raça:</label><input id="pet-breed" type="text" name="pet-breed"><br>
+            <label>Idade:</label><input id="pet-age" type="number" name="pet-age"><br>
           </fieldset>
-          <button id="service-submit" type="submit">Enviar</button>
-          <button id="service-reset" type="reset">Limpar</button>
+          <button id="pet-submit" type="submit">Enviar</button>
+          <button id="pet-reset" type="reset">Limpar</button>
         </form>
       </section>
 

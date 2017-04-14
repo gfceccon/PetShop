@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html lang="en|pt-br">
+
   <head>
     <meta charset="UTF-8">
-    <title>Pet Shop - Novo Produto</title>
+    <title>Petzzaria - Novo Produto</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Favicon tags -->
+    <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
   </head>
+
   <body>
-    <div class="header-area">
-      <div class="header">
-        <div class="logo">
-          <img class="img-logo" src="logo.png" height="128" width="128">
-        </div>
-        <div class="search">
-          <form class="search-form" method="get">
-            <input id="search" type="search" title="search">
-            <button id="submit-search" type="submit">Buscar</button>
-          </form>
-        </div>
+    <div class="wrapper">
+      <header>
+        <img id="logo-img" src="logo.png" height="128" width="128">
+
+        <form class="search-form" method="get">
+          <input id="search" type="search" title="search">
+          <button id="submit-search" type="submit">Buscar</button>
+        </form>
+
         <div class="login-area">
           <a href="#Usuario">Usuário</a>
           <a href="#Usuario">Carrinho</a>
         </div>
-      </div>
+      </header>
+
       <nav class="nav-bar">
-        <a href="">Cachorros</a>
-        <a href="#Produtos">Gatos</a>
-        <a href="#Produtos">Pássaros</a>
-        <a href="#Produtos">Peixes</a>
+        <a class="nav-item" href="#Produtos">Cachorros</a>
+        <a class="nav-item" href="#Produtos">Gatos</a>
+        <a class="nav-item" href="#Produtos">Pássaros</a>
+        <a class="nav-item" href="#Produtos">Peixes</a>
       </nav>
-    </div>
-    <div class="container">
-      <div class="content">
-        <div class="form">
+
+      <section>
         <form class="new-product-form" method="get">
           <fieldset>
             <legend>Dados do Produto:</legend>
@@ -39,17 +57,18 @@
             <label>Identificador:</label><input id="product-id" type="text" name="product-id"><br>
             <label>Foto:</label><input id="product-img" type="file" name="product-img" accept="image/*"><br>
             <label>Descrição:</label><input id="product-description" type="text" name="product-description"><br>
-            <label>Preço:</label><input id="product-price" type="number" name="product-price" step="0.01" value="0.00"><br>
-            <label>Quantidade em Estoque:</label><input id="product-stkamt" type="number" name="product-stkamt" value="0"><br>
-            <label>Quantidade Vendida:</label><input id="product-soldamt" type="number" name="product-soldamt" value="0"><br>
+            <label>Preço:</label><input id="product-price" type="number" name="product-price" step="0.01" value="0.00" min="0.00"><br>
+            <label>Quantidade em Estoque:</label><input id="product-stkamt" type="number" name="product-stkamt" value="0" min="0"><br>
+            <label>Quantidade Vendida:</label><input id="product-soldamt" type="number" name="product-soldamt" value="0" min="0"><br>
           </fieldset>
           <button id="product-submit" type="submit">Enviar</button>
           <button id="product-reset" type="reset">Limpar</button>
         </form>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
+      </section>
+
+      <footer>
+        Copyright @ 2017, Dildovan
+      </footer>
     </div>
   </body>
 </html>
