@@ -1,94 +1,98 @@
-.header-area
-{
-    background: #0000ff;
-    height: 200px;
+* {
+    border: 0px solid black;
+    padding: 0;
+    margin: 0;
 }
 
-.header
-{
-    background: #00ff00;
-    height: 150px;
-    vertical-align: middle;
+.wrapper {
+    font-weight: bold;
+    text-align: center;
+    align-items: stretch;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;  
+    flex-flow: column nowrap;
 }
 
-.logo
-{
-    width: 30%;
-    float:left;
-    height: 100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+header {
+    background: dodgerblue;
+
+    flex: 0 1 auto;
+
+    display: flex;  
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-end;
 }
 
-.img-logo
-{
-    display: block;
-    margin: auto;
-    vertical-align: middle;
-
+#logo-img {
+    flex: 0 1 auto;
+    max-width: 33%;
+    width: 100px;
+    height: 100px;
 }
 
-.search-form
-{
-    width: 100%;
+.search-form {
+    flex: 3 1 auto;
+    min-width: 33%;
+
+    display: flex;
+    flex-flow: row nowrap;
 }
 
-.search
-{
-    width: 50%;
-    float:left;
-    height: 100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+#search {
+    margin: 0 5px;
+    flex: 1;
 }
 
-#search
-{
-    width: 70%;
+.login-area {
+    flex: 0 1 auto;
+    max-width: 33%;
 }
 
-#submit-search
-{
-    width: 80px;
-    margin: auto;
-}
-
-.login-area
-{
-    width: 20%;
-    float:left;
-    height: 100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.container
-{
-    background: #ff0000;
-    height: 200px;
-}
-
-.content
-{
-    background: #ff00ff;
-    height: 200px;
-    width:80%;
-    margin:auto;
-    min-width: 720px;
-    max-width: 1280px;
-}
-
-.footer
-{
-    background: #ffff00;
-    height: 200px;
-}
-
-.nav-bar
-{
-    background: #00ffff;
+.nav-bar {
+    background: deepskyblue;
     height: 50px;
+
+    flex: 0 1 auto;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-item {
+    margin: 0 15px;
+
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+section {
+    background: lightcyan;
+
+    flex: 1 1 auto;
+}
+
+footer {
+    background: navy;
+    height: 50px;
+    width: 100%;
+    color: white;
+
+    flex: 0 1 auto;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+@media all and (max-width: 500px) {
+    header {
+        flex-flow: column nowrap;
+        align-items: center;
+    }
 }

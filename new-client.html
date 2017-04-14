@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en|pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <title>Pet Shop - Novo Cliente</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="header-area">
+      <div class="header">
+        <div class="logo">
+          <img class="img-logo" src="logo.png" height="128" width="128">
+        </div>
+        <div class="search">
+          <form class="search-form" method="get">
+            <input id="search" type="search" title="search">
+            <button id="submit-search" type="submit">Buscar</button>
+          </form>
+        </div>
+        <div class="login-area">
+          <a href="#Usuario">Usuário</a>
+          <a href="#Usuario">Carrinho</a>
+        </div>
+      </div>
+      <nav class="nav-bar">
+        <a href="">Cachorros</a>
+        <a href="#Produtos">Gatos</a>
+        <a href="#Produtos">Pássaros</a>
+        <a href="#Produtos">Peixes</a>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="content">
+        <div class="form">
+        <form class="new-client-form" method="get">
+          <fieldset>
+            <legend>Dados Pessoais:</legend>
+            <label>Nome:</label><input id="client-name" type="text" name="client-name" autofocus><br>
+            <label>Usuário:</label><input id="client-user" type="text" name="client-user"><br>
+            <label>Foto:</label><input id="client-img" type="file" name="client-img" accept="image/*"><br>
+            <label>Telefone:</label><input id="client-tel" type="tel" name="client-tel"><br>
+            <label>Email:</label><input id="client-email" type="email" name="client-email"><br>
+          </fieldset>
+          <fieldset>
+            <legend>Endereço:</legend>
+            <label>Logradouro:</label><input id="client-address" type="text" name="client-address" autofocus><br>
+            <label>Número:</label><input id="client-num" type="text" name="client-num"><br>
+            <label>Cidade:</label><input id="client-city" type="text" name="client-city" accept="image/*"><br>
+            <label>Estado:</label><input id="client-state" type="text" name="client-state"><br>
+            <label>CEP:</label><input id="client-zip" type="text" name="client-zip"><br>
+          </fieldset>
+          <button id="client-submit" type="submit">Enviar</button>
+          <button id="client-reset" type="reset">Limpar</button>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>
