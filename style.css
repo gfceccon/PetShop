@@ -68,7 +68,7 @@ header {
 
 .login-area a {
     background-color: #1496d1;
-    border: 3px solid deepskyblue;
+    border: 3px solid #35c9ea;
     color: white;
     padding: 11px 16px;
     text-align: center;
@@ -79,7 +79,7 @@ header {
 }
 
 .login-area a:hover {
-    background-color: deepskyblue;
+    background-color: #35c9ea;
 }
 
 .login-area a:first-child {
@@ -87,7 +87,7 @@ header {
 }
 
 .nav-bar {
-    background: deepskyblue;
+    background: #35c9ea;
     height: 50px;
     font-size: 30px;
 
@@ -110,15 +110,15 @@ header {
 }
 
 section {
-    background: lightcyan;
-    padding: 10px;
+    background: #e7ecef;
+    padding: 30px;
 
     flex: 1 1 auto;
     text-align: left;
 }
 
 footer {
-    background: navy;
+    background: #105596;
     height: 50px;
     width: 100%;
     color: white;
@@ -149,7 +149,7 @@ p, div, button {
 
 button {
     background-color: #1496d1;
-    border: 3px solid deepskyblue;
+    border: 3px solid #35c9ea;
     color: white;
     padding: 10px 16px;
     text-align: center;
@@ -160,15 +160,50 @@ button {
 }
 
 button:hover {
-    background-color: deepskyblue;
+    background-color: #35c9ea;
 }
 
 input {
-    border: 3px solid deepskyblue;
+    border: 3px solid #35c9ea;
     font-family: 'Nobile', Helvetica, Arial, sans-serif;
     font-size: 32px;
     line-height: 25px;
     box-sizing: content-box;
+}
+
+form {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+fieldset {
+    border: 5px solid #105596;
+    margin: 5px;
+    background: #c1e2f0;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+fieldset legend {
+    background: #1F497D;
+    color: #fff;
+    padding: 5px 10px ;
+    font-size: 32px;
+    border-radius: 5px;
+    box-shadow: 0 0 0 5px #c1e2f0;
+    margin-left: 20px;
+}
+
+.fieldset-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
 }
 
 @media all and (max-width: 500px) {

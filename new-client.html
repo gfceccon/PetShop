@@ -1,61 +1,89 @@
 <!DOCTYPE html>
 <html lang="en|pt-br">
+
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria - Novo Cliente</title>
+    <title>Petzzaria Pet Shop</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
+
+    <!-- Favicon tags -->
+    <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
   </head>
+
   <body>
-    <div class="header-area">
-      <div class="header">
-        <div class="logo">
-          <img class="img-logo" src="logo.png" height="128" width="128">
-        </div>
-        <div class="search">
+    <div class="wrapper">
+      <header>
+        <img id="logo-img" src="logo.png" height="128" width="128" alt="Petzzaria Pet Shop">
+        
+        <div class="search-area">
+          <h1>Petzzaria Pet Shop</h1><br>
           <form class="search-form" method="get">
             <input id="search" type="search" title="search">
             <button id="submit-search" type="submit">Buscar</button>
           </form>
         </div>
+
         <div class="login-area">
           <a href="#Usuario">Usuário</a>
           <a href="#Usuario">Carrinho</a>
         </div>
-      </div>
+      </header>
+
       <nav class="nav-bar">
-        <a href="">Cachorros</a>
-        <a href="#Produtos">Gatos</a>
-        <a href="#Produtos">Pássaros</a>
-        <a href="#Produtos">Peixes</a>
+        <a class="nav-item" href="#Produtos">Cachorros</a>
+        <a class="nav-item" href="#Produtos">Gatos</a>
+        <a class="nav-item" href="#Produtos">Pássaros</a>
+        <a class="nav-item" href="#Produtos">Peixes</a>
       </nav>
-    </div>
-    <div class="container">
-      <div class="content">
-        <div class="form">
+
+      <section>
         <form class="new-client-form" method="get">
-          <fieldset>
-            <legend>Dados Pessoais:</legend>
-            <label>Nome:</label><input id="client-name" type="text" name="client-name" autofocus><br>
-            <label>Usuário:</label><input id="client-user" type="text" name="client-user"><br>
-            <label>Foto:</label><input id="client-img" type="file" name="client-img" accept="image/*"><br>
-            <label>Telefone:</label><input id="client-tel" type="tel" name="client-tel"><br>
-            <label>Email:</label><input id="client-email" type="email" name="client-email"><br>
-          </fieldset>
-          <fieldset>
-            <legend>Endereço:</legend>
-            <label>Logradouro:</label><input id="client-address" type="text" name="client-address" autofocus><br>
-            <label>Número:</label><input id="client-num" type="text" name="client-num"><br>
-            <label>Cidade:</label><input id="client-city" type="text" name="client-city" accept="image/*"><br>
-            <label>Estado:</label><input id="client-state" type="text" name="client-state"><br>
-            <label>CEP:</label><input id="client-zip" type="text" name="client-zip"><br>
-          </fieldset>
-          <button id="client-submit" type="submit">Enviar</button>
-          <button id="client-reset" type="reset">Limpar</button>
+          <div class="fieldset-container">
+            <fieldset>
+              <legend>Dados Pessoais:</legend>
+              <label>Nome:</label><input id="client-name" type="text" name="client-name" autofocus><br>
+              <label>Usuário:</label><input id="client-user" type="text" name="client-user"><br>
+              <label>Foto:</label><input id="client-img" type="file" name="client-img" accept="image/*"><br>
+              <label>Telefone:</label><input id="client-tel" type="tel" name="client-tel"><br>
+              <label>Email:</label><input id="client-email" type="email" name="client-email">
+            </fieldset>
+            <fieldset>
+              <legend>Endereço:</legend>
+              <label>Logradouro:</label><input id="client-address" type="text" name="client-address"><br>
+              <label>Número:</label><input id="client-num" type="text" name="client-num"><br>
+              <label>Cidade:</label><input id="client-city" type="text" name="client-city" accept="image/*"><br>
+              <label>Estado:</label><input id="client-state" type="text" name="client-state"><br>
+              <label>CEP:</label><input id="client-zip" type="text" name="client-zip">
+            </fieldset>
+          </div>
+          <div class="button-container">
+            <button id="client-submit" type="submit">Enviar</button>
+            <button id="client-reset" type="reset">Limpar</button>
+          </div>
         </form>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
+      </section>
+
+      <footer>
+        <p>Copyright (c) 2017, Dildovan</p>
+      </footer>
     </div>
   </body>
 </html>
