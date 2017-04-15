@@ -280,13 +280,17 @@ fieldset legend {
     background: #35c9ea;
 }
 
+.content
+{
+    margin: auto;
+    max-width: 64rem;
+}
+
 .products
 {
     display: flex;
     flex-flow: row wrap;
-    margin: auto;
     justify-content: flex-start;
-    max-width: 64rem;
 }
 
 .product
