@@ -279,3 +279,36 @@ fieldset legend {
     height: 1.5rem;
     background: #35c9ea;
 }
+
+.products
+{
+    display: flex;
+    flex-flow: row wrap;
+    margin: auto;
+    justify-content: flex-start;
+    max-width: 64rem;
+}
+
+.product
+{
+    vertical-align: middle;
+    text-align: center;
+    width: 20rem;
+    height: 20rem;
+    display: flex;
+    flex-flow: column nowrap;
+    border: 2px solid #d1dbe0;
+    border-radius: 2%;
+    margin: 0.25rem;
+}
+
+.product:hover
+{
+
+    border-color: #b3c3cc;
+}
+
+.product img
+{
+    margin: auto;
+}
