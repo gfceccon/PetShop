@@ -170,7 +170,7 @@ footer p {
     padding: 0 20px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.index-link, h1, h2, h3, h4, h5, h6 {
     font-family: 'Corben', Georgia, Times, serif;
     font-size: 40px;
     line-height: 55px;
@@ -271,14 +271,10 @@ fieldset legend {
     margin: 0 15px;
 }
 
-@media all and (max-width: 750px)
+
+.product-price-alt
 {
-    .login-area {
-        display: none;
-    }
-    .login-menu {
-        display:flex;
-    }
+    display: none;
 }
 
 .cart-area
@@ -353,4 +349,162 @@ fieldset legend {
 .product img
 {
     margin: auto;
+}
+
+.product-header
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.product-images-area
+{
+    width: 256px;
+}
+
+.product-images
+{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.product-description-area
+{
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.product-description-header
+{
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.product-description-header span
+{
+    margin-bottom: 2rem;
+}
+
+
+.product-name
+{
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+}
+
+.product-brand
+{
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    color: #666666;
+}
+
+.product-description
+{
+    color: #444444;
+}
+
+.product-description p
+{
+    text-indent: 3rem;
+    padding-right: 1rem;
+}
+
+.product-full-description
+{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.product-full-description span
+{
+    font-size: 2rem;
+    line-height: 2rem;
+    color: #105596;
+    margin-bottom: 1rem;
+}
+
+.product-full-description p
+{
+    text-indent: 3rem;
+    text-align: justify;
+}
+
+.product-price-area
+{
+    min-width: 10rem;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.product-price
+{
+    color: #105596;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.product-buy
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.quantity
+{
+    flex-shrink: 1;
+    width: 2.5rem;
+    text-align: center;
+}
+
+.inline-product-buy
+{
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-self: center;
+    vertical-align: middle;
+    height: 3rem;
+    line-height: 3rem;
+    margin: 1rem 0;
+}
+
+.quantity-label
+{
+    font-size: 1.5rem;
+}
+
+.inline-product-buy
+{
+    display: none;
+}
+
+@media all and (max-width: 750px)
+{
+    .login-area {
+        display: none;
+    }
+    .login-menu {
+        display:flex;
+    }
+    .product-description
+    {
+        display: none;
+    }
+    .product-price-area
+    {
+        display: none;
+    }
+    .product-price-alt
+    {
+        display: inline;
+    }
+
+    .inline-product-buy {
+        display: flex;
+    }
 }
