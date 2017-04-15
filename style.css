@@ -2,6 +2,7 @@
     border: 0px solid black;
     padding: 0;
     margin: 0;
+    font-weight: normal;
 }
 
 .wrapper {
@@ -17,6 +18,7 @@
 
 header {
     background: #105596;
+    color: white;
 
     flex: 0 1 auto;
 
@@ -29,8 +31,17 @@ header {
 #logo-img {
     flex: 0 1 auto;
     max-width: 33%;
-    width: 100px;
-    height: 100px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.search-area{
+    flex: 3 1 auto;
+    min-width: 33%;
+    border: 10px solid #105596;
+
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .search-form {
@@ -49,22 +60,49 @@ header {
 .login-area {
     flex: 0 1 auto;
     max-width: 33%;
+    border: 10px solid #105596;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.login-area a {
+    background-color: #1496d1;
+    border: 3px solid deepskyblue;
+    color: white;
+    padding: 11px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.2s;
+    box-sizing: content-box;
+}
+
+.login-area a:hover {
+    background-color: deepskyblue;
+}
+
+.login-area a:first-child {
+    margin-bottom: 5px;
 }
 
 .nav-bar {
     background: deepskyblue;
     height: 50px;
+    font-size: 30px;
 
     flex: 0 1 auto;
 
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
 }
 
 .nav-item {
     margin: 0 15px;
+    color: #105596;
+    text-decoration: none; 
 
     display: flex;
     justify-content: center;
@@ -73,8 +111,10 @@ header {
 
 section {
     background: lightcyan;
+    padding: 10px;
 
     flex: 1 1 auto;
+    text-align: left;
 }
 
 footer {
@@ -88,6 +128,47 @@ footer {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    align-items: flex-end;
+}
+
+footer p {
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Corben', Georgia, Times, serif;
+    font-size: 40px;
+    line-height: 55px;
+}
+
+p, div, button {
+    font-family: 'Nobile', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+button {
+    background-color: #1496d1;
+    border: 3px solid deepskyblue;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.2s;
+    box-sizing: content-box;
+}
+
+button:hover {
+    background-color: deepskyblue;
+}
+
+input {
+    border: 3px solid deepskyblue;
+    font-family: 'Nobile', Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    line-height: 25px;
+    box-sizing: content-box;
 }
 
 @media all and (max-width: 500px) {
@@ -95,4 +176,15 @@ footer {
         flex-flow: column nowrap;
         align-items: center;
     }
+
+    .nav-bar {
+        min-height: 50px;
+        align-items: center;
+        font-size: 20px;
+    }
+
+    .login-area {
+        flex-flow: row nowrap;
+    }
+
 }
