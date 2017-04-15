@@ -9,7 +9,7 @@
     font-weight: bold;
     text-align: center;
     align-items: stretch;
-    width: 100vw;
+    /*width: 100vw;*/
 
     display: flex;  
     flex-flow: column nowrap;
@@ -259,6 +259,28 @@ fieldset legend {
 
 }
 
+.login-menu {
+    position: relative;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.login-menu img
+{
+    margin: 0 15px;
+}
+
+@media all and (max-width: 750px)
+{
+    .login-area {
+        display: none;
+    }
+    .login-menu {
+        display:flex;
+    }
+}
+
 .cart-area
 {
     position: relative;
@@ -278,6 +300,22 @@ fieldset legend {
     width: 1.5rem;
     height: 1.5rem;
     background: #35c9ea;
+}
+
+.menu-cart-count
+{
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    line-height: 1rem;
+    top: 0.15rem;
+    right: 0.75rem;
+    font-size: 0.7rem;
+    color: white;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    background: #105596;
 }
 
 .content
