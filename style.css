@@ -86,7 +86,7 @@ header {
 
 .nav-bar {
     background: #35c9ea;
-    height: 3rem;
+    min-height: 3rem;
 
     flex: 0 1 auto;
 
