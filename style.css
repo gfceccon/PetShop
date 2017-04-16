@@ -6,10 +6,12 @@
 }
 
 .wrapper {
+    background: url(subtle_white_feathers.png) repeat 0 0;
     font-weight: bold;
     text-align: center;
     align-items: stretch;
-    /*width: 100vw;*/
+    max-width: 100vw;
+    min-height: 100vh;
 
     display: flex;  
     flex-flow: column nowrap;
@@ -147,15 +149,16 @@ header {
 section {
     background: #e7ecef;
     padding: 30px;
+    min-width: 85%;
 
     flex: 1 1 auto;
     text-align: left;
+    align-self: center;
 }
 
 footer {
     background: #105596;
-    height: 50px;
-    width: 100%;
+    min-height: 50px;
     color: white;
 
     flex: 0 1 auto;
@@ -198,10 +201,17 @@ button:hover {
     background-color: #35c9ea;
 }
 
-input {
+.button-container > button {
+    margin: 10px 5px 5px 10px;
+}
+
+#search {
     border: 3px solid #35c9ea;
-    font-family: 'Nobile', Helvetica, Arial, sans-serif;
     font-size: 32px;
+}
+
+input {
+    font-family: 'Nobile', Helvetica, Arial, sans-serif;
     line-height: 25px;
     box-sizing: content-box;
 }
@@ -212,20 +222,20 @@ form {
 }
 
 fieldset {
-    border: 5px solid #105596;
+    border: 2px solid #d1dbe0;
     margin: 5px;
-    background: #c1e2f0;
     border-radius: 5px;
     padding: 15px;
+
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 fieldset legend {
-    background: #1F497D;
-    color: #fff;
-    padding: 5px 10px ;
-    font-size: 32px;
+    background: #d1dbe0;
+    padding: 5px 10px;
+    font-size: 24px;
     border-radius: 5px;
-    box-shadow: 0 0 0 5px #c1e2f0;
     margin-left: 20px;
 }
 
@@ -239,6 +249,26 @@ fieldset legend {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+}
+
+.form-labels {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.form-labels > label {
+    margin: 1px;
+}
+
+.form-inputs {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.form-inputs > input {
+    margin: 1px;
 }
 
 @media all and (max-width: 500px) {

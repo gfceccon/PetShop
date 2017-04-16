@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria Pet Shop</title>
+    <title>Petzzaria - Novo Cliente</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
@@ -22,7 +22,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="ico/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
+    <!--<link rel="manifest" href="/manifest.json">-->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -31,10 +31,10 @@
   <body>
     <div class="wrapper">
       <header>
-        <img id="logo-img" src="logo.png" height="128" width="128" alt="Petzzaria Pet Shop">
+        <a href="index.html" class="reset-this" style="width: 128px; height: 128px"><img id="logo-img" src="logo128.png" height="128" width="128" alt="Petzzaria Pet Shop"></a>
         
         <div class="search-area">
-          <h1>Petzzaria Pet Shop</h1><br>
+          <a href="index.html" style="text-decoration: none; color:white;"><h1>Petzzaria Pet Shop</h1><br></a>
           <form class="search-form" method="get">
             <input id="search" type="search" title="search">
             <button id="submit-search" type="submit">Buscar</button>
@@ -42,36 +42,93 @@
         </div>
 
         <div class="login-area">
-          <a href="#Usuario">Usuário</a>
-          <a href="#Usuario">Carrinho</a>
+          <div class="cart-area">
+            <img class="cart" src="cart64.png" width="64" height="64">
+            <div class="cart-count"><span>99</span></div>
+          </div>
+          <a href="#">Entrar</a>
         </div>
       </header>
 
       <nav class="nav-bar">
-        <a class="nav-item" href="#Produtos">Cachorros</a>
-        <a class="nav-item" href="#Produtos">Gatos</a>
-        <a class="nav-item" href="#Produtos">Pássaros</a>
-        <a class="nav-item" href="#Produtos">Peixes</a>
+        <div class="nav-item">
+          <a href="#">Cachorros</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Ração</a></div>
+            <div class="nav-dd-item"><a href="#">Acessórios</a></div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#">Gatos</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Ração</a></div>
+            <div class="nav-dd-item"><a href="#">Acessórios</a></div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#">Peixes</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Comida</a></div>
+            <div class="nav-dd-item"><a href="#">Aquários</a></div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#">Serviços</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Banho</a></div>
+            <div class="nav-dd-item"><a href="#">Tosa</a></div>
+            <div class="nav-dd-item"><a href="#">Adestramento</a></div>
+          </div>
+        </div>
+
+        <div class="login-menu nav-item">
+          <a href="#">Entrar</a>
+        </div>
+        <div class="login-menu nav-item">
+          <img src="cart32.png" width="32" height="32">
+          <div class="menu-cart-count"><span>99</span></div>
+        </div>
       </nav>
 
       <section>
         <form class="new-client-form" method="get">
           <div class="fieldset-container">
             <fieldset>
-              <legend>Dados Pessoais:</legend>
-              <label for="client-name">Nome:</label><input id="client-name" type="text" name="client-name" autofocus><br>
-              <label for="client-user">Usuário:</label><input id="client-user" type="text" name="client-user"><br>
-              <label for="client-img">Foto:</label><input id="client-img" type="file" name="client-img" accept="image/*"><br>
-              <label for="client-tel">Telefone:</label><input id="client-tel" type="tel" name="client-tel"><br>
-              <label for="client-email">Email:</label><input id="client-email" type="email" name="client-email">
+              <legend>Dados Pessoais</legend>
+              <div class="form-labels">
+                <label for="client-name">Nome:</label>
+                <label for="client-user">Usuário:</label>
+                <label for="client-img">Foto:</label>
+                <label for="client-tel">Telefone:</label>
+                <label for="client-email">Email:</label>
+              </div>
+              <div class="form-inputs">
+                <input id="client-name" type="text" name="client-name" autofocus>
+                <input id="client-user" type="text" name="client-user">
+                <input id="client-img" type="file" name="client-img" accept="image/*">
+                <input id="client-tel" type="tel" name="client-tel">
+                <input id="client-email" type="email" name="client-email">
+              </div>
             </fieldset>
             <fieldset>
-              <legend>Endereço:</legend>
-              <label for="client-address">Logradouro:</label><input id="client-address" type="text" name="client-address"><br>
-              <label for="client-num">Número:</label><input id="client-num" type="text" name="client-num"><br>
-              <label for="client-city">Cidade:</label><input id="client-city" type="text" name="client-city" accept="image/*"><br>
-              <label for="client-state">Estado:</label><input id="client-state" type="text" name="client-state"><br>
-              <label for="client-zip">CEP:</label><input id="client-zip" type="text" name="client-zip">
+              <legend>Endereço</legend>
+              <div class="form-labels">
+                <label for="client-address">Logradouro:</label>
+                <label for="client-num">Número:</label>
+                <label for="client-city">Cidade:</label>
+                <label for="client-state">Estado:</label>
+                <label for="client-zip">CEP:</label>
+              </div>
+              <div class="form-inputs">
+                <input id="client-address" type="text" name="client-address"><br>
+                <input id="client-num" type="text" name="client-num"><br>
+                <input id="client-city" type="text" name="client-city" accept="image/*"><br>
+                <input id="client-state" type="text" name="client-state"><br>
+                <input id="client-zip" type="text" name="client-zip">
+              </div>
             </fieldset>
           </div>
           <div class="button-container">
@@ -82,7 +139,7 @@
       </section>
 
       <footer>
-        <p>Copyright (c) 2017, Dildovan</p>
+        <p>Copyright (c) 2017, Petzzaria Pet Shop</p>
       </footer>
     </div>
   </body>

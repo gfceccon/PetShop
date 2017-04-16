@@ -1,53 +1,129 @@
 <!DOCTYPE html>
 <html lang="en|pt-br">
+
   <head>
     <meta charset="UTF-8">
     <title>Petzzaria - Novo Administrador</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
+
+    <!-- Favicon tags -->
+    <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+    <!--<link rel="manifest" href="/manifest.json">-->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
   </head>
+
   <body>
-    <div class="header-area">
-      <div class="header">
-        <div class="logo">
-          <img class="img-logo" src="logo.png" height="128" width="128">
-        </div>
-        <div class="search">
+    <div class="wrapper">
+      <header>
+        <a href="index.html" class="reset-this" style="width: 128px; height: 128px"><img id="logo-img" src="logo128.png" height="128" width="128" alt="Petzzaria Pet Shop"></a>
+        
+        <div class="search-area">
+          <a href="index.html" style="text-decoration: none; color:white;"><h1>Petzzaria Pet Shop</h1><br></a>
           <form class="search-form" method="get">
             <input id="search" type="search" title="search">
             <button id="submit-search" type="submit">Buscar</button>
           </form>
         </div>
+
         <div class="login-area">
-          <a href="#Usuario">Usuário</a>
-          <a href="#Usuario">Carrinho</a>
+          <div class="cart-area">
+            <img class="cart" src="cart64.png" width="64" height="64">
+            <div class="cart-count"><span>99</span></div>
+          </div>
+          <a href="#">Entrar</a>
         </div>
-      </div>
+      </header>
+
       <nav class="nav-bar">
-        <a href="">Cachorros</a>
-        <a href="#Produtos">Gatos</a>
-        <a href="#Produtos">Pássaros</a>
-        <a href="#Produtos">Peixes</a>
-      </nav>
-    </div>
-    <div class="container">
-      <div class="content">
-        <div class="form">
-        <form class="new-admin-form" method="get">
-          <fieldset>
-            <legend>Dados Pessoais:</legend>
-            <label>Nome:</label><input id="admin-name" type="text" name="admin-name" autofocus><br>
-            <label>Usuário:</label><input id="admin-user" type="text" name="admin-user"><br>
-            <label>Foto:</label><input id="admin-img" type="file" name="admin-img" accept="image/*"><br>
-            <label>Telefone:</label><input id="admin-tel" type="tel" name="admin-tel"><br>
-            <label>Email:</label><input id="admin-email" type="email" name="admin-email"><br>
-          </fieldset>
-          <button id="admin-submit" type="submit">Enviar</button>
-          <button id="admin-reset" type="reset">Limpar</button>
-        </form>
+        <div class="nav-item">
+          <a href="#">Cachorros</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Ração</a></div>
+            <div class="nav-dd-item"><a href="#">Acessórios</a></div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="footer">
+
+        <div class="nav-item">
+          <a href="#">Gatos</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Ração</a></div>
+            <div class="nav-dd-item"><a href="#">Acessórios</a></div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#">Peixes</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Comida</a></div>
+            <div class="nav-dd-item"><a href="#">Aquários</a></div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#">Serviços</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="#">Banho</a></div>
+            <div class="nav-dd-item"><a href="#">Tosa</a></div>
+            <div class="nav-dd-item"><a href="#">Adestramento</a></div>
+          </div>
+        </div>
+
+        <div class="login-menu nav-item">
+          <a href="#">Entrar</a>
+        </div>
+        <div class="login-menu nav-item">
+          <img src="cart32.png" width="32" height="32">
+          <div class="menu-cart-count"><span>99</span></div>
+        </div>
+      </nav>
+
+      <section>
+        <form class="new-admin-form" method="get">
+          <div class="fieldset-container">
+            <fieldset>
+              <legend>Dados Pessoais</legend>
+              <div class="form-labels">
+                <label for="admin-name">Nome:</label>
+                <label for="admin-user">Usuário:</label>
+                <label for="admin-img">Foto:</label>
+                <label for="admin-tel">Telefone:</label>
+                <label for="admin-email">Email:</label>
+              </div>
+              <div class="form-inputs">
+                <input id="admin-name" type="text" name="admin-name" autofocus>
+                <input id="admin-user" type="text" name="admin-user">
+                <input id="admin-img" type="file" name="admin-img" accept="image/*">
+                <input id="admin-tel" type="tel" name="admin-tel">
+                <input id="admin-email" type="email" name="admin-email">
+              </div>
+            </fieldset>
+          </div>
+          <div class="button-container">
+            <button id="admin-submit" type="submit">Enviar</button>
+            <button id="admin-reset" type="reset">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+      <footer>
+        <p>Copyright (c) 2017, Petzzaria Pet Shop</p>
+      </footer>
     </div>
   </body>
 </html>
