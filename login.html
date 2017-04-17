@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria Pet Shop</title>
+    <title>Petzzaria - Entrar no Sistema</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
@@ -24,14 +24,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
     <!--<link rel="manifest" href="/manifest.json">-->
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="ico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
   </head>
 
   <body>
     <div class="wrapper">
       <header>
-        <img id="logo-img" src="logo128.png" height="128" width="128" alt="Petzzaria Pet Shop">
+        <img id="logo-img" src="img/logo128.png" height="128" width="128" alt="Petzzaria Pet Shop">
         
         <div class="search-area">
           <h1>Petzzaria Pet Shop</h1><br>
@@ -43,7 +43,7 @@
 
         <div class="login-area">
           <div class="cart-area">
-            <img class="cart" src="cart64.png" width="64" height="64">
+            <img class="cart" src="img/cart64.png" width="64" height="64">
             <div class="cart-count"><span>99</span></div>
           </div>
           <a href="#">Entrar</a>
@@ -89,7 +89,7 @@
           <a href="#">Entrar</a>
         </div>
         <div class="login-menu nav-item">
-          <img src="cart32.png" width="32" height="32">
+          <img src="img/cart32.png" width="32" height="32">
           <div class="menu-cart-count"><span>99</span></div>
         </div>
       </nav>
@@ -99,9 +99,15 @@
           <form class="login" method="get">
             <div class="fieldset-container">
               <fieldset>
-                <legend>Entrar no Sistema:</legend>
-                <label for="username">Nome de Usuário:</label><input id="username" type="text" name="username"><br>
-                <label for="password">Senha:</label><input id="password" type="password" name="password">
+                <legend>Entrar no Sistema</legend>
+                <div class="form-labels">
+                  <label for="username">Nome de Usuário:</label>
+                  <label for="password">Senha:</label>
+                </div>
+                <div class="form-inputs">
+                  <input id="username" type="text" name="username">
+                  <input id="password" type="password" name="password">
+                </div>
               </fieldset>
             </div>
             <div class="button-container">
@@ -111,8 +117,6 @@
         </div>
       </section>
 
-      
-      
       <footer>
         <p>Copyright (c) 2017, Petzzaria Pet Shop</p>
       </footer>
