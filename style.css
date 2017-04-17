@@ -605,6 +605,32 @@ tr:nth-child(2n)
     color: white;
 }
 
+.admin-link
+{
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+
+/* unvisited link */
+.admin-link:link {
+    color: #1496d1;
+}
+
+/* visited link */
+.admin-link:visited {
+    color: #1496d1;
+}
+
+/* mouse over link */
+.admin-link:hover {
+    color: #105596;
+}
+
+/* selected link */
+.admin-link:active {
+    color: #1496d1;
+}
+
 .reset-this {
     animation : none;
     animation-delay : 0;
