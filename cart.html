@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria - Novo Animal</title>
+    <title>Petzzaria Pet Shop</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
@@ -99,34 +99,44 @@
       </nav>
 
       <section>
-        <form class="new-pet-form" method="get">
-          <div class="fieldset-container">
-            <fieldset>
-              <legend>Dados do Animal</legend>
-              <div style="display:flex; flex-flow: row nowrap;">
-                <div class="form-labels">
-                  <label for="pet-name">Nome:</label>
-                  <label for="pet-user">Usuário:</label>
-                  <label for="pet-img">Foto:</label>
-                  <label for="pet-breed">Raça:</label>
-                  <label for="pet-age">Idade:</label>
-                </div>
-                <div class="form-inputs">
-                  <input id="pet-name" type="text" name="pet-name" autofocus>
-                  <input id="pet-user" type="text" name="pet-user">
-                  <input id="pet-img" type="file" name="pet-img" accept="image/*">
-                  <input id="pet-breed" type="text" name="pet-breed">
-                  <input id="pet-age" type="number" name="pet-age" min="0">
-                </div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="button-container">
-            <button id="pet-submit" type="submit">Enviar</button>
-            <button id="pet-reset" type="reset">Limpar</button>
-          </div>
-        </form>
+        <div class="content">
+          <table>
+            <thead>
+              <td colspan="2">Produto</td>
+              <td>Quantidade</td>
+              <td>Preço</td>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-product"><img src="img/cat64.png"></td>
+                <td class="table-product">Ração para gato</td>
+                <td>1</td>
+                <td>R$ 199,90</td>
+              </tr>
+              <tr>
+                <td class="table-product"><img src="img/cat64.png"></td>
+                <td class="table-product">Brinquedo para gato</td>
+                <td>2</td>
+                <td>R$ 59,80</td>
+              </tr>
+                <tr>
+                  <td class="table-product"><img src="img/cat64.png"></td>
+                  <td class="table-product">Tosa gato adulto</td>
+                  <td>1</td>
+                  <td>R$ 79,90</td>
+                </tr>
+                <tr>
+                  <td class="table-product"><img src="img/cat64.png"></td>
+                  <td class="table-product">Banho gato adulto</td>
+                  <td>1</td>
+                  <td>R$ 49,80</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
+
+
 
       <footer>
         <p>Copyright (c) 2017, Petzzaria Pet Shop</p>

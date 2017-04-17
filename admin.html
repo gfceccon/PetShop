@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria - Novo Animal</title>
+    <title>Petzzaria Pet Shop</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
@@ -87,6 +87,15 @@
           </div>
         </div>
 
+        <div class="nav-item">
+          <a href="#">Admin</a>
+          <div class="drop-down-menu">
+            <div class="nav-dd-item"><a href="new-admin.html">Novo Admin</a></div>
+            <div class="nav-dd-item"><a href="new-product.html">Novo Produto</a></div>
+            <div class="nav-dd-item"><a href="new-service.html">Novo Serviço</a></div>
+          </div>
+        </div>
+
         <div class="login-menu nav-item">
           <a href="login.html">Entrar</a>
         </div>
@@ -99,34 +108,15 @@
       </nav>
 
       <section>
-        <form class="new-pet-form" method="get">
-          <div class="fieldset-container">
-            <fieldset>
-              <legend>Dados do Animal</legend>
-              <div style="display:flex; flex-flow: row nowrap;">
-                <div class="form-labels">
-                  <label for="pet-name">Nome:</label>
-                  <label for="pet-user">Usuário:</label>
-                  <label for="pet-img">Foto:</label>
-                  <label for="pet-breed">Raça:</label>
-                  <label for="pet-age">Idade:</label>
-                </div>
-                <div class="form-inputs">
-                  <input id="pet-name" type="text" name="pet-name" autofocus>
-                  <input id="pet-user" type="text" name="pet-user">
-                  <input id="pet-img" type="file" name="pet-img" accept="image/*">
-                  <input id="pet-breed" type="text" name="pet-breed">
-                  <input id="pet-age" type="number" name="pet-age" min="0">
-                </div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="button-container">
-            <button id="pet-submit" type="submit">Enviar</button>
-            <button id="pet-reset" type="reset">Limpar</button>
-          </div>
-        </form>
+        <div class="content">
+          <h2>Administração</h2>
+            <a style="font-size: 2rem;line-height:2.5rem;" href="new-admin.html">Novo Administrador</a><br>
+            <a style="font-size: 2rem;line-height:2.5rem;" href="new-product.html">Novo Produto</a><br>
+            <a style="font-size: 2rem;line-height:2.5rem;" href="new-service.html">Novo Serviço</a><br>
+        </div>
       </section>
+
+
 
       <footer>
         <p>Copyright (c) 2017, Petzzaria Pet Shop</p>

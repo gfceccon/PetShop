@@ -31,10 +31,10 @@
   <body>
     <div class="wrapper">
       <header>
-        <img id="logo-img" src="img/logo128.png" height="128" width="128" alt="Petzzaria Pet Shop">
-        
+        <a href="index.html" class="reset-this" style="width: 128px; height: 128px"><img id="logo-img" src="img/logo128.png" height="128" width="128" alt="Petzzaria Pet Shop"></a>
+
         <div class="search-area">
-          <h1>Petzzaria Pet Shop</h1><br>
+          <a href="index.html" style="text-decoration: none; color:white;"><h1>Petzzaria Pet Shop</h1><br></a>
           <form class="search-form" method="get">
             <input id="search" type="search" title="search">
             <button id="submit-search" type="submit">Buscar</button>
@@ -43,10 +43,12 @@
 
         <div class="login-area">
           <div class="cart-area">
-            <img class="cart" src="img/cart64.png" width="64" height="64">
+            <a href="cart.html" style="width: 64px; height: 64px;">
+              <img class="cart" src="img/cart64.png" width="64" height="64">
+            </a>
             <div class="cart-count"><span>99</span></div>
           </div>
-          <a href="#">Entrar</a>
+            <a class="login-link" href="login.html">Entrar</a>
         </div>
       </header>
 
@@ -86,32 +88,37 @@
         </div>
 
         <div class="login-menu nav-item">
-          <a href="#">Entrar</a>
+          <a href="login.html">Entrar</a>
         </div>
         <div class="login-menu nav-item">
-          <img src="img/cart32.png" width="32" height="32">
+          <a href="cart.html" style="width: 32px; height: 3rem;">
+            <img src="img/cart32.png" width="32" height="32" style="align-self: center">
+          </a>
           <div class="menu-cart-count"><span>99</span></div>
         </div>
       </nav>
 
       <section>
         <div class="content">
-          <form class="login" method="get">
+          <form class="login" method="get" action="user.html">
             <div class="fieldset-container">
               <fieldset>
                 <legend>Entrar no Sistema</legend>
-                <div class="form-labels">
-                  <label for="username">Nome de Usuário:</label>
-                  <label for="password">Senha:</label>
-                </div>
-                <div class="form-inputs">
-                  <input id="username" type="text" name="username">
-                  <input id="password" type="password" name="password">
+                <div style="display:flex; flex-flow: row nowrap;">
+                  <div class="form-labels">
+                    <label for="username">Nome de Usuário:</label>
+                    <label for="password">Senha:</label>
+                  </div>
+                  <div class="form-inputs">
+                    <input id="username" type="text" name="username">
+                    <input id="password" type="password" name="password">
+                  </div>
                 </div>
               </fieldset>
             </div>
             <div class="button-container">
               <button id="login" type="submit">Entrar</button>
+              <button id="new"><a href="new-client.html" style="text-decoration: none; color: white;">Novo</a></button>
             </div>
           </form>
         </div>

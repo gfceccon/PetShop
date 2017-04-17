@@ -32,7 +32,7 @@
     <div class="wrapper">
       <header>
         <a href="index.html" class="reset-this" style="width: 128px; height: 128px"><img id="logo-img" src="img/logo128.png" height="128" width="128" alt="Petzzaria Pet Shop"></a>
-        
+
         <div class="search-area">
           <a href="index.html" style="text-decoration: none; color:white;"><h1>Petzzaria Pet Shop</h1><br></a>
           <form class="search-form" method="get">
@@ -43,14 +43,17 @@
 
         <div class="login-area">
           <div class="cart-area">
-            <img class="cart" src="img/cart64.png" width="64" height="64">
+            <a href="cart.html" style="width: 64px; height: 64px;">
+              <img class="cart" src="img/cart64.png" width="64" height="64">
+            </a>
             <div class="cart-count"><span>99</span></div>
           </div>
-          <a href="#">Entrar</a>
+            <a class="login-link" href="login.html">Entrar</a>
         </div>
       </header>
 
       <nav class="nav-bar">
+
         <div class="nav-item">
           <a href="#">Cachorros</a>
           <div class="drop-down-menu">
@@ -85,10 +88,12 @@
         </div>
 
         <div class="login-menu nav-item">
-          <a href="#">Entrar</a>
+          <a href="login.html">Entrar</a>
         </div>
         <div class="login-menu nav-item">
-          <img src="img/cart32.png" width="32" height="32">
+          <a href="cart.html" style="width: 32px; height: 3rem;">
+            <img src="img/cart32.png" width="32" height="32" style="align-self: center">
+          </a>
           <div class="menu-cart-count"><span>99</span></div>
         </div>
       </nav>
@@ -98,19 +103,21 @@
           <div class="fieldset-container">
             <fieldset>
               <legend>Dados do Serviço</legend>
-              <div class="form-labels">
-                <label for="service-name">Nome:</label>
-                <label for="service-id">Identificador:</label>
-                <label for="service-img">Foto:</label>
-                <label for="service-description">Descrição:</label>
-                <label for="service-price">Preço:</label>
-              </div>
-              <div class="form-inputs">
-                <input id="service-name" type="text" name="service-name" autofocus><br>
-                <input id="service-id" type="text" name="service-id"><br>
-                <input id="service-img" type="file" name="service-img" accept="image/*"><br>
-                <input id="service-description" type="text" name="service-description"><br>
-                <input id="service-price" type="number" name="service-price" step="0.01" value="0.00" min="0.00"><br>
+              <div style="display:flex; flex-flow: row nowrap;">
+                <div class="form-labels">
+                  <label for="service-name">Nome:</label>
+                  <label for="service-id">Identificador:</label>
+                  <label for="service-img">Foto:</label>
+                  <label for="service-description">Descrição:</label>
+                  <label for="service-price">Preço:</label>
+                </div>
+                <div class="form-inputs">
+                  <input id="service-name" type="text" name="service-name" autofocus><br>
+                  <input id="service-id" type="text" name="service-id"><br>
+                  <input id="service-img" type="file" name="service-img" accept="image/*"><br>
+                  <input id="service-description" type="text" name="service-description"><br>
+                  <input id="service-price" type="number" name="service-price" step="0.01" value="0.00" min="0.00"><br>
+                </div>
               </div>
             </fieldset>
           </div>

@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Petzzaria - Novo Animal</title>
+    <title>Petzzaria Pet Shop</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href='http://fonts.googleapis.com/css?family=Corben:bold' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
@@ -99,38 +99,55 @@
       </nav>
 
       <section>
-        <form class="new-pet-form" method="get">
-          <div class="fieldset-container">
-            <fieldset>
-              <legend>Dados do Animal</legend>
-              <div style="display:flex; flex-flow: row nowrap;">
-                <div class="form-labels">
-                  <label for="pet-name">Nome:</label>
-                  <label for="pet-user">Usuário:</label>
-                  <label for="pet-img">Foto:</label>
-                  <label for="pet-breed">Raça:</label>
-                  <label for="pet-age">Idade:</label>
-                </div>
-                <div class="form-inputs">
-                  <input id="pet-name" type="text" name="pet-name" autofocus>
-                  <input id="pet-user" type="text" name="pet-user">
-                  <input id="pet-img" type="file" name="pet-img" accept="image/*">
-                  <input id="pet-breed" type="text" name="pet-breed">
-                  <input id="pet-age" type="number" name="pet-age" min="0">
-                </div>
+        <div class="content">
+          <div class="product-header">
+            <div class="product-images-area">
+              <img src="img/cat.png" width="256" height="256">
+            </div>
+
+            <div class="product-description-area">
+              <div class="product-description-header">
+                <span class="product-name">Tosa Completa para Gatos Adultos</span>
+                <span class="product-brand">Petzzaria</span>
+                <span class="product-price-alt product-price">R$ 79,90</span>
               </div>
-            </fieldset>
+              <div class="product-description">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p>
+                <p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>
+
+              </div>
+            </div>
+
+            <div class="product-price-area">
+              <span class="product-price">R$ 99,99</span>
+              <label class="quantity-label" for="quantity">Pet:</label>
+              <select class="service-pet">
+                <option value="pet0">Garfield - Gato Malhado M</option>
+                <option value="pet1">Lara - Gato Persa F</option>
+                <option value="pet2">Ana - Gato Siames F</option>
+              </select>
+              <button class="product-buy-button">Comprar</button>
+            </div>
           </div>
-          <div class="button-container">
-            <button id="pet-submit" type="submit">Enviar</button>
-            <button id="pet-reset" type="reset">Limpar</button>
+
+
+          <div class="inline-product-buy">
+            <label class="quantity-label" for="inline-quantity">Pet:</label>
+            <select class="service-pet" style="margin: 0;">
+              <option value="pet0">Garfield - Gato Malhado M</option>
+              <option value="pet1">Lara - Gato Persa F</option>
+              <option value="pet2">Ana - Gato Siames F</option>
+            </select>
+            <button>Contratar</button>
           </div>
-        </form>
+        </div>
       </section>
+
+
 
       <footer>
         <p>Copyright (c) 2017, Petzzaria Pet Shop</p>
       </footer>
     </div>
-  </body>
+</body>
 </html>
