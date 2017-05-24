@@ -6,7 +6,7 @@
 }
 
 .wrapper {
-    background: url(img/subtle_white_feathers.png) repeat 0 0;
+    background: url(../img/subtle_white_feathers.png) repeat 0 0;
     font-weight: bold;
     text-align: center;
     align-items: stretch;
@@ -64,26 +64,6 @@ header {
 
     display: flex;
     flex-flow: column nowrap;
-}
-
-.login-link {
-    background-color: #1496d1;
-    border: 3px solid #35c9ea;
-    color: white;
-    padding: 11px 16px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    transition-duration: 0.2s;
-    box-sizing: content-box;
-}
-
-.login-link:hover {
-    background-color: #35c9ea;
-}
-
-.login-link:first-child {
-    margin-bottom: 5px;
 }
 
 nav {

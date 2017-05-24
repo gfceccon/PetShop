@@ -16,6 +16,12 @@ function login() {
     })
 }
 
+function new_client() {
+    $.get('/new-client', function(result){
+        $('section').html(result);
+    })
+}
+
 function service(serviceName) {
     if(serviceName == 'tosa'){
         $.get('/service', function(result){

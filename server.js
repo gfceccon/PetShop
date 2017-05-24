@@ -12,6 +12,7 @@ var templates = {
     cart: fs.readFileSync('template/cart.html').toString(),
     login: fs.readFileSync('template/login.html').toString(),
     service: fs.readFileSync('template/service.html').toString(),
+    new_client: fs.readFileSync('template/new-client.html').toString(),
     section_admin: fs.readFileSync('template/section-admin.html').toString(),
     section_index: fs.readFileSync('template/section-index.html').toString()
 }
@@ -75,6 +76,12 @@ app.get('/login', function (req, res) {
 app.get('/service', function (req, res) {
     console.log("GET request: service");
     var html = mustache.render(templates.service);
+    res.send(html);
+})
+
+app.get('/new-client', function (req, res) {
+    console.log("GET request: new-client");
+    var html = mustache.render(templates.new_client);
     res.send(html);
 })
 
