@@ -86,7 +86,7 @@ header {
     margin-bottom: 5px;
 }
 
-.nav-bar {
+nav {
     background: #35c9ea;
     min-height: 3rem;
 
@@ -277,7 +277,7 @@ fieldset legend {
         align-items: center;
     }
 
-    .nav-bar {
+    nav {
         min-height: 50px;
         align-items: center;
         font-size: 20px;
