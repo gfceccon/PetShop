@@ -1,51 +1,46 @@
-<div class="content">
-    <div class="product-header">
-        <div class="product-images-area">
-            <img src="img/cat.png" width="256" height="256">
-            <div class="product-images">
-                <img src="img/cat64.png" width="64" height="64">
-                <img src="img/cat64.png" width="64" height="64">
-                <img src="img/cat64.png" width="64" height="64">
-            </div>
-        </div>
+<form id="buy-product" class="buy-product-form" onsubmit="return formPost(this);">
+  <input type="hidden" id="id" name="id" value="{{product_id}}" />
+  <div class="content">
+      <div class="product-header">
+          <div class="product-images-area">
+              <img src="img/{{product_img}}" width="{{img_width}}" height="{{img_height}}">
+          </div>
 
-        <div class="product-description-area">
-            <div class="product-description-header">
-                <span class="product-name">Ração Clube Real Canino Desempenho Para Gatos Adultos</span>
-                <span class="product-brand">Clube Real Canino</span>
-                <span class="product-price-alt product-price">R$ 199,90</span>
-            </div>
-            <div class="product-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p>
-                <p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>
+          <div class="product-description-area">
+              <div class="product-description-header">
+                  <span class="product-name">{{product_name}}</span>
+                  <span class="product-brand">{{product_brand}}</span>
+                  <span class="product-price-alt product-price">R$ {{product_price}}</span>
+              </div>
+              <div class="product-description">
+                  {{product_description}}
+              </div>
+          </div>
 
-            </div>
-        </div>
-
-        <div class="product-price-area">
-            <span class="product-price">R$ 199,90</span>
-            <label class="quantity-label" for="quantity">Quantidade:</label>
-            <div class="product-buy">
-                <button><</button>
-                <input id="quantity" class="quantity" type="text" value="1">
-                <button>></button>
-            </div>
-            <button class="product-buy-button">Comprar</button>
-        </div>
-    </div>
+          <div class="product-price-area">
+              <span class="product-price">R$ {{product_price}}</span>
+              <label class="quantity-label" for="quantity">Quantidade:</label>
+              <div class="product-buy">
+                  <button><</button>
+                  <input id="quantity" class="quantity" type="text" value="1">
+                  <button>></button>
+              </div>
+              <button class="product-buy-button">Comprar</button>
+          </div>
+      </div>
 
 
-    <div class="inline-product-buy">
-        <label class="quantity-label" for="inline-quantity">Quantidade:</label>
-        <button><</button>
-        <input id="inline-quantity" class="quantity" type="text" value="1">
-        <button>></button>
-        <button>Comprar</button>
-    </div>
+      <div class="inline-product-buy">
+          <label class="quantity-label" for="inline-quantity">Quantidade:</label>
+          <button onclick="less()"><</button>
+          <input id="inline-quantity" class="quantity" type="text" value="1">
+          <button onclick="more()">></button>
+          <button>Comprar</button>
+      </div>
 
-    <div class="product-full-description">
-        <span>Ração Clube Real Canino Desempenho Para Gatos Adultos</span>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi. Cras sit amet ante et metus placerat auctor ac quis odio. Sed sodales mi mauris, a euismod ligula pellentesque eu. Morbi et sapien sit amet turpis consequat sollicitudin. Etiam ante nulla, tempor vitae volutpat a, aliquet iaculis neque. Donec gravida hendrerit nisl. Donec vel libero a felis convallis mattis et eu purus. Cras ut augue eros. Curabitur fringilla, nunc eget volutpat faucibus, tellus est hendrerit eros, quis elementum ex diam eu mauris. Nunc iaculis tortor nisi, eu efficitur massa iaculis a.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi. Cras sit amet ante et metus placerat auctor ac quis odio. Sed sodales mi mauris, a euismod ligula pellentesque eu. Morbi et sapien sit amet turpis consequat sollicitudin. Etiam ante nulla, tempor vitae volutpat a, aliquet iaculis neque. Donec gravida hendrerit nisl. Donec vel libero a felis convallis mattis et eu purus. Cras ut augue eros. Curabitur fringilla, nunc eget volutpat faucibus, tellus est hendrerit eros, quis elementum ex diam eu mauris. Nunc iaculis tortor nisi, eu efficitur massa iaculis a.</p>
-    </div>
-</div>
+      <div class="product-full-description">
+          <span>{{product_name}}</span>
+          {{product_full_description}}
+      </div>
+  </div>
+</form>

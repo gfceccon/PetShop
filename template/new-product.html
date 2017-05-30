@@ -1,0 +1,33 @@
+<form id="new-product" class="new-product-form" onsubmit="return formPost(this);">
+ <div class="fieldset-container">
+   <fieldset>
+     <legend>Dados do Produto</legend>
+     <div style="display:flex; flex-flow: row nowrap;">
+       <div class="form-labels">
+         <label for="product-name">Nome:</label>
+         <label for="product-id">Identificador:</label>
+         <label for="product-img">Foto:</label>
+         <label for="product-description">Descrição:</label>
+         <label for="product-full-description">Descrição Completa:</label>
+         <label for="product-price">Preço:</label>
+         <label for="product-stkamt">Quantidade em Estoque:</label>
+         <label for="product-soldamt">Quantidade Vendida:</label>
+       </div>
+       <div class="form-inputs">
+         <input id="product-name" type="text" name="product-name" autofocus>
+         <input id="product-id" type="text" name="product-id">
+         <input id="product-img" type="file" name="product-img" accept="image/*">
+         <input id="product-description" type="text" name="product-description">
+         <input id="product-full-description" type="text" name="product-full-description">
+         <input id="product-price" type="number" name="product-price" step="0.01" value="0.00" min="0.00">
+         <input id="product-stkamt" type="number" name="product-stkamt" value="0" min="0">
+         <input id="product-soldamt" type="number" name="product-soldamt" value="0" min="0">
+       </div>
+     </div>
+   </fieldset>
+ </div>
+ <div class="button-container">
+   <button id="product-submit" type="submit">Enviar</button>
+   <button id="product-reset" type="reset">Limpar</button>
+ </div>
+</form>

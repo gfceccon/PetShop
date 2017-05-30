@@ -1,42 +1,43 @@
-<div class="content">
-    <div class="product-header">
-        <div class="product-images-area">
-            <img src="img/cat.png" width="256" height="256">
-        </div>
+<form id="buy-service" class="buy-service-form" onsubmit="return formPost(this);">
+  <input type="hidden" id="id" name="id" value="{{service_id}}" />
+  <div class="content">
+      <div class="product-header">
+          <div class="product-images-area">
+              <img src="img/{{service_img}}" width="{{img_width}}" height="{{img_height}}">
+          </div>
 
-        <div class="product-description-area">
-            <div class="product-description-header">
-                <span class="product-name">Tosa Completa para Gatos Adultos</span>
-                <span class="product-brand">Petzzaria</span>
-                <span class="product-price-alt product-price">R$ 79,90</span>
-            </div>
-            <div class="product-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p>
-                <p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>
+          <div class="product-description-area">
+              <div class="product-description-header">
+                  <span class="product-name">{{service_name}}</span>
+                  <span class="product-brand">Petzzaria</span>
+                  <span class="product-price-alt product-price">R$ {{service_price}}</span>
+              </div>
+              <div class="product-description">
+                  {{service_description}}
+              </div>
+          </div>
 
-            </div>
-        </div>
-
-        <div class="product-price-area">
-            <span class="product-price">R$ 99,99</span>
-            <label class="quantity-label" for="quantity">Pet:</label>
-            <select class="service-pet">
-                <option value="pet0">Garfield - Gato Malhado M</option>
-                <option value="pet1">Lara - Gato Persa F</option>
-                <option value="pet2">Ana - Gato Siames F</option>
-            </select>
-            <button class="product-buy-button">Comprar</button>
-        </div>
-    </div>
+          <div class="product-price-area">
+              <span class="product-price">R$ {{service_price}}</span>
+              <label class="quantity-label" for="quantity">Pet:</label>
+              <select id="service-pet" class="service-pet">
+                {{#pets}}
+                  <option value="{{pet_id}}">{{pet_description}}</option>
+                {{/pets}}
+              </select>
+              <button class="product-buy-button">Comprar</button>
+          </div>
+      </div>
 
 
-    <div class="inline-product-buy">
-        <label class="quantity-label" for="inline-quantity">Pet:</label>
-        <select class="service-pet" style="margin: 0;">
-            <option value="pet0">Garfield - Gato Malhado M</option>
-            <option value="pet1">Lara - Gato Persa F</option>
-            <option value="pet2">Ana - Gato Siames F</option>
-        </select>
-        <button>Contratar</button>
-    </div>
-</div>
+      <div class="inline-product-buy">
+          <label class="quantity-label" for="inline-quantity">Pet:</label>
+          <select id="service-pet-inline" class="service-pet" style="margin: 0;">
+            {{#pets}}
+              <option value="{{pet_id}}">{{pet_description}}</option>
+            {{/pets}}
+          </select>
+          <button>Contratar</button>
+      </div>
+  </div>
+</form>

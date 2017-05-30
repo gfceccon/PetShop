@@ -1,0 +1,27 @@
+<form id="new-service" class="new-service-form" onsubmit="return formPost(this);">
+  <div class="fieldset-container">
+    <fieldset>
+      <legend>Dados do Serviço</legend>
+      <div style="display:flex; flex-flow: row nowrap;">
+        <div class="form-labels">
+          <label for="service-name">Nome:</label>
+          <label for="service-id">Identificador:</label>
+          <label for="service-img">Foto:</label>
+          <label for="service-description">Descrição:</label>
+          <label for="service-price">Preço:</label>
+        </div>
+        <div class="form-inputs">
+          <input id="service-name" type="text" name="service-name" autofocus><br>
+          <input id="service-id" type="text" name="service-id"><br>
+          <input id="service-img" type="file" name="service-img" accept="image/*"><br>
+          <input id="service-description" type="text" name="service-description"><br>
+          <input id="service-price" type="number" name="service-price" step="0.01" value="0.00" min="0.00"><br>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="button-container">
+    <button id="service-submit" type="submit">Enviar</button>
+    <button id="service-reset" type="reset">Limpar</button>
+  </div>
+</form>

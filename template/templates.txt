@@ -1,4 +1,0 @@
-index
-  page, header, nav-index, section-index, product-card
-admin
-  page, header, nav-admin, section-admin

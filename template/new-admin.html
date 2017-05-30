@@ -1,0 +1,27 @@
+<form id="new-admin" class="new-admin-form" onsubmit="return formPost(this);">
+  <div class="fieldset-container">
+    <fieldset>
+      <legend>Dados Pessoais</legend>
+      <div style="display:flex; flex-flow: row nowrap;">
+        <div class="form-labels">
+          <label for="admin-name">Nome:</label>
+          <label for="admin-user">Usuário:</label>
+          <label for="admin-img">Foto:</label>
+          <label for="admin-tel">Telefone:</label>
+          <label for="admin-email">Email:</label>
+        </div>
+        <div class="form-inputs">
+          <input id="admin-name" type="text" name="admin-name" autofocus>
+          <input id="admin-user" type="text" name="admin-user">
+          <input id="admin-img" type="file" name="admin-img" accept="image/*">
+          <input id="admin-tel" type="tel" name="admin-tel">
+          <input id="admin-email" type="email" name="admin-email">
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="button-container">
+    <button id="admin-submit" type="submit">Enviar</button>
+    <button id="admin-reset" type="reset">Limpar</button>
+  </div>
+</form>

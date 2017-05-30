@@ -1,0 +1,27 @@
+<form id="new-pet" class="new-pet-form" onsubmit="return formPost(this);">
+  <div class="fieldset-container">
+    <fieldset>
+      <legend>Dados do Animal</legend>
+      <div style="display:flex; flex-flow: row nowrap;">
+        <div class="form-labels">
+          <label for="pet-name">Nome:</label>
+          <label for="pet-user">Usuário:</label>
+          <label for="pet-img">Foto:</label>
+          <label for="pet-breed">Raça:</label>
+          <label for="pet-age">Idade:</label>
+        </div>
+        <div class="form-inputs">
+          <input id="pet-name" type="text" name="pet-name" autofocus>
+          <input id="pet-user" type="text" name="pet-user">
+          <input id="pet-img" type="file" name="pet-img" accept="image/*">
+          <input id="pet-breed" type="text" name="pet-breed">
+          <input id="pet-age" type="number" name="pet-age" min="0">
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="button-container">
+    <button id="pet-submit" type="submit">Enviar</button>
+    <button id="pet-reset" type="reset">Limpar</button>
+  </div>
+</form>
