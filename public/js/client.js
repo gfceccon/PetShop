@@ -1,7 +1,24 @@
+$(function() {
+  $.get('/header', function(result){
+    $('header').html(result);
+  });
+  $.get('/nav', function(result){
+    $('nav').html(result);
+  });
+  $.get('/footer', function(result){
+    $('footer').html(result);
+  });
+  index();
+});
+
 function index() {
-    $.get('/', function(result){
-        $('#wrapper').html(result);
-    });
+  $.get('/index', {page: 0, pageSize: 14}, function(result){
+    $('section').html(result);
+  });
+}
+
+function product(id) {
+  
 }
 
 function cart() {

@@ -2,6 +2,12 @@ var express = require('express');
 var mustache = require('mustache');
 var fs = require("fs");
 var app = express();
+
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var multer = require('multer');
+var upload = multer();
+
 var templates = {
     header: fs.readFileSync('template/header.html').toString(),
     footer: fs.readFileSync('template/footer.html').toString(),
@@ -14,7 +20,6 @@ var templates = {
 
     page: fs.readFileSync('template/page.html').toString(),
 
-    product_card: fs.readFileSync('template/product-card.html').toString(),
     product: fs.readFileSync('template/product.html').toString(),
     cart: fs.readFileSync('template/cart.html').toString(),
     login: fs.readFileSync('template/login.html').toString(),
@@ -32,8 +37,21 @@ var templates = {
 
 app.use(express.static('public'));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(upload.array());
+app.use(cookieParser());
+
+var user = { cart: [
+    { product_id: 1, product_quantity: 1 },
+    { product_id: 2, product_quantity: 1 },
+    { product_id: 3, product_quantity: 4 }
+  ], isAdmin: false, isClient: true};
+
+var admin = { isAdmin: false, isClient: true };
+
 var getUser = function(req) {
-  return { cart_count: 1, isAdmin: false, isClient: false };
+  return user;
 }
 
 var getProducts = function(page, pageSize) {
@@ -157,6 +175,12 @@ app.get('/new-client', function (req, res) {
 app.post('/new-client', function (req, res) {
   console.log("POST request: new-client");
   var html = mustache.render(templates.new_client);
+  res.send(html);
+})
+
+app.get('/', function (req, res) {
+  console.log("GET request: /");
+  var html = mustache.render(templates.page);
   res.send(html);
 })
 
