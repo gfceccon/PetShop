@@ -42,13 +42,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 app.use(cookieParser());
 
-var user = { cart: [
+var Users = { cart: [
 	{ product_id: 1, product_quantity: 1 },
 	{ product_id: 2, product_quantity: 1 },
 	{ product_id: 3, product_quantity: 4 }
 ], isAdmin: false, isClient: true};
 
-var admin = { isAdmin: false, isClient: true };
+var lients = [{
+	client_name: "John Doe",
+	client_user: "retard",
+	client_pwd: "123456"
+	client_tel: "34954820",
+	client_email: "johndoe@uol.com.br",
+	client_address: {
+		street: "Rua dos Bobos",
+		num: "0",
+		city: "Saint Charles",
+		state: "Saint Paul",
+		zip: "40028-922",
+	},
+	is_admin: false
+}];
 
 var getUser = function(req) {
 	return user;
@@ -174,7 +188,25 @@ app.get('/new-client', function (req, res) {
 
 app.post('/new-client', function (req, res) {
 	console.log("POST request: new-client");
-	var html = mustache.render(templates.new_client);
+
+	var new_user = {};
+	new_user['user_name'] = req.body.user_name;
+	new_user['user_username'] = req.body.user_username;
+	new_user['user_password'] = req.body.user_password;
+	new_user['user_tel'] = req.body.user_tel;
+	new_user['user_email'] = req.body.user_email;
+
+	var user_address = {};
+	user_address['street'] = req.body.user_street;
+	user_address['num'] = req.body.user_street;
+	user_address['city'] = req.body.user_street;
+	user_address['state'] = req.body.user_street;
+	user_address['zip'] = req.body.user_street;
+
+	new_user['user_address'] = user_adress;
+	users.push(new_user);
+
+	var html = "<h1>Cliente cadastrado com sucesso!</h1>";
 	res.send(html);
 })
 

@@ -18,7 +18,7 @@ function index() {
 }
 
 function product(id) {
-  
+
 }
 
 function cart() {
@@ -45,4 +45,13 @@ function service(serviceName) {
             $('section').html(result);
         })
     }
+}
+
+function formPost(form){
+    var data = $(form).serialize();
+    $.post("/" + form.id, data, function(result) {
+        console.log("fuck u");
+    });
+
+    return false;
 }
