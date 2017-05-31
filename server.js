@@ -42,89 +42,179 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 app.use(cookieParser());
 
-var Users = { cart: [
-	{ product_id: 1, product_quantity: 1 },
-	{ product_id: 2, product_quantity: 1 },
-	{ product_id: 3, product_quantity: 4 }
-], isAdmin: false, isClient: true};
-
-var lients = [{
-	client_name: "John Doe",
-	client_user: "retard",
-	client_pwd: "123456"
-	client_tel: "34954820",
-	client_email: "johndoe@uol.com.br",
-	client_address: {
-		street: "Rua dos Bobos",
-		num: "0",
-		city: "Saint Charles",
-		state: "Saint Paul",
-		zip: "40028-922",
-	},
-	is_admin: false
+var Users = [
+{
+    user_id: 1,
+    user_name: 'John Doe',
+    user_username: 'john',
+    user_password: '12345',
+    user_img: '',
+    user_tel: '34954820',
+    user_email: 'johndoe@uol.com.br',
+    user_address: {
+        street: 'Rua dos Lobos',
+        num: '0',
+        city: 'Saint Charles',
+        state: 'Saint Paul',
+        zip: '40028-922',
+    },
+    cart_count: function() {
+        let cart = getCart(user_id);
+        return cart.cart.length
+    },
+    is_admin: false
+},
+{
+    user_id: 2,
+    user_name: 'Emily Hawkins',
+    user_username: 'emily',
+    user_password: '12345',
+    user_img: '',
+    user_tel: '284971920',
+    user_email: 'emily@uol.com.br',
+    user_address: {
+        street: 'Rua dos Anjos',
+        num: '0',
+        city: 'Saint Christina',
+        state: 'Saint Agatha',
+        zip: '45127-125',
+    },
+    cart_count: function() {
+        let cart = getCart(user_id);
+        return cart.cart.length
+    },
+    is_admin: false
+},
+{
+    user_id: 3,
+    user_name: 'Administrador',
+    user_user: 'admin',
+    user_password: 'admin',
+    user_img: '',
+    user_tel: '90654280',
+    user_email: 'adm@uol.com.br',
+    isAdmin: true
 }];
 
-var getUser = function(req) {
-	return user;
+var Products = [
+{
+  product_id: 1, product_img: 'cat128.png',
+  img_width: 128, img_height: 128,
+  product_name: 'Ração para gato', product_price: 199.90,
+  product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
+  product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+},
+{
+  product_id: 2, product_img: 'cat128.png',
+  img_width: 128, img_height: 128,
+  product_name: 'Brinquedo para gato', product_price: 29.90,
+  product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
+  product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+},
+{
+  product_id: 3, product_img: 'cat128.png',
+  img_width: 128, img_height: 128,
+  product_name: 'Cama para gato', product_price: 89.90,
+  product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
+  product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+},
+{
+  product_id: 4, product_img: 'cat128.png',
+  img_width: 128, img_height: 128,
+  product_name: 'Petisco para gato', product_price: 1.99,
+  product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
+  product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+},
+{
+  product_id: 5, product_img: 'cat128.png',
+  img_width: 128, img_height: 128,
+  product_name: 'Coleira para gato', product_price: 35.90,
+  product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
+  product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+}
+];
+
+var Carts = [
+{
+    user_id: 1,
+    cart: [
+        { product_id: 1, product_quantity: 1 },
+        { product_id: 2, product_quantity: 1 },
+        { product_id: 4, product_quantity: 4 }
+    ]
+},
+{
+    user_id: 2,
+    cart: [
+        { product_id: 1, product_quantity: 1 },
+        { product_id: 3, product_quantity: 1 }
+    ]
+}
+];
+
+var Pets = [
+{
+    user_id: 1,
+    pets: [
+        { pet_name: 'Garfield', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 2 },
+        { pet_name: 'Lara', pet_img: 'cat64.png', pet_breed: 'Gato Persa', pet_age: 3 },
+        { pet_name: 'Ana', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 5 }
+    ]
+},
+{
+    user_id: 2,
+    pets: [
+        { pet_name: 'James', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 4 },
+        { pet_name: 'Tom', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 1 }
+    ]
+}
+];
+
+var Services = [
+{
+    service_id: 1, service_img: 'cat128.png',
+    img_width: 128, img_height: 128,
+    service_name: 'Tosa para gato', service_price: 69.90,
+    service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+},
+{
+    service_id: 2, service_img: 'cat128.png',
+    img_width: 128, img_height: 128,
+    service_name: 'Banho para gato', service_price: 49.90,
+    service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+}
+];
+
+var getUser = function(user_id) {
+    return Users.filter((u) => { return u.user_id == user_id; });
 }
 
 var getProducts = function(page, pageSize) {
-	return {
-		products: [
-			{ product_id: 1, product_img: 'cat128.png', img_width: 128, img_height: 128, product_name: 'Ração para gato', product_price: 199.90 },
-			{ product_id: 2, product_img: 'cat128.png', img_width: 128, img_height: 128, product_name: 'Brinquedo para gato', product_price: 29.90 },
-			{ product_id: 3, product_img: 'cat128.png', img_width: 128, img_height: 128, product_name: 'Cama para gato', product_price: 89.90 },
-			{ product_id: 4, product_img: 'cat128.png', img_width: 128, img_height: 128, product_name: 'Petisco para gato', product_price: 1.99 },
-			{ product_id: 5, product_img: 'cat128.png', img_width: 128, img_height: 128, product_name: 'Coleira para gato', product_price: 35.90 }
-		]
-	};
+  return { products: Products };
 }
 
-var getProduct = function(id) {
-	return {
-		product_id: 1, product_img: 'cat128.png',
-		img_width: 128, img_height: 128,
-		product_name: 'Ração para gato', product_price: 199.90,
-		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
-		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
-	};
+var getProduct = function(product_id) {
+  return Products.filter((p) => { return p.product_id == product_id; });
 }
 
-var getCart = function(user) {
-	return {
-		cart: [
-			{ product_id: 1, product_img: 'cat128.png', product_name: 'Ração para gato', product_price: 199.90, product_quantity: 1 },
-			{ product_id: 2, product_img: 'cat128.png', product_name: 'Brinquedo para gato', product_price: 29.90, product_quantity: 2 },
-			{ product_id: 3, product_img: 'cat128.png', product_name: 'Cama para gato', product_price: 89.90, product_quantity: 1 },
-			{ product_id: 4, product_img: 'cat128.png', product_name: 'Petisco para gato', product_price: 1.99, product_quantity: 5 },
-		]
-	};
+var getCart = function(user_id) {
+  return Carts.filter((c) => { return c.user_id == user_id; });
 }
 
-var getPets = function(user) {
-	return {
-		pets: [
-			{ pet_name: 'Garfield', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 2 },
-			{ pet_name: 'Lara', pet_img: 'cat64.png', pet_breed: 'Gato Persa', pet_age: 3 },
-			{ pet_name: 'Ana', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 5 }
-		],
-		pet_description: function() {
-			return this.pet_name + ' - ' + this.pet_breed;
-		}
-	};
+var getPets = function(user_id) {
+    var pets = Pets.filter((p) => { return p.user_id == user_id; });
+    pets.pet_description = function() {
+      return this.pet_name + ' - ' + this.pet_breed;
+    }
+    return pets;
 }
 
-var getService = function(id, user) {
-	var service = {
-		service_id: 1, service_img: 'cat128.png',
-		img_width: 128, img_height: 128,
-		service_name: 'Ração para gato', service_price: 199.90,
-		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
-	};
-	var pets = getPets(user);
-	service.pets = pets.pets;
-	service.pet_description = pets.pet_description;
-	return service;
+var getService = function(service_id, user_id) {
+  var service = Services.filter((s) => { return s.service_id == service_id; });
+  var pets = getPets(user_id);
+  service.pets = pets.pets;
+  service.pet_description = pets.pet_description;
+  return service;
 }
 
 app.get('/header', function (req, res) {
@@ -190,21 +280,24 @@ app.post('/new-client', function (req, res) {
 	console.log("POST request: new-client");
 
 	var new_user = {};
-	new_user['user_name'] = req.body.user_name;
-	new_user['user_username'] = req.body.user_username;
-	new_user['user_password'] = req.body.user_password;
-	new_user['user_tel'] = req.body.user_tel;
-	new_user['user_email'] = req.body.user_email;
+	new_user['user_id'] = 4;
+	new_user['user_name'] = req.body.client_name;
+	new_user['user_username'] = req.body.client_user;
+	new_user['user_password'] = req.body.client_password;
+	new_user['user_tel'] = req.body.client_tel;
+	new_user['user_email'] = req.body.client_email;
+	new_user['is_admin'] = false;
 
 	var user_address = {};
-	user_address['street'] = req.body.user_street;
-	user_address['num'] = req.body.user_street;
-	user_address['city'] = req.body.user_street;
-	user_address['state'] = req.body.user_street;
-	user_address['zip'] = req.body.user_street;
+	user_address['street'] = req.body.client_street;
+	user_address['num'] = req.body.client_num;
+	user_address['city'] = req.body.client_city;
+	user_address['state'] = req.body.client_state;
+	user_address['zip'] = req.body.client_zip;
 
-	new_user['user_address'] = user_adress;
-	users.push(new_user);
+	new_user['user_address'] = user_address;
+	Users.push(new_user);
+	console.log(Users);
 
 	var html = "<h1>Cliente cadastrado com sucesso!</h1>";
 	res.send(html);

@@ -66,6 +66,7 @@ function new_client() {
 }
 
 function formPost(form){
+    console.log("entrou");
     var data = $(form).serialize();
     $.post("/" + form.id, data, function(result) {
         console.log("fuck u");
