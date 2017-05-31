@@ -18,31 +18,49 @@ function index() {
 }
 
 function product(id) {
-  
+  $.get('/product', {product_id: id}, function(result){
+    $('section').html(result);
+  });
+}
+
+function service(id) {
+  $.get('/service', {service_id: id}, function(result){
+    $('section').html(result);
+  });
+}
+
+function newAdmin() {
+  $.get('/new-admin', function(result){
+    $('section').html(result);
+  });
+}
+
+function newProduct() {
+  $.get('/new-product', function(result){
+    $('section').html(result);
+  });
+}
+
+function newService() {
+  $.get('/new-service', function(result){
+    $('section').html(result);
+  });
 }
 
 function cart() {
-    $.get('/cart', function(result){
-        $('section').html(result);
-    })
+  $.get('/cart', function(result){
+    $('section').html(result);
+  });
 }
 
 function login() {
-    $.get('/login', function(result){
-        $('section').html(result);
-    })
+  $.get('/login', function(result){
+    $('section').html(result);
+  });
 }
 
 function new_client() {
-    $.get('/new-client', function(result){
-        $('section').html(result);
-    })
-}
-
-function service(serviceName) {
-    if(serviceName == 'tosa'){
-        $.get('/service', function(result){
-            $('section').html(result);
-        })
-    }
+  $.get('/new-client', function(result){
+    $('section').html(result);
+  });
 }
