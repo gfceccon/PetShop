@@ -1,5 +1,5 @@
 <div class="content">
-    <form id="login" class="login" onsubmit="return formPost(this);">
+    <form id="login" class="login" onsubmit="return loginPost(this);">
         <div class="fieldset-container">
             <fieldset>
                 <legend>Entrar no Sistema</legend>
@@ -15,6 +15,7 @@
                 </div>
             </fieldset>
         </div>
+        <span style="text-align: center;" id="form_return"></span>
         <div class="button-container">
             <button id="login" type="submit">Entrar</button>
             <button id="new" type="button" onclick="new_client();" href="#">Novo</button>

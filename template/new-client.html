@@ -1,4 +1,4 @@
-<form id="new-client" class="new-client-form" onsubmit="return formPost(this);">
+<form id="new-client" class="new-client-form" onsubmit="return clientPost(this);">
   <div class="fieldset-container">
     <fieldset>
       <legend>Dados Pessoais</legend>
@@ -6,6 +6,8 @@
         <div class="form-labels">
           <label for="client_name">Nome:</label>
           <label for="client_user">Usuário:</label>
+          <label for="client_password">Senha:</label>
+          <label for="client_confirm">Confirmar Senha:</label>
           <label for="client_img">Foto:</label>
           <label for="client_tel">Telefone:</label>
           <label for="client_email">Email:</label>
@@ -13,6 +15,8 @@
         <div class="form-inputs">
           <input id="client_name" type="text" name="client_name" autofocus>
           <input id="client_user" type="text" name="client_user">
+          <input id="client_password" type="password" name="client_password">
+          <input id="client_confirm" type="password" name="client_confirm">
           <input id="client_img" type="file" name="client_img" accept="image/*">
           <input id="client_tel" type="tel" name="client_tel">
           <input id="client_email" type="email" name="client_email">
@@ -39,6 +43,7 @@
       </div>
     </fieldset>
   </div>
+  <span style="text-align: center;" id="form_return"></span>
   <div class="button-container">
     <button id="client_submit" type="submit">Enviar</button>
     <button id="client_reset" type="reset">Limpar</button>
