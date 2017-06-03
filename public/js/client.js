@@ -63,6 +63,16 @@ function login() {
     });
 }
 
+function logout() {
+    $.ajax({
+        url: '/login',
+        type: 'DELETE',
+        success: function(result){
+            drawIndex();
+        }
+    });
+}
+
 function new_client() {
     $.get('/new-client', function(result){
         $('section').html(result);

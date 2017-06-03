@@ -5,12 +5,13 @@ var app = express();
 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var Cookies = require('cookies');
 var multer = require('multer');
 var upload = multer();
 
 var templates = {
-	header: fs.readFileSync('template/header.html').toString(),
+	header_index: fs.readFileSync('template/header-index.html').toString(),
+	header_logged: fs.readFileSync('template/header-logged.html').toString(),
+
 	footer: fs.readFileSync('template/footer.html').toString(),
 
 	index: fs.readFileSync('template/index.html').toString(),
@@ -47,7 +48,7 @@ var Users = [
 		user_id: 1,
 		user_name: 'John Doe',
 		user_username: 'john',
-		user_password: '12345',
+		user_password: 'john',
 		user_img: '',
 		user_tel: '34954820',
 		user_email: 'johndoe@uol.com.br',
@@ -254,9 +255,13 @@ var Users = [
 
 	app.get('/header', function (req, res) {
 		console.log("GET request: header");
-		var user = getUser(req, 'id');
-		console.log("HEADER USER: " + user);
-		var html = mustache.render(templates.header, user);
+
+		var u = getUser(req.cookies.auth, 'id');
+		if(u)
+			var html = mustache.render(templates.header_logged, u);
+		else
+			var html = mustache.render(templates.header_index, u);
+
 		res.send(html);
 	})
 
@@ -265,16 +270,22 @@ var Users = [
 
 		var u = getUser(req.cookies.auth, 'id');
 		if(u){
-			console.log("user is: " + u.user_username + " with is_admin: " + u.is_admin);
+			console.log("User is: \"" + u.user_username + "\" with is_admin: " + u.is_admin + ".");
 			if(u.is_admin){
 				html = mustache.render(templates.nav_admin, u);
 			} else {
 				html = mustache.render(templates.nav_client, u);
 			}
 		} else {
-			console.log("no one's logged");
+			console.log("No one's logged!");
 			html = mustache.render(templates.nav_index, u);
 		}
+		res.send(html);
+	})
+
+	app.get('/footer', function (req, res) {
+		console.log("GET request: footer");
+		var html = mustache.render(templates.footer);
 		res.send(html);
 	})
 
@@ -312,11 +323,18 @@ var Users = [
 		if (!u || (u.user_password != req.body.password)){
 			res.send({ error: 1, message: "Usuário ou senha inválidos!" });
 		} else {
-			res.cookie('auth', u.user_id, { maxAge: 60000, httpOnly: true });
+			res.cookie('auth', u.user_id, { maxAge: 1000 * 3600, httpOnly: true });
 			console.log("User \"" + u.user_username + "\" just logged in!");
 
 			res.send({ error: 0, message: "Login efetuado com sucesso!" });
 		}
+	})
+
+	app.delete('/login', function (req, res) {
+		console.log("DELETE request: login");
+
+		res.clearCookie('auth');
+		res.status(204).send("No content");
 	})
 
 	app.get('/service', function (req, res) {
