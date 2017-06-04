@@ -301,7 +301,8 @@ app.get('/index', function (req, res) {
 
 app.get('/product', function (req, res) {
 	console.log("GET request: product");
-	var html = mustache.render(templates.product);
+	var product = getProduct(req.query.product_id);
+	var html = mustache.render(templates.product, product);
 	res.send(html);
 })
 
