@@ -6,7 +6,14 @@ var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var multer = require('multer');
-var upload = multer();
+var upload_user = multer({
+	dest: './public/img/user',
+	limits: { fileSize: 1048576, files: 1}
+});
+var upload_product = multer({
+	dest: './public/img/product',
+	limits: { fileSize: 1048576, files: 1}
+});
 
 var templates = {
 	header_index: fs.readFileSync('template/header-index.html').toString(),
@@ -39,7 +46,6 @@ var templates = {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(upload.array());
 app.use(cookieParser());
 app.use(express.static('public'));
 
@@ -203,6 +209,8 @@ var getUser = function(user, field) {
 		filtered_list = Users.filter((u) => { return u.user_id == user; });
 	else if(field == 'username')
 		filtered_list = Users.filter((u) => { return u.user_username == user; });
+	else if(field == 'email')
+		filtered_list = Users.filter((u) => { return u.user_email == user; });
 
 	if(!filtered_list.length)
 		return false;
@@ -386,31 +394,36 @@ app.get('/new-client', function (req, res) {
 	res.send(html);
 })
 
-app.post('/new-client', function (req, res) {
+app.post('/new-client', upload_user.single('client_img'), function (req, res) {
 	console.log("POST request: new-client");
 
-	var new_user = {};
-	new_user['user_id'] = Users.length + 1;
-	new_user['user_name'] = req.body.client_name;
-	new_user['user_username'] = req.body.client_user;
-	new_user['user_password'] = req.body.client_password;
-	new_user['user_tel'] = req.body.client_tel;
-	new_user['user_email'] = req.body.client_email;
-	new_user['is_admin'] = false;
+	if(getUser(req.body.client_user, 'username')){
+		res.send({ error: 1, message: "Este usuário já existe!" });
+	} else if(getUser(req.body.client_email, 'email')){
+		res.send({ error: 2, message: "Este email já está sendo utilizado!" });
+	} else {
+		let new_user = {};
+		new_user['user_id'] = Users.length + 1;
+		new_user['user_name'] = req.body.client_name;
+		new_user['user_username'] = req.body.client_user;
+		new_user['user_password'] = req.body.client_password;
+		new_user['user_tel'] = req.body.client_tel;
+		new_user['user_email'] = req.body.client_email;
+		new_user['user_img'] = req.file.path;
+		new_user['is_admin'] = false;
 
-	var user_address = {};
-	user_address['street'] = req.body.client_street;
-	user_address['num'] = req.body.client_num;
-	user_address['city'] = req.body.client_city;
-	user_address['state'] = req.body.client_state;
-	user_address['zip'] = req.body.client_zip;
+		let user_address = {};
+		user_address['street'] = req.body.client_street;
+		user_address['num'] = req.body.client_num;
+		user_address['city'] = req.body.client_city;
+		user_address['state'] = req.body.client_state;
+		user_address['zip'] = req.body.client_zip;
 
-	new_user['user_address'] = user_address;
-	Users.push(new_user);
-	console.log(Users);
+		new_user['user_address'] = user_address;
+		Users.push(new_user);
 
-	var html = "Cliente cadastrado com sucesso!";
-	res.send(html);
+		res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
+	}
 })
 
 app.get('/', function (req, res) {

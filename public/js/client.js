@@ -110,9 +110,21 @@ function clientPost(form){
         return false;
     }
 
-    var data = $(form).serialize();
-    $.post("/" + form.id, data, function(result) {
-        $('#form_return').html(result);
+    var formData = new FormData(form);
+    $.ajax({
+        url: '/' + form.id,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function(result){
+            if(!result.error)
+                $('#client_reset').click();
+
+            $('#form_return').html(result.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
     });
 
     return false;
@@ -143,7 +155,7 @@ function loginPost(form){
 }
 
 function searchTag(tag) {
-  $.get('/search_tag', {tag: tag}, function(result){
-      $('section').html(result);
-  });
+    $.get('/search_tag', { tag: tag }, function(result){
+        $('section').html(result);
+    });
 }
