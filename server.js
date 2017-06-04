@@ -105,6 +105,7 @@ var Products = [
 		product_id: 1, product_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		product_name: 'Ração para gato', product_price: 199.90,
+		product_tag: ['cat', 'food'],
 		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
 		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	},
@@ -112,6 +113,7 @@ var Products = [
 		product_id: 2, product_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		product_name: 'Brinquedo para gato', product_price: 29.90,
+		product_tag: ['cat', 'accy'],
 		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
 		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	},
@@ -119,6 +121,7 @@ var Products = [
 		product_id: 3, product_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		product_name: 'Cama para gato', product_price: 89.90,
+		product_tag: ['cat', 'accy'],
 		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
 		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	},
@@ -126,6 +129,7 @@ var Products = [
 		product_id: 4, product_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		product_name: 'Petisco para gato', product_price: 1.99,
+		product_tag: ['cat', 'food'],
 		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
 		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	},
@@ -133,6 +137,7 @@ var Products = [
 		product_id: 5, product_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		product_name: 'Coleira para gato', product_price: 35.90,
+		product_tag: ['cat', 'accy'],
 		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
 		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	}
@@ -179,12 +184,14 @@ var Services = [
 		service_id: 1, service_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		service_name: 'Tosa para gato', service_price: 69.90,
+		service_tag: ['cat', 'shearing'],
 		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	},
 	{
 		service_id: 2, service_img: 'cat128.png',
 		img_width: 128, img_height: 128,
 		service_name: 'Banho para gato', service_price: 49.90,
+		service_tag: ['cat', 'bath'],
 		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
 	}
 ];
@@ -214,6 +221,27 @@ var getProduct = function(product_id) {
 		return false;
 
 	return filtered_list[0];
+}
+
+var getProductsByTag = function(tag) {
+	var products = { products: [] };
+	Products.forEach(function(product) {
+		if(tag.constructor === Array) {
+			var add = true;
+			tag.forEach(function(current_tag) {
+				if(product.product_tag.indexOf(current_tag) < 0) {
+					add = false;
+				}
+			});
+			if(add)
+				products.products.push(product);
+		} else {
+			if(product.product_tag.indexOf(tag) >= 0) {
+				products.products.push(product);
+			}
+		}
+	});
+	return products;
 }
 
 var getCart = function(user_id) {
@@ -295,6 +323,13 @@ app.get('/index', function (req, res) {
 	var page = req.query.page;
 	var pageSize = req.query.page_size;
 	var products = getProducts(page, pageSize);
+	var html = mustache.render(templates.index, products);
+	res.send(html);
+})
+
+app.get('/search_tag', function (req, res) {
+	console.log("GET request: search_tag: " + req.query.tag);
+	var products = getProductsByTag(req.query.tag);
 	var html = mustache.render(templates.index, products);
 	res.send(html);
 })

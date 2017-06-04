@@ -141,3 +141,9 @@ function loginPost(form){
 
     return false;
 }
+
+function searchTag(tag) {
+  $.get('/search_tag', {tag: tag}, function(result){
+      $('section').html(result);
+  });
+}
