@@ -202,7 +202,7 @@ var Services = [
 	}
 ];
 
-var getUser = function(user, field) {
+var getUser = (user, field) => {
 	let filtered_list = [];
 
 	if(field == 'id')
@@ -218,11 +218,11 @@ var getUser = function(user, field) {
 	return filtered_list[0];
 }
 
-var getProducts = function(page, pageSize) {
+var getProducts = (page, pageSize) => {
 	return { products: Products };
 }
 
-var getProduct = function(product_id) {
+var getProduct = (product_id) => {
 	let filtered_list = Products.filter((p) => { return p.product_id == product_id; });
 
 	if(!filtered_list.length)
@@ -231,12 +231,12 @@ var getProduct = function(product_id) {
 	return filtered_list[0];
 }
 
-var getProductsByTag = function(tag) {
+var getProductsByTag = (tag) => {
 	var products = { products: [] };
-	Products.forEach(function(product) {
+	Products.forEach((product) => {
 		if(tag.constructor === Array) {
 			var add = true;
-			tag.forEach(function(current_tag) {
+			tag.forEach((current_tag) => {
 				if(product.product_tag.indexOf(current_tag) < 0) {
 					add = false;
 				}
@@ -252,7 +252,7 @@ var getProductsByTag = function(tag) {
 	return products;
 }
 
-var getCart = function(user_id) {
+var getCart = (user_id) => {
 	let filtered_list = Carts.filter((c) => { return c.user_id == user_id; });
 
 	if(!filtered_list.length)
@@ -261,21 +261,21 @@ var getCart = function(user_id) {
 	return filtered_list[0];
 }
 
-var getPets = function(user_id) {
+var getPets = (user_id) => {
 	let filtered_list = Pets.filter((p) => { return p.user_id == user_id; });
 
 	if(!filtered_list.length)
 		return false;
 
 	let pets = filtered_list[0];
-	pets.pet_description = function() {
+	pets.pet_description = () => {
 		return this.pet_name + ' - ' + this.pet_breed;
 	}
 
 	return pets;
 }
 
-var getService = function(service_id, user_id) {
+var getService = (service_id, user_id) => {
 	let filtered_list = Services.filter((s) => { return s.service_id == service_id; });
 
 	if(!filtered_list.length)
@@ -290,7 +290,7 @@ var getService = function(service_id, user_id) {
 	return service;
 }
 
-app.get('/header', function (req, res) {
+app.get('/header', (req, res) => {
 	console.log("GET request: header");
 
 	var u = getUser(req.cookies.auth, 'id');
@@ -302,7 +302,7 @@ app.get('/header', function (req, res) {
 	res.send(html);
 })
 
-app.get('/nav', function (req, res) {
+app.get('/nav', (req, res) => {
 	console.log("GET request: nav");
 
 	var u = getUser(req.cookies.auth, 'id');
@@ -320,13 +320,13 @@ app.get('/nav', function (req, res) {
 	res.send(html);
 })
 
-app.get('/footer', function (req, res) {
+app.get('/footer', (req, res) => {
 	console.log("GET request: footer");
 	var html = mustache.render(templates.footer);
 	res.send(html);
 })
 
-app.get('/index', function (req, res) {
+app.get('/index', (req, res) => {
 	console.log("GET request: index");
 	var page = req.query.page;
 	var pageSize = req.query.page_size;
@@ -335,33 +335,33 @@ app.get('/index', function (req, res) {
 	res.send(html);
 })
 
-app.get('/search_tag', function (req, res) {
+app.get('/search_tag', (req, res) => {
 	console.log("GET request: search_tag: " + req.query.tag);
 	var products = getProductsByTag(req.query.tag);
 	var html = mustache.render(templates.index, products);
 	res.send(html);
 })
 
-app.get('/product', function (req, res) {
+app.get('/product', (req, res) => {
 	console.log("GET request: product");
 	var product = getProduct(req.query.product_id);
 	var html = mustache.render(templates.product, product);
 	res.send(html);
 })
 
-app.get('/cart', function (req, res) {
+app.get('/cart', (req, res) => {
 	console.log("GET request: cart");
 	var html = mustache.render(templates.cart);
 	res.send(html);
 })
 
-app.get('/login', function (req, res) {
+app.get('/login', (req, res) => {
 	console.log("GET request: login");
 	var html = mustache.render(templates.login);
 	res.send(html);
 })
 
-app.post('/login', function (req, res) {
+app.post('/login', (req, res) => {
 	console.log("POST request: login");
 
 	var u = getUser(req.body.username, 'username');
@@ -375,26 +375,26 @@ app.post('/login', function (req, res) {
 	}
 })
 
-app.delete('/login', function (req, res) {
+app.delete('/login', (req, res) => {
 	console.log("DELETE request: login");
 
 	res.clearCookie('auth');
 	res.status(204).send("No content");
 })
 
-app.get('/service', function (req, res) {
+app.get('/service', (req, res) => {
 	console.log("GET request: service");
 	var html = mustache.render(templates.service);
 	res.send(html);
 })
 
-app.get('/new-client', function (req, res) {
+app.get('/new-client', (req, res) => {
 	console.log("GET request: new-client");
 	var html = mustache.render(templates.new_client);
 	res.send(html);
 })
 
-app.post('/new-client', upload_user.single('client_img'), function (req, res) {
+app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-client");
 
 	if(getUser(req.body.client_user, 'username')){
@@ -426,13 +426,13 @@ app.post('/new-client', upload_user.single('client_img'), function (req, res) {
 	}
 })
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
 	console.log("GET request: /");
 	var html = mustache.render(templates.page);
 	res.send(html);
 })
 
-var server = app.listen(8081, function () {
+var server = app.listen(8081, () => {
 	var host = server.address().address;
 	var port = server.address().port;
 
