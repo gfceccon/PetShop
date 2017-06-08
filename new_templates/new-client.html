@@ -1,0 +1,51 @@
+<form id="new-client" enctype="multipart/form-data" class="new-client-form" onsubmit="return clientPost(this);">
+  <div class="fieldset-container">
+    <fieldset>
+      <legend>Dados Pessoais</legend>
+      <div style="display:flex; flex-flow: row nowrap;">
+        <div class="form-labels">
+          <label for="client_name">Nome:</label>
+          <label for="client_user">Usuário:</label>
+          <label for="client_password">Senha:</label>
+          <label for="client_confirm">Confirmar Senha:</label>
+          <label for="client_img">Foto:</label>
+          <label for="client_tel">Telefone:</label>
+          <label for="client_email">Email:</label>
+        </div>
+        <div class="form-inputs">
+          <input id="client_name" type="text" name="client_name" autofocus>
+          <input id="client_user" type="text" name="client_user">
+          <input id="client_password" type="password" name="client_password">
+          <input id="client_confirm" type="password" name="client_confirm">
+          <input id="client_img" type="file" name="client_img" accept="image/*">
+          <input id="client_tel" type="tel" name="client_tel">
+          <input id="client_email" type="email" name="client_email">
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Endereço</legend>
+      <div style="display:flex; flex-flow: row nowrap;">
+        <div class="form-labels">
+          <label for="client_street">Logradouro:</label>
+          <label for="client_num">Número:</label>
+          <label for="client_city">Cidade:</label>
+          <label for="client_state">Estado:</label>
+          <label for="client_zip">CEP:</label>
+        </div>
+        <div class="form-inputs">
+          <input id="client_street" type="text" name="client_street">
+          <input id="client_num" type="text" name="client_num">
+          <input id="client_city" type="text" name="client_city" accept="image/*">
+          <input id="client_state" type="text" name="client_state">
+          <input id="client_zip" type="text" name="client_zip">
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <span style="text-align: center;" id="form_return"></span>
+  <div class="button-container">
+    <button id="client_submit" type="submit">Enviar</button>
+    <button id="client_reset" type="reset">Limpar</button>
+  </div>
+</form>

@@ -1,0 +1,42 @@
+<form id="buy-service" class="buy-service-form" onsubmit="return formPost(this);">
+  <input type="hidden" id="service_id" name="id" value="" />
+  <div class="content">
+      <div class="product-header">
+          <div class="product-images-area">
+              <img id="service_img" src="" width="" height="">
+          </div>
+
+          <div class="product-description-area">
+              <div class="product-description-header">
+                  <span id="service_name" class="product-name"></span>
+                  <span class="product-brand">Petzzaria</span>
+                  <span id="service_description_price" class="product-price-alt product-price"></span>
+              </div>
+              <div id="service_description" class="product-description">
+              </div>
+          </div>
+
+          <div class="product-price-area">
+              <span class="product-price"></span>
+              <label class="quantity-label" for="quantity">Pet:</label>
+              <select id="service-pet" class="service-pet">
+                <!-- {{#pets}} -->
+                  <option id="pet_id" value=""></option>
+                <!-- {{/pets}} -->
+              </select>
+              <button class="product-buy-button">Comprar</button>
+          </div>
+      </div>
+
+
+      <div class="inline-product-buy">
+          <label class="quantity-label" for="inline-quantity">Pet:</label>
+          <select id="service_pet_inline" class="service-pet" style="margin: 0;">
+            <!-- {{#pets}} -->
+              <option id="inline_pet_id" value=""></option>
+            <!-- {{/pets}} -->
+          </select>
+          <button>Contratar</button>
+      </div>
+  </div>
+</form>

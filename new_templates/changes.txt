@@ -1,0 +1,191 @@
+FILE: admin.html
+    CHANGES: NONE
+
+    ONCLICK: onclick="newAdmin();", line 3
+             onclick="newProduct();", line 4
+             onclick="newService();", line 5
+
+
+FILE: cart.html
+    CHANGES: {{cart}} id: cart
+             src="img/{{product_img}}" id: cart_product_img
+             {{product_name}} id: cart_product_name
+             {{product_quantity}} id: cart_product_quantity
+             {{product_price}} id: cart_product_price
+
+    ONCLICK: NONE
+
+
+FILE: footer.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: header-index.html
+    CHANGES: {{cart_count}} id: header_index_cart_count
+
+    ONCLICK: onclick="index();", line 1
+             onclick="index();", line 6
+             onclick="search();", line 11
+             onclick="cart();", line 17
+             onclick="login();", line 22
+
+
+FILE: header-logged.html
+    CHANGES: {{cart_count}} id: header_logged_cart_count
+
+    ONCLICK: onclick="index();", line 1
+             onclick="index();", line 6
+             onclick="search();", line 11
+             onclick="cart();", line 17
+             onclick="login();", line 22
+
+
+FILE: index.html
+    CHANGES: {{#products}} id: index_products
+             img/{{product_img}}, {{img_width}}, {{img_height}} id: index_product_img
+             onclick="product({{product_id}});" id: index_product_img_a
+             onclick="product({{product_id}});", {{product_name}} id: index_product_name_a
+             onclick="product({{product_id}});", R$ {{product_price}} id: index_product_price_a
+
+    ONCLICK: onclick="product({{product_id}});", line 6
+             onclick="product({{product_id}});", line 10
+             onclick="product({{product_id}});", line 11
+
+
+FILE: login.html
+    CHANGES: NONE
+
+    ONCLICK: onclick="new_client();", line 21
+
+
+FILE: nav-admin.html
+    CHANGES: {{cart_count}} id: nav_admin_cart_count
+
+    ONCLICK: onclick="searchTag('dog');", line 2
+             onclick="searchTag(['dog', 'food']);", line 4
+             onclick="searchTag(['dog', 'accy']);", line 5
+             onclick="searchTag('cat');", line 10
+             onclick="searchTag(['cat', 'food']);", line 12
+             onclick="searchTag(['cat', 'accy']);", line 13
+             onclick="searchTag('fish');", line 18
+             onclick="searchTag(['fish', 'food']);", line 20
+             onclick="searchTag(['fish', 'tank']);", line 21
+             onclick="service('bath');", line 28
+             onclick="service('shearing');", line 29
+             onclick="service('training');", line 30
+             onclick="logout();", line 44
+             onclick="cart();", line 47
+
+
+FILE: nav-client.html
+    CHANGES: {{cart_count}} id: nav_client_cart_count
+
+    ONCLICK: onclick="searchTag('dog');", line 2
+             onclick="searchTag(['dog', 'food']);", line 4
+             onclick="searchTag(['dog', 'accy']);", line 5
+             onclick="searchTag('cat');", line 10
+             onclick="searchTag(['cat', 'food']);", line 12
+             onclick="searchTag(['cat', 'accy']);", line 13
+             onclick="searchTag('fish');", line 18
+             onclick="searchTag(['fish', 'food']);", line 20
+             onclick="searchTag(['fish', 'tank']);", line 21
+             onclick="service('bath');", line 28
+             onclick="service('shearing');", line 29
+             onclick="service('training');", line 30
+             onclick="user();", line 35
+             onclick="newPet();", line 37
+             onclick="logout();", line 42
+             onclick="cart();", line 45
+
+
+FILE: nav-index.html
+    CHANGES: {{cart_count}} id: nav_index_cart_count
+
+    ONCLICK: onclick="searchTag('dog');", line 2
+             onclick="searchTag(['dog', 'food']);", line 4
+             onclick="searchTag(['dog', 'accy']);", line 5
+             onclick="searchTag('cat');", line 10
+             onclick="searchTag(['cat', 'food']);", line 12
+             onclick="searchTag(['cat', 'accy']);", line 13
+             onclick="searchTag('fish');", line 18
+             onclick="searchTag(['fish', 'food']);", line 20
+             onclick="searchTag(['fish', 'tank']);", line 21
+             onclick="service('bath');", line 28
+             onclick="service('shearing');", line 29
+             onclick="service('training');", line 30
+             onclick="login();", line 35
+             onclick="cart();", line 38
+
+
+FILE: new-admin.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: new-client.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: new-pet.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: new-product.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: new-service.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: page.html
+    CHANGES: NONE
+
+    ONCLICK: NONE
+
+
+FILE: product.html
+    CHANGES: value="{{product_id}}" id: product_id
+             img/{{product_img}}, {{img_width}}, {{img_height}} id: product_img
+             {{product_name}} id: product_name (line 11)
+             {{product_brand}} id: product_brand
+             R$ {{product_price}} id: product_description_price (line 13)
+             {{{product_description}}} id: product_description
+             R$ {{product_price}} id: product_price_price (line 20)
+             {{{product_full_description}}} id: product_full_description
+             {{product_name}} id: product_full_name (line 41)
+
+    ONCLICK: onclick="less()", line 34
+             onclick="more()", line 36
+
+
+FILE: service.html
+    CHANGES: value="{{service_id}}" id: service_id
+             img/{{product_img}}, {{img_width}}, {{img_height}} id: service_img
+             {{service_name}} id: service_name
+             R$ {{service_price}} id: service_description_price (line 13)
+             {{service_description}} id: service_description
+             R$ {{service_price}} id: service_price_price (line 20)
+             {{pet_id}}, {{pet_description}} id: pet_id (line 24)
+             {{pet_id}}, {{pet_description}} id: inline_pet_id (line 36)
+
+    ONCLICK: NONE
+
+
+FILE: user.html
+    CHANGES: {{#pets}} id: user_pets
+             img/{{pet_img}} id: user_pet_img
+             {{pet_description}} id: user_pet_description
+
+    ONCLICK: NONE

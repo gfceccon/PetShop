@@ -1,0 +1,49 @@
+<div class="nav-item">
+    <a href="#" onclick="searchTag('dog');">Cachorros</a>
+    <div class="drop-down-menu">
+        <div class="nav-dd-item"><a href="#" onclick="searchTag(['dog', 'food']);">Ração</a></div>
+        <div class="nav-dd-item"><a href="#" onclick="searchTag(['dog', 'accy']);">Acessórios</a></div>
+    </div>
+</div>
+
+<div class="nav-item">
+    <a href="#" onclick="searchTag('cat');">Gatos</a>
+    <div class="drop-down-menu">
+        <div class="nav-dd-item"><a href="#" onclick="searchTag(['cat', 'food']);">Ração</a></div>
+        <div class="nav-dd-item"><a href="#" onclick="searchTag(['cat', 'accy']);">Acessórios</a></div>
+    </div>
+</div>
+
+<div class="nav-item">
+    <a href="#" onclick="searchTag('fish');">Peixes</a>
+    <div class="drop-down-menu">
+        <div class="nav-dd-item"><a href="#" onclick="searchTag(['fish', 'food']);">Comida</a></div>
+        <div class="nav-dd-item"><a href="#" onclick="searchTag(['fish', 'tank']);">Aquários</a></div>
+    </div>
+</div>
+
+<div class="nav-item">
+    <a href="#">Serviços</a>
+    <div class="drop-down-menu">
+        <div class="nav-dd-item"><a href="#" onclick="service('bath');">Banho</a></div>
+        <div class="nav-dd-item"><a href="#" onclick="service('shearing');">Tosa</a></div>
+        <div class="nav-dd-item"><a href="#" onclick="service('training');">Adestramento</a></div>
+    </div>
+</div>
+
+<div class="nav-item">
+  <a href="#" onclick="user();">Usuário</a>
+  <div class="drop-down-menu">
+    <div class="nav-dd-item"><a href="#" onclick="newPet();">Novo Pet</a></div>
+  </div>
+</div>
+
+<div class="login-menu nav-item">
+    <a href="#" onclick="logout();">Sair</a>
+</div>
+<div class="login-menu nav-item">
+    <a style="width: 32px; height: 3rem;" onclick="cart();">
+        <img src="img/cart32.png" width="32" height="32" style="align-self: center">
+    </a>
+    <div id="nav_client_cart_count" class="menu-cart-count"><span></span></div>
+</div>
