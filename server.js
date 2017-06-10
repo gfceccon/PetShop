@@ -111,7 +111,8 @@ app.get('/product', (req, res) => {
 
 app.get('/service', (req, res) => {
 	console.log("GET request: service");
-	var service = db.getService(req.query.service_id);
+	var u = db.getUser(req.cookies.auth, 'id');
+	var service = db.getService(req.query.service_id, u.user_id);
 	var html = mustache.render(templates.service, service);
 	res.send(html);
 })
@@ -147,12 +148,6 @@ app.delete('/login', (req, res) => {
 
 	res.clearCookie('auth');
 	res.status(204).send("No content");
-})
-
-app.get('/service', (req, res) => {
-	console.log("GET request: service");
-	var html = mustache.render(templates.service);
-	res.send(html);
 })
 
 app.get('/new-client', (req, res) => {

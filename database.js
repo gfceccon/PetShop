@@ -111,16 +111,16 @@ module.exports = {
     	{
     		user_id: 1,
     		pets: [
-    			{ pet_name: 'Garfield', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 2 },
-    			{ pet_name: 'Lara', pet_img: 'cat64.png', pet_breed: 'Gato Persa', pet_age: 3 },
-    			{ pet_name: 'Ana', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 5 }
+    			{ pet_id: 1, pet_name: 'Garfield', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 2 },
+    			{ pet_id: 2, pet_name: 'Lara', pet_img: 'cat64.png', pet_breed: 'Gato Persa', pet_age: 3 },
+    			{ pet_id: 3, pet_name: 'Ana', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 5 }
     		]
     	},
     	{
     		user_id: 2,
     		pets: [
-    			{ pet_name: 'James', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 4 },
-    			{ pet_name: 'Tom', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 1 }
+    			{ pet_id: 4, pet_name: 'James', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 4 },
+    			{ pet_id: 5, pet_name: 'Tom', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 1 }
     		]
     	}
     ],
