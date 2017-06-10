@@ -70,17 +70,21 @@ FILE: nav-admin.html
     ONCLICK: onclick="searchTag('dog');", line 2
              onclick="searchTag(['dog', 'food']);", line 4
              onclick="searchTag(['dog', 'accy']);", line 5
-             onclick="searchTag('cat');", line 10
-             onclick="searchTag(['cat', 'food']);", line 12
-             onclick="searchTag(['cat', 'accy']);", line 13
-             onclick="searchTag('fish');", line 18
-             onclick="searchTag(['fish', 'food']);", line 20
-             onclick="searchTag(['fish', 'tank']);", line 21
-             onclick="searchTag('bath');", line 28
-             onclick="searchTag('shearing');", line 29
-             onclick="searchTag('training');", line 30
-             onclick="logout();", line 44
-             onclick="cart();", line 47
+             onclick="searchTag(['dog', 'service']);", line 6
+             onclick="searchTag('cat');", line 11
+             onclick="searchTag(['cat', 'food']);", line 13
+             onclick="searchTag(['cat', 'accy']);", line 14
+             onclick="searchTag(['cat', 'service']);", line 15
+             onclick="searchTag('fish');", line 20
+             onclick="searchTag(['fish', 'food']);", line 22
+             onclick="searchTag(['fish', 'tank']);", line 23
+             onclick="searchTag(['fish', 'service']);", line 24
+             onclick="searchTag('service');", line 29
+             onclick="searchTag('bath');", line 31
+             onclick="searchTag('shearing');", line 32
+             onclick="searchTag('training');", line 33
+             onclick="logout();", line 47
+             onclick="cart();", line 50
 
 
 FILE: nav-client.html
@@ -89,19 +93,23 @@ FILE: nav-client.html
     ONCLICK: onclick="searchTag('dog');", line 2
              onclick="searchTag(['dog', 'food']);", line 4
              onclick="searchTag(['dog', 'accy']);", line 5
-             onclick="searchTag('cat');", line 10
-             onclick="searchTag(['cat', 'food']);", line 12
-             onclick="searchTag(['cat', 'accy']);", line 13
-             onclick="searchTag('fish');", line 18
-             onclick="searchTag(['fish', 'food']);", line 20
-             onclick="searchTag(['fish', 'tank']);", line 21
-             onclick="searchTag('bath');", line 28
-             onclick="searchTag('shearing');", line 29
-             onclick="searchTag('training');", line 30
-             onclick="user();", line 35
-             onclick="newPet();", line 37
-             onclick="logout();", line 42
-             onclick="cart();", line 45
+             onclick="searchTag(['dog', 'service']);", line 6
+             onclick="searchTag('cat');", line 11
+             onclick="searchTag(['cat', 'food']);", line 13
+             onclick="searchTag(['cat', 'accy']);", line 14
+             onclick="searchTag(['cat', 'service']);", line 15
+             onclick="searchTag('fish');", line 20
+             onclick="searchTag(['fish', 'food']);", line 22
+             onclick="searchTag(['fish', 'tank']);", line 23
+             onclick="searchTag(['fish', 'service']);", line 24
+             onclick="searchTag('service');", line 29
+             onclick="searchTag('bath');", line 31
+             onclick="searchTag('shearing');", line 32
+             onclick="searchTag('training');", line 33
+             onclick="user();", line 38
+             onclick="newPet();", line 40
+             onclick="logout();", line 45
+             onclick="cart();", line 48
 
 
 FILE: nav-index.html
@@ -110,17 +118,21 @@ FILE: nav-index.html
     ONCLICK: onclick="searchTag('dog');", line 2
              onclick="searchTag(['dog', 'food']);", line 4
              onclick="searchTag(['dog', 'accy']);", line 5
-             onclick="searchTag('cat');", line 10
-             onclick="searchTag(['cat', 'food']);", line 12
-             onclick="searchTag(['cat', 'accy']);", line 13
-             onclick="searchTag('fish');", line 18
-             onclick="searchTag(['fish', 'food']);", line 20
-             onclick="searchTag(['fish', 'tank']);", line 21
-             onclick="searchTag('bath');", line 28
-             onclick="searchTag('shearing');", line 29
-             onclick="searchTag('training');", line 30
-             onclick="login();", line 35
-             onclick="cart();", line 38
+             onclick="searchTag(['dog', 'service']);", line 6
+             onclick="searchTag('cat');", line 11
+             onclick="searchTag(['cat', 'food']);", line 13
+             onclick="searchTag(['cat', 'accy']);", line 14
+             onclick="searchTag(['cat', 'service']);", line 15
+             onclick="searchTag('fish');", line 20
+             onclick="searchTag(['fish', 'food']);", line 22
+             onclick="searchTag(['fish', 'tank']);", line 23
+             onclick="searchTag(['fish', 'service']);", line 24
+             onclick="searchTag('service');", line 29
+             onclick="searchTag('bath');", line 31
+             onclick="searchTag('shearing');", line 32
+             onclick="searchTag('training');", line 33
+             onclick="login();", line 38
+             onclick="cart();", line 41
 
 
 FILE: new-admin.html

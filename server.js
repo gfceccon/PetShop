@@ -97,8 +97,8 @@ app.get('/index', (req, res) => {
 
 app.get('/search_tag', (req, res) => {
 	console.log("GET request: search_tag: " + req.query.tag);
-	var products = db.getIndexItemsByTag(req.query.tag);
-	var html = mustache.render(templates.index, products);
+	var items = db.getIndexItemsByTag(req.query.tag);
+	var html = mustache.render(templates.index, items);
 	res.send(html);
 })
 
