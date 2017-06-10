@@ -90,14 +90,14 @@ app.get('/index', (req, res) => {
 	console.log("GET request: index");
 	var page = req.query.page;
 	var pageSize = req.query.page_size;
-	var products = db.getProducts(page, pageSize);
-	var html = mustache.render(templates.index, products);
+	var items = db.getIndexItems(page, pageSize);
+	var html = mustache.render(templates.index, items);
 	res.send(html);
 })
 
 app.get('/search_tag', (req, res) => {
 	console.log("GET request: search_tag: " + req.query.tag);
-	var products = db.getProductsByTag(req.query.tag);
+	var products = db.getIndexItemsByTag(req.query.tag);
 	var html = mustache.render(templates.index, products);
 	res.send(html);
 })
@@ -106,6 +106,13 @@ app.get('/product', (req, res) => {
 	console.log("GET request: product");
 	var product = db.getProduct(req.query.product_id);
 	var html = mustache.render(templates.product, product);
+	res.send(html);
+})
+
+app.get('/service', (req, res) => {
+	console.log("GET request: service");
+	var service = db.getService(req.query.service_id);
+	var html = mustache.render(templates.service, service);
 	res.send(html);
 })
 

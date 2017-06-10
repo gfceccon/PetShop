@@ -43,11 +43,15 @@ FILE: header-logged.html
 
 
 FILE: index.html
-    CHANGES: {{#products}} id: index_products
-             img/{{product_img}}, {{img_width}}, {{img_height}} id: index_product_img
-             onclick="product({{product_id}});" id: index_product_img_a
-             onclick="product({{product_id}});", {{product_name}} id: index_product_name_a
-             onclick="product({{product_id}});", R$ {{product_price}} id: index_product_price_a
+    CHANGES: {{#items}} id: index_items
+             onclick="product({item.product_id}});" id: index_product_img_a (line 7)
+             src="img/{{item.product_img}}" width="{{item.img_width}}" height="{{item.img_height}}" id: index_product_img
+             onclick="product({{item.product_id}});", {{item.product_name}} id: index_product_name_a (line 9)
+             onclick="product({{item.product_id}});", R$ {{item.product_price}} id: index_product_price_a (line 10)
+             onclick="service({{item.service_id}});" id: index_service_img_a (line 12)
+             src="img/{{item.service_img}}" width="{{item.img_width}}" height="{{item.img_height}}" id: index_service_img
+             onclick="service({{item.service_id}});", {{item.service_name}} id: index_service_name_a (line 9)
+             onclick="service({{item.service_id}});", R$ {{item.service_price}} id: index_service_price_a (line 10)
 
     ONCLICK: onclick="product({{product_id}});", line 6
              onclick="product({{product_id}});", line 10
@@ -72,9 +76,9 @@ FILE: nav-admin.html
              onclick="searchTag('fish');", line 18
              onclick="searchTag(['fish', 'food']);", line 20
              onclick="searchTag(['fish', 'tank']);", line 21
-             onclick="service('bath');", line 28
-             onclick="service('shearing');", line 29
-             onclick="service('training');", line 30
+             onclick="searchTag('bath');", line 28
+             onclick="searchTag('shearing');", line 29
+             onclick="searchTag('training');", line 30
              onclick="logout();", line 44
              onclick="cart();", line 47
 
@@ -91,9 +95,9 @@ FILE: nav-client.html
              onclick="searchTag('fish');", line 18
              onclick="searchTag(['fish', 'food']);", line 20
              onclick="searchTag(['fish', 'tank']);", line 21
-             onclick="service('bath');", line 28
-             onclick="service('shearing');", line 29
-             onclick="service('training');", line 30
+             onclick="searchTag('bath');", line 28
+             onclick="searchTag('shearing');", line 29
+             onclick="searchTag('training');", line 30
              onclick="user();", line 35
              onclick="newPet();", line 37
              onclick="logout();", line 42
@@ -112,9 +116,9 @@ FILE: nav-index.html
              onclick="searchTag('fish');", line 18
              onclick="searchTag(['fish', 'food']);", line 20
              onclick="searchTag(['fish', 'tank']);", line 21
-             onclick="service('bath');", line 28
-             onclick="service('shearing');", line 29
-             onclick="service('training');", line 30
+             onclick="searchTag('bath');", line 28
+             onclick="searchTag('shearing');", line 29
+             onclick="searchTag('training');", line 30
              onclick="login();", line 35
              onclick="cart();", line 38
 

@@ -139,6 +139,13 @@ module.exports = {
     		service_name: 'Banho para gato', service_price: 49.90,
     		service_tag: ['cat', 'bath'],
     		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
+    	},
+        {
+    		service_id: 3, service_img: 'cat128.png',
+    		img_width: 128, img_height: 128,
+    		service_name: 'Treino para cão', service_price: 49.90,
+    		service_tag: ['dog', 'training'],
+    		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	}
     ],
 
@@ -162,6 +169,29 @@ module.exports = {
     	return { products: this.Products };
     },
 
+    getServices: function(page, pageSize) {
+    	return { products: this.Services };
+    },
+
+    getIndexItems: function(page, pageSize) {
+        var items = { items: [] };
+        this.Products.forEach((product) => {
+            items.items.push({
+                isProduct: true,
+                isService: false,
+                item: product
+            });
+        });
+        this.Services.forEach((service) => {
+            items.items.push({
+                isProduct: false,
+                isService: true,
+                item: service
+            });
+        });
+        return items;
+    },
+
     getProduct: function(product_id) {
     	let filtered_list = this.Products.filter((p) => { return p.product_id == product_id; });
 
@@ -171,8 +201,8 @@ module.exports = {
     	return filtered_list[0];
     },
 
-    getProductsByTag: function(tag) {
-    	var products = { products: [] };
+    getIndexItemsByTag: function(tag) {
+    	var items = { items: [] };
     	this.Products.forEach((product) => {
     		if(tag.constructor === Array) {
     			var add = true;
@@ -182,14 +212,46 @@ module.exports = {
     				}
     			});
     			if(add)
-    				products.products.push(product);
+    				items.items.push({
+                        isProduct: true,
+                        isService: false,
+                        item: product
+                    });
     		} else {
     			if(product.product_tag.indexOf(tag) >= 0) {
-    				products.products.push(product);
+    				items.items.push({
+                        isProduct: true,
+                        isService: false,
+                        item: product
+                    });
     			}
     		}
     	});
-    	return products;
+        this.Services.forEach((service) => {
+    		if(tag.constructor === Array) {
+    			var add = true;
+    			tag.forEach((current_tag) => {
+    				if(service.service_tag.indexOf(current_tag) < 0) {
+    					add = false;
+    				}
+    			});
+    			if(add)
+    				items.items.push({
+                        isProduct: false,
+                        isService: true,
+                        item: service
+                    });
+    		} else {
+    			if(service.service_tag.indexOf(tag) >= 0) {
+    				items.items.push({
+                        isProduct: false,
+                        isService: true,
+                        item: service
+                    });
+    			}
+    		}
+    	});
+    	return items;
     },
 
     getCart: function(user_id) {

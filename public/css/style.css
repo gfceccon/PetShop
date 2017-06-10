@@ -330,14 +330,14 @@ fieldset legend {
     max-width: 67rem;
 }
 
-.products
+.products, .services, .index-items
 {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
 }
 
-.product
+.product, .service, .index-item
 {
   justify-content: space-around;
     text-align: center;
@@ -350,24 +350,24 @@ fieldset legend {
     margin: 0.25rem;
 }
 
-.product:hover
+.product:hover, .service:hover, .index-item:hover
 {
 
     border-color: #b3c3cc;
 }
 
-.product div
+.product div, .service div, .index-item div
 {
   display: flex;
   flex-flow: column nowrap;
 }
 
-.product img
+.product img, .service img, .index-item img
 {
     margin: auto;
 }
 
-.product-header
+.product-header, .service-header
 {
     display: flex;
     flex-flow: row nowrap;
@@ -375,55 +375,55 @@ fieldset legend {
     margin-bottom: 3rem;
 }
 
-.product-images-area
+.product-images-area, .service-images-area
 {
     width: 256px;
 }
 
-.product-images
+.product-images, .service-images
 {
     display: flex;
     flex-flow: row nowrap;
     width: 100%;
 }
 
-.product-description-area
+.product-description-area, .service-description-area
 {
     display: flex;
     flex-flow: column wrap;
 }
 
-.product-description-header
+.product-description-header, .service-description-header
 {
     display: flex;
     flex-flow: column wrap;
 }
 
-.product-description-header span
+.product-description-header span, .service-description-header span
 {
     margin-bottom: 2rem;
 }
 
 
-.product-name
+.product-name, .service-name
 {
     font-size: 2.5rem;
     line-height: 2.5rem;
 }
 
-.product-brand
+.product-brand, .service-brand
 {
     font-size: 1.5rem;
     line-height: 1.5rem;
     color: #666666;
 }
 
-.product-description
+.product-description, .service-description
 {
     color: #444444;
 }
 
-.product-description p
+.product-description p, .service-description p
 {
     text-indent: 3rem;
     padding-right: 1rem;
@@ -449,21 +449,21 @@ fieldset legend {
     text-align: justify;
 }
 
-.product-price-area
+.product-price-area, .service-price-area
 {
     min-width: 10rem;
     display: flex;
     flex-flow: column nowrap;
 }
 
-.product-price
+.product-price, .service-price
 {
     color: #105596;
     font-size: 2rem;
     margin-bottom: 1rem;
 }
 
-.product-buy
+.product-buy, .service-buy
 {
     display: flex;
     flex-flow: row nowrap;
@@ -478,7 +478,7 @@ fieldset legend {
     text-align: center;
 }
 
-.inline-product-buy
+.inline-product-buy, .inline-service-buy
 {
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -487,16 +487,12 @@ fieldset legend {
     height: 3rem;
     line-height: 3rem;
     margin: 1rem 0;
+    display: none;
 }
 
 .quantity-label
 {
     font-size: 1.5rem;
-}
-
-.inline-product-buy
-{
-    display: none;
 }
 
 @media all and (max-width: 750px)
@@ -507,26 +503,27 @@ fieldset legend {
     .login-menu {
         display:flex;
     }
-    .product-description
+    .product-description, .service-description
     {
         display: none;
     }
-    .product-price-area
+    .product-price-area, .service-price-area
     {
         display: none;
     }
-    .product-price-alt
+    .product-price-alt, .service-price-alt
     {
         display: inline;
     }
 
-    .inline-product-buy {
+    .inline-product-buy, .inline-service-buy
+    {
         display: flex;
     }
 }
 
 
-.index-product-name
+.index-product-name, .index-service-name
 {
   text-decoration: none;
   color: black;
@@ -534,7 +531,7 @@ fieldset legend {
   line-height: 1.5rem;
 }
 
-.index-product-price
+.index-product-price, .index-service-price
 {
   text-decoration: none;
   color: #105596;
