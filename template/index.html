@@ -4,7 +4,7 @@
       {{#items}}
       <div class="index-item">
         {{#isProduct}}
-        <a onclick="product({item.product_id}});" href="#">
+        <a onclick="product({{item.product_id}});" href="#">
           <img src="img/{{item.product_img}}" width="{{item.img_width}}" height="{{item.img_height}}">
         </a>
         <div>
