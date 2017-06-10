@@ -16,123 +16,47 @@ var upload_product = multer({
 	limits: { fileSize: 1048576, files: 1}
 });
 
-var templates = {
-	header_index: fs.readFileSync('template/header-index.html').toString(),
-	header_logged: fs.readFileSync('template/header-logged.html').toString(),
-
-	footer: fs.readFileSync('template/footer.html').toString(),
-
-	index: fs.readFileSync('template/index.html').toString(),
-
-	nav_admin: fs.readFileSync('template/nav-admin.html').toString(),
-	nav_client: fs.readFileSync('template/nav-client.html').toString(),
-	nav_index: fs.readFileSync('template/nav-index.html').toString(),
-
-	page: fs.readFileSync('template/page.html').toString(),
-
-	product: fs.readFileSync('template/product.html').toString(),
-	cart: fs.readFileSync('template/cart.html').toString(),
-	login: fs.readFileSync('template/login.html').toString(),
-	service: fs.readFileSync('template/service.html').toString(),
-
-	admin: fs.readFileSync('template/admin.html').toString(),
-	user: fs.readFileSync('template/user.html').toString(),
-
-	new_client: fs.readFileSync('template/new-client.html').toString(),
-	new_admin: fs.readFileSync('template/new-admin.html').toString(),
-	new_pet: fs.readFileSync('template/new-pet.html').toString(),
-	new_product: fs.readFileSync('template/new-product.html').toString(),
-	new_service: fs.readFileSync('template/new-service.html').toString()
-}
+var Index = fs.readFileSync('public/templates/page.html').toString()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
 
-app.get('/header', (req, res) => {
-	console.log("GET request: header");
 
-	var u = db.getUser(req.cookies.auth, 'id');
-	if(u)
-		var html = mustache.render(templates.header_logged, u);
-	else
-		var html = mustache.render(templates.header_index, u);
-
+app.get('/', (req, res) => {
+	console.log("GET request: /");
+	let html = Index;
 	res.send(html);
-})
+});
 
-app.get('/nav', (req, res) => {
-	console.log("GET request: nav");
+app.get('/getUser', (req, res) => {
+	console.log("GET request: /getUser");
+	let user = db.getUser(req.cookies.auth, 'id');
+	res.send(JSON.stringify(user));
+});
 
-	var u = db.getUser(req.cookies.auth, 'id');
-	if(u){
-		console.log("User is: \"" + u.user_username + "\" with is_admin: " + u.is_admin + ".");
-		if(u.is_admin){
-			html = mustache.render(templates.nav_admin, u);
-		} else {
-			html = mustache.render(templates.nav_client, u);
-		}
-	} else {
-		console.log("No one's logged!");
-		html = mustache.render(templates.nav_index, u);
-	}
-	res.send(html);
-})
+app.get('/getCart', (req, res) => {
+	console.log("GET request: /getCart");
+	let user = db.getUser(req.cookies.auth, 'id');
+	let cart = {};
+	if(user)
+		cart = db.getCart(user.user_id);
+	res.send(JSON.stringify(cart));
+});
 
-app.get('/footer', (req, res) => {
-	console.log("GET request: footer");
-	var html = mustache.render(templates.footer);
-	res.send(html);
-})
-
-app.get('/index', (req, res) => {
-	console.log("GET request: index");
-	var page = req.query.page;
-	var pageSize = req.query.page_size;
-	var items = db.getIndexItems(page, pageSize);
-	var html = mustache.render(templates.index, items);
-	res.send(html);
-})
-
-app.get('/search_tag', (req, res) => {
-	console.log("GET request: search_tag: " + req.query.tag);
-	var items = db.getIndexItemsByTag(req.query.tag);
-	var html = mustache.render(templates.index, items);
-	res.send(html);
-})
-
-app.get('/product', (req, res) => {
-	console.log("GET request: product");
-	var product = db.getProduct(req.query.product_id);
-	var html = mustache.render(templates.product, product);
-	res.send(html);
-})
-
-app.get('/service', (req, res) => {
-	console.log("GET request: service");
-	var u = db.getUser(req.cookies.auth, 'id');
-	var service = db.getService(req.query.service_id, u.user_id);
-	var html = mustache.render(templates.service, service);
-	res.send(html);
-})
-
-app.get('/cart', (req, res) => {
-	console.log("GET request: cart");
-	var html = mustache.render(templates.cart);
-	res.send(html);
-})
-
-app.get('/login', (req, res) => {
-	console.log("GET request: login");
-	var html = mustache.render(templates.login);
-	res.send(html);
-})
+app.get('/getItems', (req, res) => {
+	console.log("GET request: /getCart");
+	let page = req.query.page;
+	let pageSize = req.query.page_size;
+	let items = db.getIndexItems(page, pageSize);
+	res.send(JSON.stringify(items));
+});
 
 app.post('/login', (req, res) => {
 	console.log("POST request: login");
 
-	var u = db.getUser(req.body.username, 'username');
+	let u = db.getUser(req.body.username, 'username');
 	if (!u || (u.user_password != req.body.password)){
 		res.send({ error: 1, message: "Usuário ou senha inválidos!" });
 	} else {
@@ -141,22 +65,37 @@ app.post('/login', (req, res) => {
 
 		res.send({ error: 0, message: "Login efetuado com sucesso!" });
 	}
-})
+});
+
+app.get('/getItemsByTag', (req, res) => {
+	console.log("GET request: search_tag: " + req.query.tag);
+	let page = req.query.page;
+	let pageSize = req.query.page_size;
+	let items = db.getIndexItemsByTag(req.query.tag);
+	res.send(JSON.stringify(items));
+});
+
+app.get('/getProduct', (req, res) => {
+	console.log("GET request: product");
+	let product = db.getProduct(req.query.product_id);
+	res.send(JSON.stringify(product));
+});
+
+app.get('/getService', (req, res) => {
+	console.log("GET request: service");
+	let u = db.getUser(req.cookies.auth, 'id');
+	let service = db.getService(req.query.service_id, u.user_id);
+	res.send(service);
+});
 
 app.delete('/login', (req, res) => {
 	console.log("DELETE request: login");
 
 	res.clearCookie('auth');
 	res.status(204).send("No content");
-})
+});
 
-app.get('/new-client', (req, res) => {
-	console.log("GET request: new-client");
-	var html = mustache.render(templates.new_client);
-	res.send(html);
-})
-
-app.post('/new-client', upload_user.single('client_img'), (req, res) => {
+app.post('/newClient', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-client");
 
 	if(getUser(req.body.client_user, 'username')){
@@ -186,17 +125,11 @@ app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 
 		res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
 	}
-})
-
-app.get('/', (req, res) => {
-	console.log("GET request: /");
-	var html = mustache.render(templates.page);
-	res.send(html);
-})
+});
 
 var server = app.listen(8081, () => {
 	var host = server.address().address;
 	var port = server.address().port;
 
 	console.log("Petzzaria Pet Shop listening at http://%s:%s", host, port);
-})
+});

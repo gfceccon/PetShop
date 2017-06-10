@@ -1,28 +1,26 @@
-<section>
-  <div class="content">
+<div class="content">
     <div class="index-items">
-      {{#items}}
-      <div class="index-item">
+    {{#items}}
+        <div class="index-item">
         {{#isProduct}}
-        <a onclick="product({{item.product_id}});" href="#">
-          <img src="img/{{item.product_img}}" width="{{item.img_width}}" height="{{item.img_height}}">
-        </a>
-        <div>
-          <a onclick="product({{item.product_id}});" class="index-product-name" href="#">{{item.product_name}}</a>
-          <a onclick="product({{item.product_id}});" class="index-product-price" href="#">R$ {{item.product_price}}</a>
-        </div>
+            <a onclick="product({{item.product_id}});" href="#">
+            <img src="img/{{item.product_img}}" width="{{item.img_width}}" height="{{item.img_height}}">
+            </a>
+            <div>
+                <a onclick="product({{item.product_id}});" class="index-product-name" href="#">{{item.product_name}}</a>
+                <a onclick="product({{item.product_id}});" class="index-product-price" href="#">R$ {{item.product_price}}</a>
+            </div>
         {{/isProduct}}
         {{#isService}}
-        <a onclick="service({{item.service_id}});" href="#">
-          <img src="img/{{item.service_img}}" width="{{item.img_width}}" height="{{item.img_height}}">
-        </a>
-        <div>
-          <a onclick="service({{item.service_id}});" class="index-service-name" href="#">{{item.service_name}}</a>
-          <a onclick="service({{item.service_id}});" class="index-service-price" href="#">R$ {{item.service_price}}</a>
-        </div>
+            <a onclick="service({{item.service_id}});" href="#">
+            <img src="img/{{item.service_img}}" width="{{item.img_width}}" height="{{item.img_height}}">
+            </a>
+            <div>
+                <a onclick="service({{item.service_id}});" class="index-service-name" href="#">{{item.service_name}}</a>
+                <a onclick="service({{item.service_id}});" class="index-service-price" href="#">R$ {{item.service_price}}</a>
+            </div>
         {{/isService}}
-      </div>
-      {{/items}}
+        </div>
+    {{/items}}
     </div>
-  </div>
-</section>
+</div>

@@ -174,16 +174,16 @@ module.exports = {
     },
 
     getIndexItems: function(page, pageSize) {
-        var items = { items: [] };
+        var items = [];
         this.Products.forEach((product) => {
-            items.items.push({
+            items.push({
                 isProduct: true,
                 isService: false,
                 item: product
             });
         });
         this.Services.forEach((service) => {
-            items.items.push({
+            items.push({
                 isProduct: false,
                 isService: true,
                 item: service
@@ -202,7 +202,7 @@ module.exports = {
     },
 
     getIndexItemsByTag: function(tag) {
-    	var items = { items: [] };
+    	var items = [];
     	this.Products.forEach((product) => {
     		if(tag.constructor === Array) {
     			var add = true;
@@ -212,14 +212,14 @@ module.exports = {
     				}
     			});
     			if(add)
-    				items.items.push({
+    				items.push({
                         isProduct: true,
                         isService: false,
                         item: product
                     });
     		} else {
     			if(product.product_tag.indexOf(tag) >= 0) {
-    				items.items.push({
+    				items.push({
                         isProduct: true,
                         isService: false,
                         item: product
@@ -260,7 +260,7 @@ module.exports = {
     	if(!filtered_list.length)
     		return false;
 
-    	return filtered_list[0];
+    	return filtered_list[0].cart;
     },
 
     getPets: function(user_id) {
@@ -270,9 +270,6 @@ module.exports = {
     		return false;
 
     	let pets = filtered_list[0];
-    	pets.pet_description = () => {
-    		return this.pet_name + ' - ' + this.pet_breed;
-    	}
 
     	return pets;
     },
@@ -288,7 +285,6 @@ module.exports = {
 
     	// This makes no sense
     	service.pets = pets.pets;
-    	service.pet_description = pets.pet_description;
     	return service;
     }
 };

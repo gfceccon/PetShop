@@ -1,29 +1,93 @@
+var user;
+var cart;
+
 $(function() {
-    drawIndex();
+    base();
+    index();
 });
 
-function drawIndex() {
-    $.get('/header', function(result){
-        $('header').html(result);
-    });
-    $.get('/nav', function(result){
-        $('nav').html(result);
-    });
-    $.get('/footer', function(result){
-        $('footer').html(result);
-    });
-    index();
+function base() {
+    $.get({url: '/getUser',
+    success: function(result){
+        user = JSON.parse(result);
+    }, async: false});
+    var header;
+    var nav;
+    var footer;
+    if(typeof user.user_id == 'undefined')
+    {
+        header = $(Templates.get(Templates.Header));
+        if (user.is_admin)
+            nav = $(Templates.get(Templates.NavAdmin));
+        else
+            nav = $(Templates.get(Templates.NavClient));
+        header.find('#header_index_cart_count').html('0');
+        cart = [];
+    } else {
+        header = $(Templates.get(Templates.HeaderLogged));
+        nav = $(Templates.get(Templates.NavIndex));
+        $.get({url: '/getCart',
+        success: function(result){
+            cart = JSON.parse(result);
+        }, async: false});
+        header.find('#header_logged_cart_count').html(cart.length);
+    }
+    footer = $(Templates.get(Templates.Footer));
+    $('header').append(header);
+    $('nav').append(nav);
+    $('footer').append(footer);
 }
 
 function index() {
-    $.get('/index', {page: 0, pageSize: 14}, function(result){
-        $('section').html(result);
+    var indexObj = $(Templates.get(Templates.Index));
+    $.get('/getItems', {page: 0, pageSize: 14}, function(result) {
+        var items = JSON.parse(result);
+        var itemObj = '';
+        items.forEach(function(item, index) {
+            if(item.isProduct) {
+                itemObj = $(Templates.get(Templates.IndexProduct));
+                itemObj.find('.index-item').attr('data-product', item.item.product_id);
+
+                itemObj.find('.index_product_img_a').click(product);
+
+                itemObj.find('.index_product_img').attr('src', 'img/' + item.item.product_img);
+                itemObj.find('.index_product_img').attr('width', item.item.img_width);
+                itemObj.find('.index_product_img').attr('height', item.item.img_height);
+
+                itemObj.find('.index_product_name_a').click(product);
+                itemObj.find('.index_product_name_a').html(item.item.product_name);
+
+                itemObj.find('.index_product_price_a').click(product);
+                itemObj.find('.index_product_price_a').html('R$ ' + item.item.product_price.toFixed(2));
+            }
+            if(item.isService) {
+                itemObj = $(Templates.get(Templates.IndexService));
+                itemObj.find('.index-item').attr('data-product', item.item.product_id);
+
+                itemObj.find('.index_service_img_a').click(product);
+
+                itemObj.find('.index_service_img').attr('src', 'img/' + item.item.service_img);
+                itemObj.find('.index_service_img').attr('width', item.item.img_width);
+                itemObj.find('.index_service_img').attr('height', item.item.img_height);
+
+                itemObj.find('.index_service_name_a').click(product);
+                itemObj.find('.index_service_name_a').html(item.item.service_name);
+
+                itemObj.find('.index_service_price_a').click(product);
+                itemObj.find('.index_service_price_a').html('R$ ' + item.item.service_price.toFixed(2));
+            }
+            indexObj.find('#index_items').append(itemObj);
+            $('section').html(indexObj);
+        });
     });
 }
 
-function product(id) {
+function product() {
+    var obj = $(this);
+    var id = obj.attr('data-product');
+    if (typeof id !== typeof undefined && id !== false)
+        id = obj.parents('div[data-product]').attr('data-product');
     $.get('/product', {product_id: id}, function(result){
-        $('section').html(result);
     });
 }
 
@@ -155,7 +219,7 @@ function loginPost(form){
 }
 
 function searchTag(tag) {
-    $.get('/search_tag', { tag: tag }, function(result){
+    $.get('/search_tag', { page: 0, pageSize: 14, tag: tag }, function(result){
         $('section').html(result);
     });
 }
