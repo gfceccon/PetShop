@@ -11,7 +11,7 @@ var index = function() {
 }
 
 var base = function() {
-    $.get({url: '/getUser',
+    $.get({url: '/user',
     success: function(result){
         if(typeof result == 'string')
             user = JSON.parse(result);
@@ -34,16 +34,19 @@ var base = function() {
             nav = $(Templates.get(Templates.NavAdmin));
         else
             nav = $(Templates.get(Templates.NavClient));
-        $.get({url: '/getCart',
+        $.get({url: '/cart',
         success: function(result){
             if(typeof result == 'string')
                 cart = JSON.parse(result);
             else
                 cart = result;
             var quantity = 0;
-            cart.forEach(function(p, index){
-                quantity += p.product_quantity;
-            });
+            if(typeof cart != 'undefined' && cart != false)
+            {
+                cart.forEach(function(p, index){
+                    quantity += p.product_quantity;
+                });
+            }
             header.find('#header_cart_count').html(quantity);
             nav.find('#nav_cart_count').html(quantity);
         }, async: false});
@@ -56,7 +59,7 @@ var base = function() {
 
 var frontPage = function() {
     var page = $(Templates.get(Templates.Index));
-    $.get('/getItems', {page: 0, pageSize: 14}, function(result) {
+    $.get('/items', {page: 0, pageSize: 14}, function(result) {
         var items; if(typeof result == 'string') items = JSON.parse(result); else items = result;
         addItemsTo(items, page);
     });
@@ -65,7 +68,7 @@ var frontPage = function() {
 
 var searchTag = function(tags) {
     var page = $(Templates.get(Templates.Index));
-    $.get('/getItemsByTag', { page: 0, pageSize: 14, tag: tags }, function(result){
+    $.get('/items-by-tag', { page: 0, pageSize: 14, tag: tags }, function(result){
         var items; if(typeof result == 'string') items = JSON.parse(result); else items = result;
         addItemsTo(items, page);
     });
@@ -118,7 +121,7 @@ var product = function() {
     var id = obj.attr('data-product');
     if (typeof id == typeof undefined || id == false)
         id = obj.parents('div[data-product]').attr('data-product');
-    $.get('/getProduct', {product_id: id}, function(result){
+    $.get('/product', {product_id: id}, function(result){
         var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
         var page = $(Templates.get(Templates.Product));
         page.find('#product_id').attr('value', p.product_id);
@@ -146,7 +149,7 @@ var service = function() {
     var id = obj.attr('data-service');
     if (typeof id == typeof undefined || id == false)
         id = obj.parents('div[data-service]').attr('data-service');
-    $.get('/getService', {service_id: id}, function(result){
+    $.get('/service', {service_id: id}, function(result){
         var s; if(typeof result == 'string') s = JSON.parse(result); else s = result;
         var page = $(Templates.get(Templates.Service));
 
@@ -162,7 +165,7 @@ var service = function() {
 
         page.find('#service_price_price').html('R$ ' + s.service_price.toFixed(2));
 
-        $.get('/getPets', function(result){
+        $.get('/pets', function(result){
             var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
             if(typeof p.user_id != typeof undefined && p.user_id != false)
             {
@@ -216,6 +219,11 @@ var newService = function() {
     $('section').html(page);
 }
 
+var newPet = function() {
+    var page = $(Templates.get(Templates.NewPet));
+    $('section').html(page);
+}
+
 var cart = function() {
     var page = $(Templates.get(Templates.NewCart));
     $('section').html(page);
@@ -236,7 +244,7 @@ var logout = function() {
     });
 }
 
-var clientPost = function() {
+var clientPost = function(form) {
     if (!$('#client_name').val()){
         $('#form_return').html("Preencha um nome!");
         $('#client_name').focus();
@@ -246,6 +254,11 @@ var clientPost = function() {
     if (!$('#client_user').val()){
         $('#form_return').html("Preencha um usuário!");
         $('#client_user').focus();
+        return false;
+    }
+    if (!$('#client_img').val()){
+        $('#form_return').html("Escolha uma imagem!");
+        $('#client_img').focus();
         return false;
     }
 
@@ -314,6 +327,59 @@ var loginPost = function(form) {
 }
 
 var adminPost = function(form) {
+
+    if (!$('#admin_name').val()){
+        $('#form_return').html("Preencha um nome!");
+        $('#admin_name').focus();
+        return false;
+    }
+
+    if (!$('#admin_img').val()){
+        $('#form_return').html("Escolha uma imagem!");
+        $('#admin_img').focus();
+        return false;
+    }
+
+    if (!$('#admin_user').val()){
+        $('#form_return').html("Preencha um usuário!");
+        $('#admin_user').focus();
+        return false;
+    }
+
+    if (!$('#admin_password').val()){
+        $('#form_return').html("Preencha uma senha!");
+        $('#admin_password').focus();
+        return false;
+    }
+
+    if ($('#admin_confirm').val() != $('#admin_password').val()){
+        $('#form_return').html("Senhas não são iguais!");
+        $('#admin_password').focus();
+        return false;
+    }
+
+    if (!$('#admin_email').val()){
+        $('#form_return').html("Preencha um email!");
+        $('#admin_email').focus();
+        return false;
+    }
+
+    var formData = new FormData(form);
+    $.ajax({
+        url: '/' + form.id,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function(result){
+            if(!result.error)
+                $('#admin_reset').click();
+
+            $('#form_return').html(result.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
     return false;
 }
 
@@ -327,6 +393,12 @@ var productPost = function(form) {
     if (!$('#product_id').val()){
         $('#form_return').html("Preencha um identificador!");
         $('#product_id').focus();
+        return false;
+    }
+
+    if (!$('#product_img').val()){
+        $('#form_return').html("Escolha uma imagem!");
+        $('#product_img').focus();
         return false;
     }
 
@@ -399,6 +471,12 @@ var servicePost = function(form) {
         return false;
     }
 
+    if (!$('#service_img').val()){
+        $('#form_return').html("Escolha uma imagem!");
+        $('#service_img').focus();
+        return false;
+    }
+
     if (!$('#service_description').val()){
         $('#form_return').html("Preencha uma descrição!");
         $('#service_description').focus();
@@ -438,6 +516,48 @@ var servicePost = function(form) {
 }
 
 var petPost = function(form) {
+
+    if (!$('#pet_name').val()){
+        $('#form_return').html("Preencha um nome!");
+        $('#pet_name').focus();
+        return false;
+    }
+
+    if (!$('#pet_img').val()){
+        $('#form_return').html("Escolha uma imagem!");
+        $('#pet_img').focus();
+        return false;
+    }
+
+    if (!$('#pet_breed').val()){
+        $('#form_return').html("Especifique a raça!");
+        $('#pet_breed').focus();
+        return false;
+    }
+
+    if (!$('#pet_age').val()){
+        $('#form_return').html("Especifique a idade!");
+        $('#pet_age').focus();
+        return false;
+    }
+
+    var formData = new FormData(form);
+    $.ajax({
+        url: '/' + form.id,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function(result){
+            if(!result.error)
+                $('#pet_reset').click();
+
+            $('#form_return').html(result.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
     return false;
 }
 
@@ -480,7 +600,7 @@ var petChange = function(obj) {
 var userPets = function() {
     var page = $(Templates.get(Templates.User));
     var pet_table = page.find('#user_pets');
-    $.get('/getPets', function(result){
+    $.get('/pets', function(result){
         var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
         if(typeof p.user_id != typeof undefined && p.user_id != false)
         {

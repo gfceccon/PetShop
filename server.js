@@ -1,5 +1,4 @@
 var express = require('express');
-var mustache = require('mustache');
 var fs = require("fs");
 var db = require("./database");
 var app = express();
@@ -39,20 +38,20 @@ app.get('/', (req, res) => {
 	res.send(html);
 });
 
-app.get('/getUser', (req, res) => {
+app.get('/user', (req, res) => {
 	console.log("GET request: user");
 	let user = db.getUser(req.cookies.auth, 'id');
 	res.send(JSON.stringify(user));
 });
 
-app.get('/getPets', (req, res) => {
+app.get('/pets', (req, res) => {
 	console.log("GET request: pets");
 	let user = db.getUser(req.cookies.auth, 'id');
 	let pets = db.getPets(user.user_id);
 	res.send(JSON.stringify(pets));
 });
 
-app.get('/getCart', (req, res) => {
+app.get('/cart', (req, res) => {
 	console.log("GET request: cart");
 	let user = db.getUser(req.cookies.auth, 'id');
 	let cart = {};
@@ -61,7 +60,7 @@ app.get('/getCart', (req, res) => {
 	res.send(JSON.stringify(cart));
 });
 
-app.get('/getItems', (req, res) => {
+app.get('/items', (req, res) => {
 	console.log("GET request: items");
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
@@ -83,7 +82,7 @@ app.post('/login', (req, res) => {
 	}
 });
 
-app.get('/getItemsByTag', (req, res) => {
+app.get('/items-by-tag', (req, res) => {
 	console.log("GET request: items-by-tag: " + req.query.tag);
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
@@ -91,13 +90,13 @@ app.get('/getItemsByTag', (req, res) => {
 	res.send(JSON.stringify(items));
 });
 
-app.get('/getProduct', (req, res) => {
+app.get('/product', (req, res) => {
 	console.log("GET request: product");
 	let product = db.getProduct(req.query.product_id);
 	res.send(JSON.stringify(product));
 });
 
-app.get('/getService', (req, res) => {
+app.get('/service', (req, res) => {
 	console.log("GET request: service");
 	let service = db.getService(req.query.service_id);
 	res.send(JSON.stringify(service));
@@ -113,13 +112,13 @@ app.delete('/login', (req, res) => {
 app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-client");
 
-	if(getUser(req.body.client_user, 'username')){
+	if(db.getUser(req.body.client_user, 'username')){
 		res.send({ error: 1, message: "Este usuário já existe!" });
-	} else if(getUser(req.body.client_email, 'email')){
+	} else if(db.getUser(req.body.client_email, 'email')){
 		res.send({ error: 2, message: "Este email já está sendo utilizado!" });
 	} else {
 		let new_user = {};
-		new_user['user_id'] = Users.length + 1;
+		new_user['user_id'] = db.Users.length + 1;
 		new_user['user_name'] = req.body.client_name;
 		new_user['user_username'] = req.body.client_user;
 		new_user['user_password'] = req.body.client_password;
@@ -142,7 +141,7 @@ app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 	}
 });
 
-app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
+app.post('/new-admin', upload_user.single('admin_img'), (req, res) => {
 	console.log("POST request: new-admin");
 
 	let user = db.getUser(req.cookies.auth, 'id');
@@ -151,18 +150,18 @@ app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
 		allow = true;
 	if(allow)
 	{
-		if(getUser(req.body.client_user, 'username')){
+		if(db.getUser(req.body.client_user, 'username')){
 			res.send({ error: 1, message: "Este usuário já existe!" });
-		} else if(getUser(req.body.client_email, 'email')){
+		} else if(db.getUser(req.body.client_email, 'email')){
 			res.send({ error: 2, message: "Este email já está sendo utilizado!" });
 		} else {
 			let new_user = {};
-			new_user['user_id'] = Users.length + 1;
-			new_user['user_name'] = req.body.client_name;
-			new_user['user_username'] = req.body.client_user;
-			new_user['user_password'] = req.body.client_password;
-			new_user['user_tel'] = req.body.client_tel;
-			new_user['user_email'] = req.body.client_email;
+			new_user['user_id'] = db.Users.length + 1;
+			new_user['user_name'] = req.body.admin_name;
+			new_user['user_username'] = req.body.admin_user;
+			new_user['user_password'] = req.body.admin_password;
+			new_user['user_tel'] = req.body.admin_tel;
+			new_user['user_email'] = req.body.admin_email;
 			new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
 			new_user['is_admin'] = true;
 			new_user['user_address'] = {};
@@ -172,7 +171,7 @@ app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
 		}
 	}
 	else
-		res.send({ error: 2, message: "Operação não autorizada!" });
+		res.send({ error: 3, message: "Operação não autorizada!" });
 });
 
 app.post('/new-product', upload_product.single('product_img'), (req, res) => {
@@ -236,6 +235,40 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 	}
 	else
 		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
+app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
+	console.log("POST request: new-pet");
+
+	let user = db.getUser(req.cookies.auth, 'id');
+	if(user != false)
+	{
+		let new_pet = {};
+
+		let user_pets = db.getPets(user.user_id);
+		let exists = true;
+		if(!user_pets)
+		{
+			user_pets = { user_id: user.user_id, pets: [] };
+			exists = false;
+		}
+
+		new_pet['pet_id'] = user_pets.pets.length + 1;
+		new_pet['pet_img'] = req.file.path.replace(/^.*public\//, "");
+		new_pet['img_width'] = 128;
+		new_pet['img_height'] = 128;
+		new_pet['pet_name'] = req.body.pet_name;
+		new_pet['pet_breed'] = req.body.pet_breed;
+		new_pet['pet_age'] = parseInt(req.body.pet_age);
+		new_pet['pet_status'] = 'Em casa';
+
+		if(!exists)
+			db.Pets.push(user_pets);
+
+		res.send({ error: 0, message: "Pet cadastrado com sucesso!" });
+	}
+	else
+		res.send({ error: 1, message: "Nenhum usuário logado!" });
 });
 
 var server = app.listen(8081, () => {
