@@ -22,6 +22,7 @@ var Templates = {
     Service: { Link: 'templates/service.html' },
     ServicePet: { Link: 'templates/service-pet.html' },
     User: { Link: 'templates/user.html' },
+    UserPet: { Link: 'templates/user-pet.html' },
 
     NewAdmin: { Link: 'templates/new-admin.html' },
     NewClient: { Link: 'templates/new-client.html' },

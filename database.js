@@ -5,7 +5,7 @@ module.exports = {
     		user_name: 'John Doe',
     		user_username: 'john',
     		user_password: 'john',
-    		user_img: '',
+    		user_img: 'img/',
     		user_tel: '34954820',
     		user_email: 'johndoe@uol.com.br',
     		user_address: {
@@ -22,7 +22,7 @@ module.exports = {
     		user_name: 'Emily Hawkins',
     		user_username: 'emily',
     		user_password: '12345',
-    		user_img: '',
+    		user_img: 'img/',
     		user_tel: '284971920',
     		user_email: 'emily@uol.com.br',
     		user_address: {
@@ -39,7 +39,7 @@ module.exports = {
     		user_name: 'Administrador',
     		user_username: 'admin',
     		user_password: 'admin',
-    		user_img: '',
+    		user_img: 'img/',
     		user_tel: '90654280',
     		user_email: 'adm@uol.com.br',
     		is_admin: true
@@ -48,7 +48,7 @@ module.exports = {
 
     Products: [
     	{
-    		product_id: 1, product_img: 'product/cat-food.jpg',
+    		product_id: 1, product_img: 'img/product/cat-food.jpg',
     		img_width: 128, img_height: 128,
     		product_name: 'Ração para gato', product_price: 199.90,
     		product_tag: ['product', 'cat', 'food'],
@@ -56,7 +56,7 @@ module.exports = {
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	},
     	{
-    		product_id: 2, product_img: 'product/cat-toy.jpg',
+    		product_id: 2, product_img: 'img/product/cat-toy.jpg',
     		img_width: 128, img_height: 128,
     		product_name: 'Brinquedo para gato', product_price: 29.90,
     		product_tag: ['product', 'cat', 'accy'],
@@ -64,7 +64,7 @@ module.exports = {
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	},
     	{
-    		product_id: 3, product_img: 'product/cat-bed.jpg',
+    		product_id: 3, product_img: 'img/product/cat-bed.jpg',
     		img_width: 128, img_height: 128,
     		product_name: 'Cama para gato', product_price: 89.90,
     		product_tag: ['product', 'cat', 'accy'],
@@ -72,7 +72,7 @@ module.exports = {
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	},
     	{
-    		product_id: 4, product_img: 'product/cat-snack.jpg',
+    		product_id: 4, product_img: 'img/product/cat-snack.jpg',
     		img_width: 128, img_height: 128,
     		product_name: 'Petisco para gato', product_price: 1.99,
     		product_tag: ['product', 'cat', 'food'],
@@ -80,7 +80,7 @@ module.exports = {
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	},
     	{
-    		product_id: 5, product_img: 'product/cat-collar.jpg',
+    		product_id: 5, product_img: 'img/product/cat-collar.jpg',
     		img_width: 128, img_height: 128,
     		product_name: 'Coleira para gato', product_price: 35.90,
     		product_tag: ['product', 'cat', 'accy'],
@@ -111,37 +111,37 @@ module.exports = {
     	{
     		user_id: 1,
     		pets: [
-    			{ pet_id: 1, pet_name: 'Garfield', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 2 },
-    			{ pet_id: 2, pet_name: 'Lara', pet_img: 'cat64.png', pet_breed: 'Gato Persa', pet_age: 3 },
-    			{ pet_id: 3, pet_name: 'Ana', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 5 }
+    			{ pet_id: 1, pet_name: 'Garfield', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Malhado', pet_age: 2, pet_status: 'Em casa' },
+    			{ pet_id: 2, pet_name: 'Lara', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Persa', pet_age: 3, pet_status: 'Tosa' },
+    			{ pet_id: 3, pet_name: 'Ana', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Siames', pet_age: 5, pet_status: 'Banho' }
     		]
     	},
     	{
     		user_id: 2,
     		pets: [
-    			{ pet_id: 4, pet_name: 'James', pet_img: 'cat64.png', pet_breed: 'Gato Siames', pet_age: 4 },
-    			{ pet_id: 5, pet_name: 'Tom', pet_img: 'cat64.png', pet_breed: 'Gato Malhado', pet_age: 1 }
+    			{ pet_id: 4, pet_name: 'James', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Siames', pet_age: 4, pet_status: 'Em casa' },
+    			{ pet_id: 5, pet_name: 'Tom', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Malhado', pet_age: 1, pet_status: 'Banho' }
     		]
     	}
     ],
 
     Services: [
     	{
-    		service_id: 1, service_img: 'service/cat-shearing.jpg',
+    		service_id: 1, service_img: 'img/service/cat-shearing.jpg',
     		img_width: 128, img_height: 128,
     		service_name: 'Tosa para gato', service_price: 69.90,
     		service_tag: ['service', 'cat', 'shearing'],
     		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	},
     	{
-    		service_id: 2, service_img: 'service/cat-bath.jpg',
+    		service_id: 2, service_img: 'img/service/cat-bath.jpg',
     		img_width: 128, img_height: 128,
     		service_name: 'Banho para gato', service_price: 49.90,
     		service_tag: ['service', 'cat', 'bath'],
     		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	},
         {
-    		service_id: 3, service_img: 'service/dog-training.jpg',
+    		service_id: 3, service_img: 'img/service/dog-training.jpg',
     		img_width: 128, img_height: 128,
     		service_name: 'Treino para cão', service_price: 49.90,
     		service_tag: ['service', 'dog', 'training'],

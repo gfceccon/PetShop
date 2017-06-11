@@ -36,13 +36,17 @@ var base = function() {
             nav = $(Templates.get(Templates.NavClient));
         $.get({url: '/getCart',
         success: function(result){
-            if(typeof cart == 'string')
+            if(typeof result == 'string')
                 cart = JSON.parse(result);
             else
                 cart = result;
+            var quantity = 0;
+            cart.forEach(function(p, index){
+                quantity += p.product_quantity;
+            });
+            header.find('#header_cart_count').html(quantity);
+            nav.find('#nav_cart_count').html(quantity);
         }, async: false});
-        header.find('#header_cart_count').html(cart.length);
-        nav.find('#nav_cart_count').html(cart.length);
     }
     footer = $(Templates.get(Templates.Footer));
     $('header').html(header);
@@ -78,7 +82,7 @@ var addItemsTo = function(items, page) {
 
             itemObj.find('.product_img_a').click(product);
 
-            itemObj.find('.product_img').attr('src', 'img/' + p.product_img);
+            itemObj.find('.product_img').attr('src', p.product_img);
             itemObj.find('.product_img').attr('width', p.img_width);
             itemObj.find('.product_img').attr('height', p.img_height);
 
@@ -95,7 +99,7 @@ var addItemsTo = function(items, page) {
 
             itemObj.find('.service_img_a').click(service);
 
-            itemObj.find('.service_img').attr('src', 'img/' + s.service_img);
+            itemObj.find('.service_img').attr('src', s.service_img);
             itemObj.find('.service_img').attr('width', s.img_width);
             itemObj.find('.service_img').attr('height', s.img_height);
 
@@ -119,7 +123,7 @@ var product = function() {
         var page = $(Templates.get(Templates.Product));
         page.find('#product_id').attr('value', p.product_id);
 
-        page.find('#product_img').attr('src', 'img/' + p.product_img);
+        page.find('#product_img').attr('src', p.product_img);
         page.find('#product_img').attr('width', p.img_width);
         page.find('#product_img').attr('height', p.img_height);
 
@@ -148,7 +152,7 @@ var service = function() {
 
         page.find('#product_id').attr('value', s.service_id);
 
-        page.find('#service_img').attr('src', 'img/' + s.service_img);
+        page.find('#service_img').attr('src', s.service_img);
         page.find('#service_img').attr('width', s.img_width);
         page.find('#service_img').attr('height', s.img_height);
 
@@ -471,4 +475,26 @@ var petChange = function(obj) {
     $('#pet_id').val(id);
     $('#service_pet').val(id);
     $('#service_pet_inline').val(id);
+}
+
+var userPets = function() {
+    var page = $(Templates.get(Templates.User));
+    var pet_table = page.find('#user_pets');
+    $.get('/getPets', function(result){
+        var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
+        if(typeof p.user_id != typeof undefined && p.user_id != false)
+        {
+            var pets = p.pets;
+            pets.forEach(function(pet, index){
+                var user_pet = $(Templates.get(Templates.UserPet));
+                user_pet.find('.user_pet_img').attr('src', pet.pet_img);
+                user_pet.find('.user_pet_img').attr('width', pet.img_width);
+                user_pet.find('.user_pet_img').attr('height', pet.img_height);
+                user_pet.find('.user_pet_description').html(pet.pet_name + ', ' + pet.pet_breed + ', ' + pet.pet_age + ' ano(s)');
+                user_pet.find('.user_pet_status').html(pet.pet_status);
+                pet_table.append(user_pet);
+            });
+        }
+        $('section').html(page);
+    });
 }

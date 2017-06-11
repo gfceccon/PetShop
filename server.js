@@ -19,6 +19,11 @@ var upload_service = multer({
 	dest: './public/img/service',
 	limits: { fileSize: 1048576, files: 1}
 });
+var upload_pet = multer({
+	dest: './public/img/pet',
+	limits: { fileSize: 1048576, files: 1}
+});
+
 
 var Index = fs.readFileSync('public/templates/page.html').toString()
 
@@ -79,7 +84,7 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/getItemsByTag', (req, res) => {
-	console.log("GET request: search_tag: " + req.query.tag);
+	console.log("GET request: items-by-tag: " + req.query.tag);
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
 	let items = db.getIndexItemsByTag(req.query.tag);
@@ -158,7 +163,7 @@ app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
 			new_user['user_password'] = req.body.client_password;
 			new_user['user_tel'] = req.body.client_tel;
 			new_user['user_email'] = req.body.client_email;
-			new_user['user_img'] = req.file.path.replace(/^.*public\/img\//, "");
+			new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
 			new_user['is_admin'] = true;
 			new_user['user_address'] = {};
 			db.Users.push(new_user);
@@ -186,7 +191,7 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 			list.push(tag);
 
 		new_product['product_id'] = parseInt(req.body.product_id);
-		new_product['product_img'] = req.file.path.replace(/^.*public\/img\//, "");
+		new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
 		new_product['img_width'] = 128;
 		new_product['img_height'] = 128;
 		new_product['product_name'] = req.body.product_name;
@@ -218,7 +223,7 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 			list.push(tag);
 
 		new_service['service_id'] = parseInt(req.body.service_id);
-		new_service['service_img'] = req.file.path.replace(/^.*public\/img\//, "");
+		new_service['service_img'] = req.file.path.replace(/^.*public\//, "");
 		new_service['img_width'] = 128;
 		new_service['img_height'] = 128;
 		new_service['service_name'] = req.body.service_name;
