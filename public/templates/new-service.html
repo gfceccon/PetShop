@@ -1,4 +1,4 @@
-<form id="new-service" class="new-service-form" onsubmit="return |servicePost(this);">
+<form id="new-service" enctype="multipart/form-data" class="new-service-form" onsubmit="return servicePost(this);">
   <div class="fieldset-container">
     <fieldset>
       <legend>Dados do Serviço</legend>
@@ -6,7 +6,7 @@
         <div class="form-labels">
           <label for="service_name">Nome:</label>
           <label for="service_id">Identificador:</label>
-          <label for="service_img_file">Foto:</label>
+          <label for="service_img">Foto:</label>
           <label for="service_description">Descrição:</label>
           <label for="service_tag">Tags:</label>
           <label for="service_price">Preço:</label>
@@ -14,7 +14,7 @@
         <div class="form-inputs">
           <input id="service_name" type="text" name="service_name" autofocus>
           <input id="service_id" type="text" name="service_id">
-          <input id="service_img_file" type="file" name="service_img" accept="image/*">
+          <input id="service_img" type="file" name="service_img" accept="image/*">
           <input id="service_description" type="text" name="service_description">
           <input id="service_tag" type="text" name="service_tag">
           <input id="service_price" type="number" name="service_price" step="0.01" value="0.00" min="0.00">
@@ -22,6 +22,7 @@
       </div>
     </fieldset>
   </div>
+  <span style="text-align: center;" id="form_return"></span>
   <div class="button-container">
     <button id="service_submit" type="submit">Enviar</button>
     <button id="service_reset" type="reset">Limpar</button>

@@ -105,7 +105,7 @@ app.delete('/login', (req, res) => {
 	res.status(204).send("No content");
 });
 
-app.post('/newClient', upload_user.single('client_img'), (req, res) => {
+app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-client");
 
 	if(getUser(req.body.client_user, 'username')){
@@ -137,7 +137,7 @@ app.post('/newClient', upload_user.single('client_img'), (req, res) => {
 	}
 });
 
-app.post('/newAdmin', upload_user.single('client_img'), (req, res) => {
+app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-admin");
 
 	let user = db.getUser(req.cookies.auth, 'id');
@@ -158,12 +158,9 @@ app.post('/newAdmin', upload_user.single('client_img'), (req, res) => {
 			new_user['user_password'] = req.body.client_password;
 			new_user['user_tel'] = req.body.client_tel;
 			new_user['user_email'] = req.body.client_email;
-			new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
+			new_user['user_img'] = req.file.path.replace(/^.*public\/img\//, "");
 			new_user['is_admin'] = true;
-
-			let user_address = {};
-
-			new_user['user_address'] = user_address;
+			new_user['user_address'] = {};
 			db.Users.push(new_user);
 
 			res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
@@ -173,7 +170,7 @@ app.post('/newAdmin', upload_user.single('client_img'), (req, res) => {
 		res.send({ error: 2, message: "Operação não autorizada!" });
 });
 
-app.post('/newProduct', upload_product.single('product_img_file'), (req, res) => {
+app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 	console.log("POST request: new-product");
 
 	let user = db.getUser(req.cookies.auth, 'id');
@@ -182,23 +179,21 @@ app.post('/newProduct', upload_product.single('product_img_file'), (req, res) =>
 		allow = true;
 	if(allow)
 	{
-		let new_product = { };
+		let new_product = {};
+		let tags = req.body.product_tag.split(/\s*,\s*/);
+		let list = [];
+		for (let tag of tags)
+			list.push(tag);
+
 		new_product['product_id'] = req.body.product_id;
-		new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
+		new_product['product_img'] = req.file.path.replace(/^.*public\/img\//, "");
 		new_product['img_width'] = 128;
 		new_product['img_height'] = 128;
 		new_product['product_name'] = req.body.product_name;
 		new_product['product_price'] = req.body.product_price;
-		var tags = req.body.product_tag.replace(","," ").split();
-		for (var i = 0; i < tags.length; i++) {
-			if (tags[i] == undefined) {
-				tags.splice(i, 1);
-				i--;
-			}
-		}
-		new_product['product_tag'] = tags;
 		new_product['product_description'] = req.body.product_description;
 		new_product['product_full_description'] = req.body.product_full_description;
+		new_product['product_tag'] = list;
 		db.Products.push(new_product);
 
 		res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
@@ -207,7 +202,7 @@ app.post('/newProduct', upload_product.single('product_img_file'), (req, res) =>
 		res.send({ error: 2, message: "Operação não autorizada!" });
 });
 
-app.post('/newService', upload_service.single('service_img_file'), (req, res) => {
+app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 	console.log("POST request: new-service");
 
 	let user = db.getUser(req.cookies.auth, 'id');
@@ -216,25 +211,23 @@ app.post('/newService', upload_service.single('service_img_file'), (req, res) =>
 		allow = true;
 	if(allow)
 	{
-		let new_service = { };
+		let new_service = {};
+		let tags = req.body.service_tag.split(/\s*,\s*/);
+		let list = [];
+		for (let tag of tags)
+			list.push(tag);
+
 		new_service['service_id'] = req.body.service_id;
-		new_service['service_img'] = req.file.path.replace(/^.*public\//, "");
+		new_service['service_img'] = req.file.path.replace(/^.*public\/img\//, "");
 		new_service['img_width'] = 128;
 		new_service['img_height'] = 128;
 		new_service['service_name'] = req.body.service_name;
 		new_service['service_price'] = req.body.service_price;
-		var tags = req.body.service_tag.replace(","," ").split();
-		for (var i = 0; i < tags.length; i++) {
-			if (tags[i] == undefined) {
-				tags.splice(i, 1);
-				i--;
-			}
-		}
-		new_service['service_tag'] = tags;
+		new_service['service_tag'] = list;
 		new_service['service_description'] = req.body.service_description;
 		db.Services.push(new_service);
 
-		res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
+		res.send({ error: 0, message: "Serviço cadastrado com sucesso!" });
 	}
 	else
 		res.send({ error: 2, message: "Operação não autorizada!" });

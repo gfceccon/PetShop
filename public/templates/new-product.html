@@ -1,4 +1,4 @@
-<form id="new-product" class="new-product-form" onsubmit="return productPost(this);">
+<form id="new-product" enctype="multipart/form-data" class="new-product-form" onsubmit="return productPost(this);">
  <div class="fieldset-container">
    <fieldset>
      <legend>Dados do Produto</legend>
@@ -17,7 +17,7 @@
        <div class="form-inputs">
          <input id="product_name" type="text" name="product_name" autofocus>
          <input id="product_id" type="text" name="product_id">
-         <input id="product_img_file" type="file" name="product_img" accept="image/*">
+         <input id="product_img" type="file" name="product_img" accept="image/*">
          <input id="product_description" type="text" name="product_description">
          <input id="product_full_description" type="text" name="product_full_description">
          <input id="product_tag" type="text" name="product_tag">
@@ -28,6 +28,7 @@
      </div>
    </fieldset>
  </div>
+ <span style="text-align: center;" id="form_return"></span>
  <div class="button-container">
    <button id="product_submit" type="submit">Enviar</button>
    <button id="product_reset" type="reset">Limpar</button>

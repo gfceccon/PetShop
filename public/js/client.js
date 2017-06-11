@@ -86,7 +86,7 @@ var addItemsTo = function(items, page) {
             itemObj.find('.product_name_a').html(p.product_name);
 
             itemObj.find('.product_price_a').click(product);
-            itemObj.find('.product_price_a').html('R$ ' + p.product_price.toFixed(2));
+            itemObj.find('.product_price_a').html('R$ ' + parseFloat(p.product_price).toFixed(2));
         }
         if(item.isService) {
             var s = item.item;
@@ -314,10 +314,122 @@ var adminPost = function(form) {
 }
 
 var productPost = function(form) {
+    if (!$('#product_name').val()){
+        $('#form_return').html("Preencha um nome!");
+        $('#product_name').focus();
+        return false;
+    }
+
+    if (!$('#product_id').val()){
+        $('#form_return').html("Preencha um identificador!");
+        $('#product_id').focus();
+        return false;
+    }
+
+    if (!$('#product_description').val()){
+        $('#form_return').html("Preencha uma descrição!");
+        $('#product_description').focus();
+        return false;
+    }
+
+    if (!$('#product_full_description').val()){
+        $('#form_return').html("Preencha a descrição completa!");
+        $('#product_full_description').focus();
+        return false;
+    }
+
+    if (!$('#product_tag').val()){
+        $('#form_return').html("Especifique algumas tags!");
+        $('#product_tag').focus();
+        return false;
+    }
+
+    if (!$('#product_price').val()){
+        $('#form_return').html("Especifique um preço!");
+        $('#product_price').focus();
+        return false;
+    }
+
+    if (!$('#product_stkamt').val()){
+        $('#form_return').html("Especifique a quantidade em estoque!");
+        $('#product_stkamt').focus();
+        return false;
+    }
+
+    if (!$('#product_soldamt').val()){
+        $('#form_return').html("Especifique a quantidade vendida!");
+        $('#product_soldamt').focus();
+        return false;
+    }
+
+    var formData = new FormData(form);
+    $.ajax({
+        url: '/' + form.id,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function(result){
+            if(!result.error)
+                $('#product_reset').click();
+
+            $('#form_return').html(result.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
     return false;
 }
 
 var servicePost = function(form) {
+    if (!$('#service_name').val()){
+        $('#form_return').html("Preencha um nome!");
+        $('#service_name').focus();
+        return false;
+    }
+
+    if (!$('#service_id').val()){
+        $('#form_return').html("Preencha um identificador!");
+        $('#service_id').focus();
+        return false;
+    }
+
+    if (!$('#service_description').val()){
+        $('#form_return').html("Preencha uma descrição!");
+        $('#service_description').focus();
+        return false;
+    }
+
+    if (!$('#service_tag').val()){
+        $('#form_return').html("Especifique algumas tags!");
+        $('#service_tag').focus();
+        return false;
+    }
+
+    if (!$('#service_price').val()){
+        $('#form_return').html("Especifique um preço!");
+        $('#service_price').focus();
+        return false;
+    }
+
+    var formData = new FormData(form);
+    $.ajax({
+        url: '/' + form.id,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function(result){
+            if(!result.error)
+                $('#service_reset').click();
+
+            $('#form_return').html(result.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
     return false;
 }
 
