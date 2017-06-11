@@ -2,9 +2,13 @@ var user;
 var cart;
 
 $(function() {
+    index();
+});
+
+var index = function() {
     base();
     frontPage();
-});
+}
 
 var base = function() {
     $.get({url: '/getUser',
@@ -41,9 +45,9 @@ var base = function() {
         nav.find('#nav_cart_count').html(cart.length);
     }
     footer = $(Templates.get(Templates.Footer));
-    $('header').append(header);
-    $('nav').append(nav);
-    $('footer').append(footer);
+    $('header').html(header);
+    $('nav').html(nav);
+    $('footer').html(footer);
 }
 
 var frontPage = function() {
@@ -183,40 +187,39 @@ var service = function() {
     });
 }
 
+var admin = function() {
+    var page = $(Templates.get(Templates.Admin));
+    $('section').html(page);
+}
+
 var newClient = function() {
-    $.get('/new-client', function(result){
-        $('section').html(result);
-    });
+    var page = $(Templates.get(Templates.NewClient));
+    $('section').html(page);
 }
 
 var newAdmin = function() {
-    $.get('/new-admin', function(result){
-        $('section').html(result);
-    });
+    var page = $(Templates.get(Templates.NewAdmin));
+    $('section').html(page);
 }
 
 var newProduct = function() {
-    $.get('/new-product', function(result){
-        $('section').html(result);
-    });
+    var page = $(Templates.get(Templates.NewProduct));
+    $('section').html(page);
 }
 
 var newService = function() {
-    $.get('/new-service', function(result){
-        $('section').html(result);
-    });
+    var page = $(Templates.get(Templates.NewService));
+    $('section').html(page);
 }
 
 var cart = function() {
-    $.get('/cart', function(result){
-        $('section').html(result);
-    });
+    var page = $(Templates.get(Templates.NewCart));
+    $('section').html(page);
 }
 
 var login = function() {
-    $.get('/login', function(result){
-        $('section').html(result);
-    });
+    var page = $(Templates.get(Templates.Login));
+    $('section').html(page);
 }
 
 var logout = function() {
@@ -224,7 +227,7 @@ var logout = function() {
         url: '/login',
         type: 'DELETE',
         success: function(result){
-            drawIndex();
+            base();
         }
     });
 }
@@ -295,12 +298,30 @@ var loginPost = function(form) {
 
     var data = $(form).serialize();
     $.post("/" + form.id, data, function(result) {
-        if(result.error)
-            $('#form_return').html(result.message);
-        else
-            drawIndex();
+        var l; if(typeof result == 'string') l = JSON.parse(result); else l = result;
+        if(l.error == 0)
+            base();
+        if(typeof l.user != typeof undefined && l.user != false)
+            user = l.user;
+        $('#form_return').html(l.message);
     });
 
+    return false;
+}
+
+var adminPost = function(form) {
+    return false;
+}
+
+var productPost = function(form) {
+    return false;
+}
+
+var servicePost = function(form) {
+    return false;
+}
+
+var petPost = function(form) {
     return false;
 }
 

@@ -15,6 +15,10 @@ var upload_product = multer({
 	dest: './public/img/product',
 	limits: { fileSize: 1048576, files: 1}
 });
+var upload_service = multer({
+	dest: './public/img/service',
+	limits: { fileSize: 1048576, files: 1}
+});
 
 var Index = fs.readFileSync('public/templates/page.html').toString()
 
@@ -70,7 +74,7 @@ app.post('/login', (req, res) => {
 		res.cookie('auth', u.user_id, { maxAge: 1000 * 3600, httpOnly: true });
 		console.log("User \"" + u.user_username + "\" just logged in!");
 
-		res.send({ error: 0, message: "Login efetuado com sucesso!" });
+		res.send(JSON.stringify({ error: 0, message: "Login efetuado com sucesso!", user: u }));
 	}
 });
 
@@ -116,7 +120,7 @@ app.post('/newClient', upload_user.single('client_img'), (req, res) => {
 		new_user['user_password'] = req.body.client_password;
 		new_user['user_tel'] = req.body.client_tel;
 		new_user['user_email'] = req.body.client_email;
-		new_user['user_img'] = req.file.path;
+		new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
 		new_user['is_admin'] = false;
 
 		let user_address = {};
@@ -131,6 +135,109 @@ app.post('/newClient', upload_user.single('client_img'), (req, res) => {
 
 		res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
 	}
+});
+
+app.post('/newAdmin', upload_user.single('client_img'), (req, res) => {
+	console.log("POST request: new-admin");
+
+	let user = db.getUser(req.cookies.auth, 'id');
+	let allow = false;
+	if(user && user.is_admin)
+		allow = true;
+	if(allow)
+	{
+		if(getUser(req.body.client_user, 'username')){
+			res.send({ error: 1, message: "Este usuário já existe!" });
+		} else if(getUser(req.body.client_email, 'email')){
+			res.send({ error: 2, message: "Este email já está sendo utilizado!" });
+		} else {
+			let new_user = {};
+			new_user['user_id'] = Users.length + 1;
+			new_user['user_name'] = req.body.client_name;
+			new_user['user_username'] = req.body.client_user;
+			new_user['user_password'] = req.body.client_password;
+			new_user['user_tel'] = req.body.client_tel;
+			new_user['user_email'] = req.body.client_email;
+			new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
+			new_user['is_admin'] = true;
+
+			let user_address = {};
+
+			new_user['user_address'] = user_address;
+			db.Users.push(new_user);
+
+			res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
+		}
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
+app.post('/newProduct', upload_product.single('product_img_file'), (req, res) => {
+	console.log("POST request: new-product");
+
+	let user = db.getUser(req.cookies.auth, 'id');
+	let allow = false;
+	if(user && user.is_admin)
+		allow = true;
+	if(allow)
+	{
+		let new_product = { };
+		new_product['product_id'] = req.body.product_id;
+		new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
+		new_product['img_width'] = 128;
+		new_product['img_height'] = 128;
+		new_product['product_name'] = req.body.product_name;
+		new_product['product_price'] = req.body.product_price;
+		var tags = req.body.product_tag.replace(","," ").split();
+		for (var i = 0; i < tags.length; i++) {
+			if (tags[i] == undefined) {
+				tags.splice(i, 1);
+				i--;
+			}
+		}
+		new_product['product_tag'] = tags;
+		new_product['product_description'] = req.body.product_description;
+		new_product['product_full_description'] = req.body.product_full_description;
+		db.Products.push(new_product);
+
+		res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
+app.post('/newService', upload_service.single('service_img_file'), (req, res) => {
+	console.log("POST request: new-service");
+
+	let user = db.getUser(req.cookies.auth, 'id');
+	let allow = false;
+	if(user && user.is_admin)
+		allow = true;
+	if(allow)
+	{
+		let new_service = { };
+		new_service['service_id'] = req.body.service_id;
+		new_service['service_img'] = req.file.path.replace(/^.*public\//, "");
+		new_service['img_width'] = 128;
+		new_service['img_height'] = 128;
+		new_service['service_name'] = req.body.service_name;
+		new_service['service_price'] = req.body.service_price;
+		var tags = req.body.service_tag.replace(","," ").split();
+		for (var i = 0; i < tags.length; i++) {
+			if (tags[i] == undefined) {
+				tags.splice(i, 1);
+				i--;
+			}
+		}
+		new_service['service_tag'] = tags;
+		new_service['service_description'] = req.body.service_description;
+		db.Services.push(new_service);
+
+		res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
 });
 
 var server = app.listen(8081, () => {
