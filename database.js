@@ -236,14 +236,14 @@ module.exports = {
     				}
     			});
     			if(add)
-    				items.items.push({
+    				items.push({
                         isProduct: false,
                         isService: true,
                         item: service
                     });
     		} else {
     			if(service.service_tag.indexOf(tag) >= 0) {
-    				items.items.push({
+    				items.push({
                         isProduct: false,
                         isService: true,
                         item: service
@@ -274,17 +274,14 @@ module.exports = {
     	return pets;
     },
 
-    getService: function(service_id, user_id) {
+    getService: function(service_id) {
     	let filtered_list = this.Services.filter((s) => { return s.service_id == service_id; });
 
     	if(!filtered_list.length)
     		return false;
 
     	let service = filtered_list[0];
-    	let pets = this.getPets(user_id);
 
-    	// This makes no sense
-    	service.pets = pets.pets;
     	return service;
     }
 };

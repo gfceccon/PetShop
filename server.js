@@ -25,19 +25,26 @@ app.use(express.static('public'));
 
 
 app.get('/', (req, res) => {
-	console.log("GET request: /");
+	console.log("GET request: index");
 	let html = Index;
 	res.send(html);
 });
 
 app.get('/getUser', (req, res) => {
-	console.log("GET request: /getUser");
+	console.log("GET request: user");
 	let user = db.getUser(req.cookies.auth, 'id');
 	res.send(JSON.stringify(user));
 });
 
+app.get('/getPets', (req, res) => {
+	console.log("GET request: pets");
+	let user = db.getUser(req.cookies.auth, 'id');
+	let pets = db.getPets(user.user_id);
+	res.send(JSON.stringify(pets));
+});
+
 app.get('/getCart', (req, res) => {
-	console.log("GET request: /getCart");
+	console.log("GET request: cart");
 	let user = db.getUser(req.cookies.auth, 'id');
 	let cart = {};
 	if(user)
@@ -46,7 +53,7 @@ app.get('/getCart', (req, res) => {
 });
 
 app.get('/getItems', (req, res) => {
-	console.log("GET request: /getCart");
+	console.log("GET request: items");
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
 	let items = db.getIndexItems(page, pageSize);
@@ -83,9 +90,8 @@ app.get('/getProduct', (req, res) => {
 
 app.get('/getService', (req, res) => {
 	console.log("GET request: service");
-	let u = db.getUser(req.cookies.auth, 'id');
-	let service = db.getService(req.query.service_id, u.user_id);
-	res.send(service);
+	let service = db.getService(req.query.service_id);
+	res.send(JSON.stringify(service));
 });
 
 app.delete('/login', (req, res) => {

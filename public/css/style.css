@@ -379,6 +379,15 @@ fieldset legend {
 .product-images-area, .service-images-area
 {
     width: 256px;
+    margin: 0.75em;
+}
+
+#product_img, #service_img
+{
+    border: 2px solid #d1dbe0;
+    border-radius: 2%;
+    padding: 0.5em;
+    background-color: white;
 }
 
 .product-images, .service-images

@@ -1,5 +1,6 @@
 <form id="buy-service" class="buy-service-form" onsubmit="return formPost(this);">
   <input type="hidden" id="service_id" name="id" value="" />
+  <input type="hidden" id="pet_id" name="pet_id" value="" />
   <div class="content">
       <div class="product-header">
           <div class="product-images-area">
@@ -19,10 +20,7 @@
           <div class="product-price-area">
               <span class="product-price"></span>
               <label class="quantity-label" for="quantity">Pet:</label>
-              <select id="service-pet" class="service-pet">
-                <!-- {{#pets}} -->
-                  <option id="pet_id" value=""></option>
-                <!-- {{/pets}} -->
+              <select id="service_pet" class="service-pet" onchange="petChange(this)">
               </select>
               <button class="product-buy-button">Comprar</button>
           </div>
@@ -31,10 +29,7 @@
 
       <div class="inline-product-buy">
           <label class="quantity-label" for="inline-quantity">Pet:</label>
-          <select id="service_pet_inline" class="service-pet" style="margin: 0;">
-            <!-- {{#pets}} -->
-              <option id="inline_pet_id" value=""></option>
-            <!-- {{/pets}} -->
+          <select id="service_pet_inline" class="service-pet" style="margin: 0;" onchange="petChange(this)">
           </select>
           <button>Contratar</button>
       </div>

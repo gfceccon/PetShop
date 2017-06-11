@@ -15,11 +15,12 @@ var Templates = {
     NavAdmin: { Link: 'templates/nav-admin.html' },
     NavClient: { Link: 'templates/nav-client.html' },
 
-    Page: { Link: 'template/page.html' },
+    Page: { Link: 'templates/page.html' },
     Login: { Link: 'templates/login.html' },
     Admin: { Link: 'templates/admin.html' },
-    Product: { Link: 'template/product.html' },
+    Product: { Link: 'templates/product.html' },
     Service: { Link: 'templates/service.html' },
+    ServicePet: { Link: 'templates/service-pet.html' },
     User: { Link: 'templates/user.html' },
 
     NewAdmin: { Link: 'templates/new-admin.html' },
