@@ -185,12 +185,12 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 		for (let tag of tags)
 			list.push(tag);
 
-		new_product['product_id'] = req.body.product_id;
+		new_product['product_id'] = parseInt(req.body.product_id);
 		new_product['product_img'] = req.file.path.replace(/^.*public\/img\//, "");
 		new_product['img_width'] = 128;
 		new_product['img_height'] = 128;
 		new_product['product_name'] = req.body.product_name;
-		new_product['product_price'] = req.body.product_price;
+		new_product['product_price'] = parseFloat(req.body.product_price);
 		new_product['product_description'] = req.body.product_description;
 		new_product['product_full_description'] = req.body.product_full_description;
 		new_product['product_tag'] = list;
@@ -217,12 +217,12 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 		for (let tag of tags)
 			list.push(tag);
 
-		new_service['service_id'] = req.body.service_id;
+		new_service['service_id'] = parseInt(req.body.service_id);
 		new_service['service_img'] = req.file.path.replace(/^.*public\/img\//, "");
 		new_service['img_width'] = 128;
 		new_service['img_height'] = 128;
 		new_service['service_name'] = req.body.service_name;
-		new_service['service_price'] = req.body.service_price;
+		new_service['service_price'] = parseFloat(req.body.service_price);
 		new_service['service_tag'] = list;
 		new_service['service_description'] = req.body.service_description;
 		db.Services.push(new_service);
