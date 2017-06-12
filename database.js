@@ -50,7 +50,7 @@ module.exports = {
     	{
     		product_id: 1, product_img: 'img/product/cat-food.jpg',
     		img_width: 128, img_height: 128,
-    		product_name: 'Ração para gato', product_price: 199.90,
+    		product_name: 'Ração para gato', product_price: 199.90, product_stkamt: 40, product_soldamt: 11,
     		product_tag: ['product', 'cat', 'food'],
     		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
@@ -58,7 +58,7 @@ module.exports = {
     	{
     		product_id: 2, product_img: 'img/product/cat-toy.jpg',
     		img_width: 128, img_height: 128,
-    		product_name: 'Brinquedo para gato', product_price: 29.90,
+    		product_name: 'Brinquedo para gato', product_price: 29.90, product_stkamt: 20, product_soldamt: 12,
     		product_tag: ['product', 'cat', 'accy'],
     		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
@@ -66,7 +66,7 @@ module.exports = {
     	{
     		product_id: 3, product_img: 'img/product/cat-bed.jpg',
     		img_width: 128, img_height: 128,
-    		product_name: 'Cama para gato', product_price: 89.90,
+    		product_name: 'Cama para gato', product_price: 89.90, product_stkamt: 10, product_soldamt: 13,
     		product_tag: ['product', 'cat', 'accy'],
     		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
@@ -74,7 +74,7 @@ module.exports = {
     	{
     		product_id: 4, product_img: 'img/product/cat-snack.jpg',
     		img_width: 128, img_height: 128,
-    		product_name: 'Petisco para gato', product_price: 1.99,
+    		product_name: 'Petisco para gato', product_price: 1.99, product_stkamt: 50, product_soldamt: 16,
     		product_tag: ['product', 'cat', 'food'],
     		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
@@ -82,7 +82,7 @@ module.exports = {
     	{
     		product_id: 5, product_img: 'img/product/cat-collar.jpg',
     		img_width: 128, img_height: 128,
-    		product_name: 'Coleira para gato', product_price: 35.90,
+    		product_name: 'Coleira para gato', product_price: 35.90, product_stkamt: 45, product_soldamt: 15,
     		product_tag: ['product', 'cat', 'accy'],
     		product_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>',
     		product_full_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio. Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
@@ -176,11 +176,13 @@ module.exports = {
     getIndexItems: function(page, pageSize) {
         var items = [];
         this.Products.forEach((product) => {
-            items.push({
-                isProduct: true,
-                isService: false,
-                item: product
-            });
+            if(product.product_stkamt > 0) {
+                items.push({
+                    isProduct: true,
+                    isService: false,
+                    item: product
+                });
+            }
         });
         this.Services.forEach((service) => {
             items.push({

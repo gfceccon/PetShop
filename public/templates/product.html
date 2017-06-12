@@ -1,5 +1,6 @@
 <form id="buyProduct" class="buy-product-form" onsubmit="return buyProduct(this);">
   <input type="hidden" id="product_id" name="id" value="" />
+  <input type="hidden" id="product_stock_ammount" name="id" value="" />
   <input type="hidden" id="product_quantity" name="product_quantity" value="1" />
   <div class="content">
       <div class="product-header">
@@ -19,7 +20,7 @@
 
           <div class="product-price-area">
               <span id="product_price_price" class="product-price"></span>
-              <label class="quantity-label" for="quantity">Quantidade:</label>
+              <label id="product_stock_ammount_text" class="quantity-label" for="quantity" value=""></label>
               <div class="product-buy">
                   <button type="button" onclick="less()"><</button>
                   <input id="quantity" class="quantity" type="text" value="1">
