@@ -281,6 +281,9 @@ fieldset legend {
     margin: 0 15px;
 }
 
+.cart_product_remove {
+    text-align: center;
+}
 
 .product-price-alt
 {
