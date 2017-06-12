@@ -149,6 +149,8 @@ var product = function() {
 
         page.find('#product_description').html(p.product_description);
         page.find('#product_price_price').html('R$ ' + p.product_price.toFixed(2));
+        page.find('#product_stock_ammount_text').html('Quantidade:<br>(' + p.product_stkamt + ')');
+        page.find('#product_stock_ammount').attr('value', p.product_stkamt);
         page.find('#product_full_description').html(p.product_full_description);
 
         $('section').html(page);
@@ -593,7 +595,9 @@ var buyProduct = function(form) {
 
 var more = function() {
     var quantity = $('#product_quantity').val();
-    quantity++;
+    var maxquantity = $('#product_stock_ammount').val();
+    if(parseInt(quantity) < parseInt(maxquantity))
+        quantity++;
     $('#quantity').val(quantity);
     $('#inline_quantity').val(quantity);
     $('#product_quantity').val(quantity);
