@@ -111,6 +111,31 @@ app.get('/service', (req, res) => {
 	res.send(JSON.stringify(service));
 });
 
+app.post('/buy-product', (req, res) => {
+	let product_id = req.body.id;
+	let product_quantity = parseInt(req.body.product_quantity);
+	console.log("POST request: buy-product, id: " + product_id + ", quant: " + product_quantity);
+	let user = db.getUser(req.cookies.auth, 'id');
+	let cart = {};
+	let added = false;
+	if(user) {
+		cart = db.getCart(user.user_id);
+		cart.forEach((buyItem) => {
+			if(buyItem.product_id == product_id) {
+				buyItem.product_quantity = buyItem.product_quantity + product_quantity;
+				added = true;
+			}
+		});
+		if(!added) {
+			cart.push({
+				product_id: product_id,
+				product_quantity: product_quantity
+			});
+		}
+	}
+	res.send(JSON.stringify(cart));
+});
+
 app.delete('/login', (req, res) => {
 	console.log("DELETE request: login");
 

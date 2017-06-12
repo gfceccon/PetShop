@@ -573,11 +573,11 @@ var petPost = function(form) {
 
 var buyProduct = function(form) {
     var data = $(form).serialize();
-    $.post("/" + form.id, data, function(result) {
+    $.post("/buy-product", data, function(result) {
         if(result.error)
             $('#form_return').html(result.message);
         else
-            drawIndex();
+            viewCart();
     });
 
     return false;
