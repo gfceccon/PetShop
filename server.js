@@ -111,6 +111,16 @@ app.get('/service', (req, res) => {
 	res.send(JSON.stringify(service));
 });
 
+app.get('/cart-clear', (req, res) => {
+	console.log("GET request: cart(clear)");
+	let user = db.getUser(req.cookies.auth, 'id');
+	let cart = {};
+	if(user) {
+		db.getCart(user.user_id).length = 0;
+	}
+	res.send({ message: "nice" });
+})
+
 app.post('/buy-product', (req, res) => {
 	let product_id = req.body.id;
 	let product_quantity = parseInt(req.body.product_quantity);
@@ -266,6 +276,26 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 		db.Services.push(new_service);
 
 		res.send({ error: 0, message: "Serviço cadastrado com sucesso!" });
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
+app.post('/transaction', (req, res) => {
+	console.log("POST requset: transaction");
+
+	let credit_card = req.body.credit_card;
+	let user = db.getUser(req.cookies.auth, 'id');
+	let cart = {};
+	if(user) {
+		cart = db.getCart(user.user_id);
+		cart.forEach((buyItem) => {
+			product = db.getProduct(buyItem.product_id);
+			product.product_stkamt = product.product_stkamt - buyItem.product_quantity;
+			product.product_soldamt = product.product_soldamt + buyItem.product_quantity;
+		});
+		cart.length = 0;
+		res.send({ error: 0, message: "Compra realizada com sucesso!" });
 	}
 	else
 		res.send({ error: 2, message: "Operação não autorizada!" });

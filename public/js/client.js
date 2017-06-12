@@ -581,6 +581,40 @@ var petPost = function(form) {
     return false;
 }
 
+var transactionPost = function(form) {
+    console.log("hello");
+    if(!$('#credit_card').val()) {
+        $('#form_return').html("Insira um número de cartão válido!");
+        $('#credit_card').focus();
+        return false;
+    }
+
+    var formData = new FormData(form);
+    $.ajax({
+        url: '/' + form.id,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function(result){
+            $('#form_return').html(result.message);
+            setTimeout(function () {
+                viewCart();
+            }, 1000);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
+    return false;
+}
+
+var clearCart = function() {
+    $.get('/cart-clear', function(result) {
+        viewCart();
+    })
+}
+
 var buyProduct = function(form) {
     var data = $(form).serialize();
     $.post("/buy-product", data, function(result) {
