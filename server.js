@@ -90,6 +90,15 @@ app.get('/items-by-tag', (req, res) => {
 	res.send(JSON.stringify(items));
 });
 
+
+app.get('/items-by-search', (req, res) => {
+	console.log("GET request: items-by-search: " + req.query.query);
+	let page = req.query.page;
+	let pageSize = req.query.page_size;
+	let items = db.getIndexItembsByString(req.query.query.toLowerCase());
+	res.send(JSON.stringify(items));
+});
+
 app.get('/product', (req, res) => {
 	console.log("GET request: product");
 	let product = db.getProduct(req.query.product_id);

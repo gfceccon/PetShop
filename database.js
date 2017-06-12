@@ -254,6 +254,29 @@ module.exports = {
     	return items;
     },
 
+    getIndexItembsByString: function(query) {
+        var items = [];
+        this.Products.forEach((product) => {
+            if((product.product_name.toLowerCase().search(query) >= 0) || (product.product_description.toLowerCase().search(query) >= 0) || (product.product_full_description.toLowerCase().search(query) >= 0)) {
+                items.push({
+                    isProduct: true,
+                    isService: false,
+                    item: product
+                });
+            }
+        });
+        this.Services.forEach((service) => {
+            if((service.service_name.toLowerCase().search(query) >= 0) || (service.service_description.toLowerCase().search(query) >= 0)) {
+                items.push({
+                    isProduct: false,
+                    isService: true,
+                    item: service
+                });
+            }
+        });
+        return items;
+    },
+
     getCart: function(user_id) {
     	let filtered_list = this.Carts.filter((c) => { return c.user_id == user_id; });
 

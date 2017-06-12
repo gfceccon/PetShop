@@ -75,6 +75,16 @@ var searchTag = function(tags) {
     $('section').html(page);
 }
 
+var search = function() {
+    var page = $(Templates.get(Templates.Index));
+    query = document.getElementById('search').value;
+    $.get('/items-by-search', { page: 0, pageSize: 14, query: query}, function(result) {
+        var items; if(typeof result == 'string') items = JSON.parse(result); else items = result;
+        addItemsTo(items, page);
+    });
+    $('section').html(page);
+}
+
 var addItemsTo = function(items, page) {
     var itemObj = '';
     items.forEach(function(item, index) {
