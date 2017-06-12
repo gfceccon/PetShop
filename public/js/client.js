@@ -11,13 +11,13 @@ var index = function() {
 }
 
 var base = function() {
-    $.get({url: '/user',
-    success: function(result){
+    $.get({url: '/user', success: function(result){
         if(typeof result == 'string')
             user = JSON.parse(result);
         else
             user = result;
     }, async: false});
+
     var header;
     var nav;
     var footer;
@@ -51,6 +51,7 @@ var base = function() {
             nav.find('#nav_cart_count').html(quantity);
         }, async: false});
     }
+
     footer = $(Templates.get(Templates.Footer));
     $('header').html(header);
     $('nav').html(nav);
@@ -315,11 +316,18 @@ var loginPost = function(form) {
 
     var data = $(form).serialize();
     $.post("/" + form.id, data, function(result) {
-        var l; if(typeof result == 'string') l = JSON.parse(result); else l = result;
-        if(l.error == 0)
-            base();
-        if(typeof l.user != typeof undefined && l.user != false)
+        var l;
+        if(typeof result == 'string')
+            l = JSON.parse(result);
+        else
+            l = result;
+
+        if(typeof l.user !== typeof undefined && l.user != false)
             user = l.user;
+
+        if(!l.error)
+            index();
+
         $('#form_return').html(l.message);
     });
 
