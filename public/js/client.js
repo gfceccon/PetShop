@@ -76,6 +76,16 @@ var searchTag = function(tags) {
     $('section').html(page);
 }
 
+var search = function() {
+    var page = $(Templates.get(Templates.Index));
+    query = document.getElementById('search').value;
+    $.get('/items-by-search', { page: 0, pageSize: 14, query: query}, function(result) {
+        var items; if(typeof result == 'string') items = JSON.parse(result); else items = result;
+        addItemsTo(items, page);
+    });
+    $('section').html(page);
+}
+
 var addItemsTo = function(items, page) {
     var itemObj = '';
     items.forEach(function(item, index) {
@@ -621,6 +631,36 @@ var userPets = function() {
                 user_pet.find('.user_pet_description').html(pet.pet_name + ', ' + pet.pet_breed + ', ' + pet.pet_age + ' ano(s)');
                 user_pet.find('.user_pet_status').html(pet.pet_status);
                 pet_table.append(user_pet);
+            });
+        }
+        $('section').html(page);
+    });
+}
+
+var viewCart = function() {
+    var page = $(Templates.get(Templates.Cart));
+    var cart_table = page.find('#cart');
+    $.get('/cart', function(result){
+        if(typeof result == 'string')
+            cart = JSON.parse(result);
+        else
+            cart = result;
+        if(typeof cart != 'undefined' && cart != false)
+        {
+            cart.forEach(function(prod, index){
+
+                $.get('/product', { product_id: prod.product_id}, function(result){
+                    var product; if(typeof result == 'string') product = JSON.parse(result);
+                    else product = result;
+                    var item = $(Templates.get(Templates.CartItem));
+                    item.find('.cart_product_img').attr('src', product.product_img);
+                    item.find('.cart_product_img').attr('width', product.img_width);
+                    item.find('.cart_product_img').attr('height', product.img_height);
+                    item.find('.cart_product_name').html(product.product_name);
+                    item.find('.cart_product_quantity').html(prod.product_quantity);
+                    item.find('.cart_product_price').html(product.product_price);
+                    cart_table.append(item);
+                });
             });
         }
         $('section').html(page);
