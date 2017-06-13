@@ -377,9 +377,11 @@ app.post('/transaction', (req, res) => {
 			let transaction = {};
 			product = db.getProduct(buyItem.product_id);
 
-			transaction['product_id'] = buyItem.product_id;
+			transaction['product_id'] = product.product_id;
+
+			transaction['price'] = product.product_price;
 			transaction['quantity'] = buyItem.product_quantity;
-			transaction['price'] = buyItem.product_price;
+			
 			transaction['is_product'] = true;
 			db.Transactions.push(transaction);
 
@@ -398,12 +400,12 @@ app.post('/transaction-service', (req, res) => {
 	let user = db.getUser(req.cookies.auth, 'id');
 	if(user) {
 		let transaction = {};
-		product = db.getService(req.body.service_id);
+		service = db.getService(parseInt(req.body.service_id));
 
-		transaction['service_id'] = req.body.service_id;
+		transaction['service_id'] = service.service_id;
 		transaction['quantity'] = 1;
-		transaction['price'] = req.body.service_price;
-		transaction['pet_id'] = req.body.pet_id;
+		transaction['price'] = service.service_price;
+		transaction['pet_id'] = parseInt(req.body.pet_id);
 		transaction['is_product'] = false;
 		db.Transactions.push(transaction);
 

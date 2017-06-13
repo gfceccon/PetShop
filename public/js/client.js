@@ -240,7 +240,7 @@ var admin = function() {
                         item.find('.cart_product_img').attr('height', product.img_height);
                         item.find('.cart_product_name').html(product.product_name);
                         item.find('.cart_product_quantity').html(trans.quantity);
-                        item.find('.cart_product_price').html(trans.price);
+                        item.find('.cart_product_price').html(trans.price.toFixed(2));
                         item.find('.cart_product_remove').hide();
 
                         prod_table.append(item);
@@ -259,7 +259,7 @@ var admin = function() {
                         item.find('.cart_product_img').attr('height', service.img_height);
                         item.find('.cart_product_name').html(service.service_name);
                         item.find('.cart_product_quantity').html(trans.quantity);
-                        item.find('.cart_product_price').html(trans.price);
+                        item.find('.cart_product_price').html(trans.price.toFixed(2));
                         item.find('.cart_product_remove').hide();
 
                         serv_table.append(item);
@@ -464,12 +464,6 @@ var productPost = function(form) {
         return false;
     }
 
-    if (!$('#product_id').val()){
-        $('#form_return').html("Preencha um identificador!");
-        $('#product_id').focus();
-        return false;
-    }
-
     if (!$('#product_img').val()){
         $('#form_return').html("Escolha uma imagem!");
         $('#product_img').focus();
@@ -536,12 +530,6 @@ var servicePost = function(form) {
     if (!$('#service_name').val()){
         $('#form_return').html("Preencha um nome!");
         $('#service_name').focus();
-        return false;
-    }
-
-    if (!$('#service_id').val()){
-        $('#form_return').html("Preencha um identificador!");
-        $('#service_id').focus();
         return false;
     }
 
