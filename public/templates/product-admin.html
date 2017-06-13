@@ -1,0 +1,46 @@
+<form id="buyProduct" class="buy-product-form" onsubmit="return buyProduct(this);">
+  <input type="hidden" id="product_id" name="id" value="" />
+  <input type="hidden" id="product_stock_ammount" name="id" value="" />
+  <input type="hidden" id="product_quantity" name="product_quantity" value="1" />
+  <div class="content">
+      <div class="product-header">
+          <div class="product-images-area">
+              <img id="product_img" src="" class="nice_border" width="" height="">
+          </div>
+
+          <div class="product-description-area">
+              <div class="product-description-header">
+                  <span id="product_name" class="product-name"></span>
+                  <span id="product_brand" class="product-brand"></span>
+                  <span id="product_description_price" class="product-price-alt product-price"></span>
+              </div>
+              <div id="product_description" class="product-description">
+              </div>
+          </div>
+
+          <div class="product-price-area">
+              <span id="product_price_price" class="product-price"></span>
+              <label id="product_stock_ammount_text" class="quantity-label" for="quantity" value=""></label>
+              <div class="product-buy">
+                  <button type="button" onclick="less()"><</button>
+                  <input id="quantity" class="quantity" type="text" value="1">
+                  <button type="button" onclick="more()">></button>
+              </div>
+              <button class="product-edit-button">Editar</button>
+          </div>
+      </div>
+
+
+      <div class="inline-product-buy">
+          <label class="quantity-label" for="inline-quantity">Quantidade:</label>
+          <button type="button" onclick="less()"><</button>
+          <input id="inline_quantity" class="quantity" type="text" value="1">
+          <button type="button" onclick="more()">></button>
+          <button>Comprar</button>
+      </div>
+
+      <div id="product_full_description" class="product-full-description">
+          <span id="product_full_name"></span>
+      </div>
+  </div>
+</form>

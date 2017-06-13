@@ -134,7 +134,13 @@ var product = function() {
         id = obj.parents('div[data-product]').attr('data-product');
     $.get('/product', {product_id: id}, function(result){
         var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
-        var page = $(Templates.get(Templates.Product));
+
+        var page;
+        if(user.is_admin)
+            page = $(Templates.get(Templates.ProductAdmin));
+        else
+            page = $(Templates.get(Templates.Product));
+
         page.find('#product_id').attr('value', p.product_id);
 
         page.find('#product_img').attr('src', p.product_img);
@@ -164,7 +170,12 @@ var service = function() {
         id = obj.parents('div[data-service]').attr('data-service');
     $.get('/service', {service_id: id}, function(result){
         var s; if(typeof result == 'string') s = JSON.parse(result); else s = result;
-        var page = $(Templates.get(Templates.Service));
+
+        var page;
+        if(user.is_admin)
+            page = $(Templates.get(Templates.ServiceAdmin));
+        else
+            page = $(Templates.get(Templates.Service));
 
         page.find('#product_id').attr('value', s.service_id);
 
