@@ -296,11 +296,6 @@ var newPet = function() {
     $('section').html(page);
 }
 
-var cart = function() {
-    var page = $(Templates.get(Templates.NewCart));
-    $('section').html(page);
-}
-
 var login = function() {
     var page = $(Templates.get(Templates.Login));
     $('section').html(page);
@@ -801,7 +796,10 @@ var buyProduct = function(form) {
         if(result.error)
             $('#form_return').html(result.message);
         else
+        {
+            base();
             viewCart();
+        }
     });
 
     return false;
@@ -819,7 +817,7 @@ var buyService = function(form) {
         if(result.error)
             $('#form_return').html(result.message);
         else
-            viewCart();
+            index();
     });
 
     return false;

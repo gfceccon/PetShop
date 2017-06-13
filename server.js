@@ -239,7 +239,7 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 		for (let tag of tags)
 			list.push(tag);
 
-		new_product['product_id'] = parseInt(req.body.product_id);
+		new_product['product_id'] = db.Products.length + 1;
 		new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
 		new_product['img_width'] = 128;
 		new_product['img_height'] = 128;
@@ -271,7 +271,7 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 		for (let tag of tags)
 			list.push(tag);
 
-		new_service['service_id'] = parseInt(req.body.service_id);
+		new_service['service_id'] = db.Services.length + 1;
 		new_service['service_img'] = req.file.path.replace(/^.*public\//, "");
 		new_service['img_width'] = 128;
 		new_service['img_height'] = 128;
@@ -437,6 +437,7 @@ app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
 		new_pet['pet_breed'] = req.body.pet_breed;
 		new_pet['pet_age'] = parseInt(req.body.pet_age);
 		new_pet['pet_status'] = 'Em casa';
+		user_pets.pets.push(new_pet);
 
 		if(!exists)
 			db.Pets.push(user_pets);
