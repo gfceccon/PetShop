@@ -122,9 +122,9 @@ app.get('/cart-clear', (req, res) => {
 })
 
 app.post('/buy-product', (req, res) => {
-	let product_id = req.body.id;
+	console.log("POST request: buy-product");
+	let product_id = parseInt(req.body.product_id);
 	let product_quantity = parseInt(req.body.product_quantity);
-	console.log("POST request: buy-product, id: " + product_id + ", quant: " + product_quantity);
 	let user = db.getUser(req.cookies.auth, 'id');
 	let cart = {};
 	let added = false;
@@ -281,6 +281,84 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 		res.send({ error: 2, message: "Operação não autorizada!" });
 });
 
+app.put('/edit-product', upload_product.single('product_img'), (req, res) => {
+	console.log("PUT request: edit-product");
+
+	let user = db.getUser(req.cookies.auth, 'id');
+	let allow = false;
+	if(user && user.is_admin)
+		allow = true;
+	if(allow)
+	{
+		let product = db.getProduct(parseInt(req.body.product_id));
+		if(product)
+		{
+			if(typeof req.file != typeof undefined && req.file != false)
+			{
+				fs.unlink('./public/' + product['product_img'], function() { });
+				product['product_img'] = req.file.path.replace(/^.*public\//, "");
+			}
+			let tags = req.body.product_tag.split(/\s*,\s*/);
+			let list = [];
+			for (let tag of tags)
+				list.push(tag);
+
+			product['img_width'] = 128;
+			product['img_height'] = 128;
+			product['product_name'] = req.body.product_name;
+			product['product_price'] = parseFloat(req.body.product_price);
+			product['product_description'] = req.body.product_description;
+			product['product_full_description'] = req.body.product_full_description;
+			product['product_tag'] = list;
+
+			res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
+		}
+		else
+			res.send({ error: 1, message: "Produto não encontrado!" });
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
+app.put('/edit-service', upload_service.single('service_img'), (req, res) => {
+	console.log("PUT request: edit-service");
+
+	let user = db.getUser(req.cookies.auth, 'id');
+	let allow = false;
+	if(user && user.is_admin)
+		allow = true;
+	if(allow)
+	{
+		let service = db.getService(parseInt(req.body.service_id));
+		if(service)
+		{
+			if(typeof req.file != typeof undefined && req.file != false)
+			{
+				fs.unlink('./public/' + product['service_img'], function() { });
+				service['service_img'] = req.file.path.replace(/^.*public\//, "");
+			}
+			let tags = req.body.service_tag.split(/\s*,\s*/);
+			let list = [];
+			for (let tag of tags)
+				list.push(tag);
+
+			service['img_width'] = 128;
+			service['img_height'] = 128;
+			service['service_name'] = req.body.service_name;
+			service['service_price'] = parseFloat(req.body.service_price);
+			service['service_tag'] = list;
+			service['service_description'] = req.body.service_description;
+
+			res.send({ error: 0, message: "Serviço cadastrado com sucesso!" });
+		}
+		else {
+			res.send({ error: 1, message: "Serviço não encontrado!" });
+		}
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
 app.post('/transaction', (req, res) => {
 	console.log("POST requset: transaction");
 
@@ -290,11 +368,39 @@ app.post('/transaction', (req, res) => {
 	if(user) {
 		cart = db.getCart(user.user_id);
 		cart.forEach((buyItem) => {
+			let transaction = {};
 			product = db.getProduct(buyItem.product_id);
+
+			transaction['product_id'] = buyItem.product_id;
+			transaction['quantity'] = buyItem.product_quantity;
+			transaction['price'] = buyItem.product_price;
+			transaction['is_product'] = true;
+			db.Transactions.push(transaction);
+
 			product.product_stkamt = product.product_stkamt - buyItem.product_quantity;
 			product.product_soldamt = product.product_soldamt + buyItem.product_quantity;
 		});
 		cart.length = 0;
+		res.send({ error: 0, message: "Compra realizada com sucesso!" });
+	}
+	else
+		res.send({ error: 2, message: "Operação não autorizada!" });
+});
+
+app.post('/transaction-service', (req, res) => {
+	console.log("POST requset: transaction");
+	let user = db.getUser(req.cookies.auth, 'id');
+	if(user) {
+		let transaction = {};
+		product = db.getService(req.body.service_id);
+
+		transaction['service_id'] = req.body.service_id;
+		transaction['quantity'] = 1;
+		transaction['price'] = req.body.service_price;
+		transaction['pet_id'] = req.body.pet_id;
+		transaction['is_product'] = false;
+		db.Transactions.push(transaction);
+
 		res.send({ error: 0, message: "Compra realizada com sucesso!" });
 	}
 	else

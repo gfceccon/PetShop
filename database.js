@@ -148,6 +148,10 @@ module.exports = {
     		service_description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis sollicitudin turpis. Sed sed luctus dui. Suspendisse id luctus odio.</p><p>Suspendisse eu orci eget urna suscipit efficitur. Cras tempus sapien vel quam imperdiet dignissim. Nunc dui libero, eleifend sed vulputate vehicula, sodales nec nisi.</p>'
     	}
     ],
+    Transactions: [
+        { product_id: 1, service_id: 1, pet_id: 1, price: 123.90, quantity: 1, is_product: true },
+        { product_id: 1, service_id: 1, pet_id: 1, price: 13.90, quantity: 1, is_product: false }
+    ],
 
     getUser: function(user, field) {
     	let filtered_list = [];

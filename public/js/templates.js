@@ -30,6 +30,9 @@ var Templates = {
     NewProduct: { Link: 'templates/new-product.html' },
     NewService: { Link: 'templates/new-service.html' },
 
+    EditProduct: { Link: 'templates/edit-product.html' },
+    EditService: { Link: 'templates/edit-service.html' },
+
     get: function(tpl) {
         var text = '';
         if(typeof tpl.Text == 'undefined')
