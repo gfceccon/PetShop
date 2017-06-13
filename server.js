@@ -51,6 +51,12 @@ app.get('/pets', (req, res) => {
 	res.send(JSON.stringify(pets));
 });
 
+app.get('/transactions', (req, res) => {
+	console.log("GET request: transactions");
+	let transactions = db.getTransactions();
+	res.send(JSON.stringify(transactions));
+});
+
 app.get('/cart', (req, res) => {
 	console.log("GET request: cart");
 	let user = db.getUser(req.cookies.auth, 'id');
@@ -360,7 +366,7 @@ app.put('/edit-service', upload_service.single('service_img'), (req, res) => {
 });
 
 app.post('/transaction', (req, res) => {
-	console.log("POST requset: transaction");
+	console.log("POST request: transaction");
 
 	let credit_card = req.body.credit_card;
 	let user = db.getUser(req.cookies.auth, 'id');
@@ -388,7 +394,7 @@ app.post('/transaction', (req, res) => {
 });
 
 app.post('/transaction-service', (req, res) => {
-	console.log("POST requset: transaction");
+	console.log("POST request: transaction");
 	let user = db.getUser(req.cookies.auth, 'id');
 	if(user) {
 		let transaction = {};
