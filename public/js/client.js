@@ -167,7 +167,9 @@ var service = function() {
         id = obj.parents('div[data-service]').attr('data-service');
     $.get('/service', {service_id: id}, function(result){
         var s; if(typeof result == 'string') s = JSON.parse(result); else s = result;
-        var page = $(Templates.get(Templates.Service));
+
+        var page;
+        page = $(Templates.get(Templates.Service));
 
         page.find('#service_id').val(s.service_id);
 
