@@ -1,0 +1,38 @@
+{
+  "name": "petshop",
+  "version": "1.0.0",
+  "description": "PetShop for Introduction to Web Development class",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "cookies": "^0.7.0",
+    "express": "^4.15.3",
+    "jquery": "^3.2.1",
+    "jsdom": "^11.1.0",
+    "multer": "^1.3.0",
+    "mustache": "^2.3.0",
+    "nano": "^6.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gfceccon/PetShop.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "petshop",
+    "spa"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gfceccon/PetShop/issues"
+  },
+  "homepage": "https://github.com/gfceccon/PetShop#readme"
+}

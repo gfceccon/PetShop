@@ -23,14 +23,12 @@ var upload_pet = multer({
 	limits: { fileSize: 1048576, files: 1}
 });
 
-
-var Index = fs.readFileSync('public/templates/page.html').toString()
+var Index = fs.readFileSync('public/templates/page.html').toString();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
-
 
 app.get('/', (req, res) => {
 	console.log("GET request: index");
@@ -40,15 +38,28 @@ app.get('/', (req, res) => {
 
 app.get('/user', (req, res) => {
 	console.log("GET request: user");
-	let user = db.getUser(req.cookies.auth, 'id');
-	res.send(JSON.stringify(user));
+	db.getUser(req.cookies.auth, 'id', (err, user) => {
+		if(err)
+			res.send(false);
+		else
+			res.send(JSON.stringify(user));
+	});
 });
 
 app.get('/pets', (req, res) => {
 	console.log("GET request: pets");
-	let user = db.getUser(req.cookies.auth, 'id');
-	let pets = db.getPets(user.user_id);
-	res.send(JSON.stringify(pets));
+	db.getUser(req.cookies.auth, 'id', (err, user) => {
+		if(!err){
+			db.getPets(user._id, (err, pets) => {
+				if(err)
+					res.send(false);
+				else
+					res.send(JSON.stringify(pets.pets));
+			});
+		} else {
+			res.send(false);
+		}
+	});
 });
 
 app.get('/transactions', (req, res) => {
@@ -59,41 +70,61 @@ app.get('/transactions', (req, res) => {
 
 app.get('/cart', (req, res) => {
 	console.log("GET request: cart");
-	let user = db.getUser(req.cookies.auth, 'id');
-	let cart = {};
-	if(user)
-		cart = db.getCart(user.user_id);
-	res.send(JSON.stringify(cart));
+	db.getUser(req.cookies.auth, 'id', (err, user) => {
+		if(!err){
+			db.getCart(user._id, (err, cart) => {
+				if(err)
+					res.send(false);
+				else
+					res.send(JSON.stringify(cart.cart));
+			});
+		}
+	});
 });
 
 app.get('/items', (req, res) => {
 	console.log("GET request: items");
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
-	let items = db.getIndexItems(page, pageSize);
-	res.send(JSON.stringify(items));
+
+	db.getIndexItems(page, pageSize, (err, items) => {
+		if(err)
+			res.send(false)
+		else
+			res.send(JSON.stringify(items));
+	});
 });
 
 app.post('/login', (req, res) => {
 	console.log("POST request: login");
 
-	let u = db.getUser(req.body.username, 'username');
-	if (!u || (u.user_password != req.body.password)){
-		res.send({ error: 1, message: "Usuário ou senha inválidos!" });
-	} else {
-		res.cookie('auth', u.user_id, { maxAge: 1000 * 3600, httpOnly: true });
-		console.log("User \"" + u.user_username + "\" just logged in!");
+	db.getUser(req.body.username, 'id', (err, user) => {
+		if(err){
+			res.send({ error: 1, message: "Usuário ou senha inválidos!" });
+		} else {
+			if(user.user_password != req.body.password){
+				res.send({ error: 1, message: "Usuário ou senha inválidos!" });
+			} else {
+				res.cookie('auth', user._id, { maxAge: 1000 * 3600, httpOnly: true });
+				console.log("User \"" + user._id + "\" just logged in!");
 
-		res.send(JSON.stringify({ error: 0, message: "Login efetuado com sucesso!", user: u }));
-	}
+				res.send(JSON.stringify({ error: 0, message: "Login efetuado com sucesso!", user: user }));
+			}
+		}
+	});
 });
 
 app.get('/items-by-tag', (req, res) => {
 	console.log("GET request: items-by-tag: " + req.query.tag);
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
-	let items = db.getIndexItemsByTag(req.query.tag);
-	res.send(JSON.stringify(items));
+
+	db.getIndexItemsByTag(req.query.tag, (err, items) => {
+		if(err)
+			res.send(false)
+		else
+			res.send(JSON.stringify(items));
+	});
 });
 
 
@@ -107,14 +138,22 @@ app.get('/items-by-search', (req, res) => {
 
 app.get('/product', (req, res) => {
 	console.log("GET request: product");
-	let product = db.getProduct(req.query.product_id);
-	res.send(JSON.stringify(product));
+	db.getProduct(req.query.product_id, (err, product) => {
+		if(err)
+			res.send(false);
+		else
+			res.send(JSON.stringify(product));
+	});
 });
 
 app.get('/service', (req, res) => {
 	console.log("GET request: service");
-	let service = db.getService(req.query.service_id);
-	res.send(JSON.stringify(service));
+	db.getService(req.query.service_id, (err, service) => {
+		if(err)
+			res.send(false);
+		else
+			res.send(JSON.stringify(service));
+	});
 });
 
 app.get('/cart-clear', (req, res) => {
@@ -159,36 +198,56 @@ app.delete('/login', (req, res) => {
 	res.status(204).send("No content");
 });
 
+var searchUserId = function(req, res) {
+	db.getUser(req.body.client_user, 'id', (err, user) => {
+		if(!err){
+			res.send({ error: 1, message: "Este usuário já existe!" });
+		} else {
+			searchUserEmail(req, res);
+		}
+	});
+};
+
+var searchUserEmail = function(req, res) {
+	db.getUser(req.body.client_email, 'email', (err, user) => {
+		if(!err){
+			res.send({ error: 2, message: "Este email já está sendo utilizado!" });
+		} else {
+			addNewUser(req, res);
+		}
+	});
+};
+
+var addNewUser = function(req, res) {
+	let new_user = {};
+	new_user['user_name'] = req.body.client_name;
+	new_user['user_password'] = req.body.client_password;
+	new_user['user_tel'] = req.body.client_tel;
+	new_user['user_email'] = req.body.client_email;
+	new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
+	new_user['is_admin'] = false;
+
+	let user_address = {};
+	user_address['street'] = req.body.client_street;
+	user_address['num'] = req.body.client_num;
+	user_address['city'] = req.body.client_city;
+	user_address['state'] = req.body.client_state;
+	user_address['zip'] = req.body.client_zip;
+	new_user['user_address'] = user_address;
+
+	db.addUser(new_user, req.body.client_user, (err, body) => {
+		if(!err){
+			res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
+		} else {
+			console.log(err);
+			console.log(body);
+		}
+	})
+}
+
 app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-client");
-
-	if(db.getUser(req.body.client_user, 'username')){
-		res.send({ error: 1, message: "Este usuário já existe!" });
-	} else if(db.getUser(req.body.client_email, 'email')){
-		res.send({ error: 2, message: "Este email já está sendo utilizado!" });
-	} else {
-		let new_user = {};
-		new_user['user_id'] = db.Users.length + 1;
-		new_user['user_name'] = req.body.client_name;
-		new_user['user_username'] = req.body.client_user;
-		new_user['user_password'] = req.body.client_password;
-		new_user['user_tel'] = req.body.client_tel;
-		new_user['user_email'] = req.body.client_email;
-		new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
-		new_user['is_admin'] = false;
-
-		let user_address = {};
-		user_address['street'] = req.body.client_street;
-		user_address['num'] = req.body.client_num;
-		user_address['city'] = req.body.client_city;
-		user_address['state'] = req.body.client_state;
-		user_address['zip'] = req.body.client_zip;
-
-		new_user['user_address'] = user_address;
-		db.Users.push(new_user);
-
-		res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
-	}
+	searchUserId(req, res);
 });
 
 app.post('/new-admin', upload_user.single('admin_img'), (req, res) => {
@@ -381,7 +440,7 @@ app.post('/transaction', (req, res) => {
 
 			transaction['price'] = product.product_price;
 			transaction['quantity'] = buyItem.product_quantity;
-			
+
 			transaction['is_product'] = true;
 			db.Transactions.push(transaction);
 

@@ -104,10 +104,8 @@ var userPets = function() {
     var page = $(Templates.get(Templates.User));
     var pet_table = page.find('#user_pets');
     $.get('/pets', function(result){
-        var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
-        if(typeof p.user_id != typeof undefined && p.user_id != false)
-        {
-            var pets = p.pets;
+        if(result !== false){
+            pets = JSON.parse(result);
             pets.forEach(function(pet, index){
                 var user_pet = $(Templates.get(Templates.UserPet));
                 user_pet.find('.user_pet_img').attr('src', pet.pet_img);

@@ -5,25 +5,29 @@ var product = function() {
     if (typeof id == typeof undefined || id == false)
         id = obj.parents('div[data-product]').attr('data-product');
     $.get('/product', {product_id: id}, function(result){
-        var p; if(typeof result == 'string') p = JSON.parse(result); else p = result;
         var page = $(Templates.get(Templates.Product));
-        page.find('#product_id').val(p.product_id);
 
-        page.find('#product_img').attr('src', p.product_img);
-        page.find('#product_img').attr('width', p.img_width);
-        page.find('#product_img').attr('height', p.img_height);
+        if(result !== false){
+            p = JSON.parse(result);
 
-        page.find('#product_name').html(p.product_name);
-        page.find('#product_brand').html(p.product_brand);
-        page.find('#product_description_price').html('R$ ' + p.product_price.toFixed(2));
+            page.find('#product_id').val(p.product_id);
 
-        page.find('#product_full_name').html(p.product_name);
+            page.find('#product_img').attr('src', p.product_img);
+            page.find('#product_img').attr('width', p.img_width);
+            page.find('#product_img').attr('height', p.img_height);
 
-        page.find('#product_description').html(p.product_description);
-        page.find('#product_price_price').html('R$ ' + p.product_price.toFixed(2));
-        page.find('#product_stock_ammount_text').html('Quantidade:<br>(' + p.product_stkamt + ')');
-        page.find('#product_stock_ammount').val(p.product_stkamt);
-        page.find('#product_full_description').html(p.product_full_description);
+            page.find('#product_name').html(p.product_name);
+            page.find('#product_brand').html(p.product_brand);
+            page.find('#product_description_price').html('R$ ' + p.product_price.toFixed(2));
+
+            page.find('#product_full_name').html(p.product_name);
+
+            page.find('#product_description').html(p.product_description);
+            page.find('#product_price_price').html('R$ ' + p.product_price.toFixed(2));
+            page.find('#product_stock_ammount_text').html('Quantidade:<br>(' + p.product_stkamt + ')');
+            page.find('#product_stock_ammount').val(p.product_stkamt);
+            page.find('#product_full_description').html(p.product_full_description);
+        }
 
         if(user.is_admin)
             page.find('.transaction').html('Editar');

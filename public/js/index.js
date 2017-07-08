@@ -12,16 +12,15 @@ var index = function() {
 
 var base = function() {
     $.get({url: '/user', success: function(result){
-        if(typeof result == 'string')
-            user = JSON.parse(result);
+        if(result === false)
+            user = false;
         else
-            user = result;
+            user = JSON.parse(result);
     }, async: false});
-
     var header;
     var nav;
     var footer;
-    if(typeof user.user_id == typeof undefined || user.user_id == false)
+    if(user === false)
     {
         header = $(Templates.get(Templates.Header));
         nav = $(Templates.get(Templates.NavIndex));
@@ -34,15 +33,10 @@ var base = function() {
             nav = $(Templates.get(Templates.NavAdmin));
         else
             nav = $(Templates.get(Templates.NavClient));
-        $.get({url: '/cart',
-        success: function(result){
-            if(typeof result == 'string')
+        $.get({url: '/cart', success: function(result){
+            let quantity = 0;
+            if(result !== false){
                 cart = JSON.parse(result);
-            else
-                cart = result;
-            var quantity = 0;
-            if(typeof cart != 'undefined' && cart != false)
-            {
                 cart.forEach(function(p, index){
                     quantity += p.product_quantity;
                 });
@@ -61,8 +55,8 @@ var base = function() {
 var frontPage = function() {
     var page = $(Templates.get(Templates.Index));
     $.get('/items', {page: 0, pageSize: 14}, function(result) {
-        var items; if(typeof result == 'string') items = JSON.parse(result); else items = result;
-        addItemsTo(items, page);
+        if(result !== false)
+            addItemsTo(JSON.parse(result), page);
     });
     $('section').html(page);
 }
@@ -70,8 +64,8 @@ var frontPage = function() {
 var searchTag = function(tags) {
     var page = $(Templates.get(Templates.Index));
     $.get('/items-by-tag', { page: 0, pageSize: 14, tag: tags }, function(result){
-        var items; if(typeof result == 'string') items = JSON.parse(result); else items = result;
-        addItemsTo(items, page);
+        if(result !== false)
+            addItemsTo(JSON.parse(result), page);
     });
     $('section').html(page);
 }
@@ -92,7 +86,7 @@ var addItemsTo = function(items, page) {
         if(item.isProduct) {
             var p = item.item;
             itemObj = $(Templates.get(Templates.IndexProduct));
-            itemObj.attr('data-product', p.product_id);
+            itemObj.attr('data-product', p._id);
 
             itemObj.find('.product_img_a').click(product);
 
@@ -109,7 +103,7 @@ var addItemsTo = function(items, page) {
         if(item.isService) {
             var s = item.item;
             itemObj = $(Templates.get(Templates.IndexService));
-            itemObj.attr('data-service', s.service_id);
+            itemObj.attr('data-service', s._id);
 
             itemObj.find('.service_img_a').click(service);
 
