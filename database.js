@@ -6,24 +6,6 @@ var services = nano.use('services');
 var carts = nano.use('carts');
 var pets = nano.use('pets');
 
-exports.Pets = [
-	{
-		user_id: 1,
-		pets: [
-			{ pet_id: 1, pet_name: 'Garfield', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Malhado', pet_age: 2, pet_status: 'Em casa' },
-			{ pet_id: 2, pet_name: 'Lara', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Persa', pet_age: 3, pet_status: 'Tosa' },
-			{ pet_id: 3, pet_name: 'Ana', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Siames', pet_age: 5, pet_status: 'Banho' }
-		]
-	},
-	{
-		user_id: 2,
-		pets: [
-			{ pet_id: 4, pet_name: 'James', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Siames', pet_age: 4, pet_status: 'Em casa' },
-			{ pet_id: 5, pet_name: 'Tom', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Malhado', pet_age: 1, pet_status: 'Banho' }
-		]
-	}
-];
-
 exports.Transactions = [
     { product_id: 1, price: 123.90, quantity: 1, is_product: true },
     { service_id: 1, pet_id: 1, price: 13.90, quantity: 1, is_product: false }
@@ -225,18 +207,6 @@ exports.getCart = function(user_id, callback) {
         else
             callback(false, body);
     })
-
-    /*carts.list({include_docs: true}, (err, body) => {
-        if(!err){
-            let all_carts = body.rows;
-            let filtered_list = all_carts.filter((c) => { return c._id == user_id; });
-
-            if(!filtered_list.length)
-                callback(true, undefined);
-            else
-                callback(false, filtered_list[0].doc);
-        }
-    });*/
 };
 
 exports.getPets = function(user_id, callback) {
