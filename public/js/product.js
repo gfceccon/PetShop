@@ -1,4 +1,3 @@
-
 var product = function() {
     var obj = $(this);
     var id = obj.attr('data-product');

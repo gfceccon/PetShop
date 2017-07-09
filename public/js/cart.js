@@ -1,5 +1,4 @@
 var transactionPost = function(form) {
-    console.log("hello");
     if(!$('#credit_card').val()) {
         $('#form_return').html("Insira um número de cartão válido!");
         $('#credit_card').focus();
@@ -27,9 +26,13 @@ var transactionPost = function(form) {
 }
 
 var clearCart = function() {
-    $.get('/cart-clear', function(result) {
-        viewCart();
-    })
+    $.ajax({
+        url: '/cart',
+        type: 'DELETE',
+        success: function(result){
+            viewCart();
+        }
+    });
 }
 
 var buyProduct = function(form) {

@@ -1,7 +1,6 @@
 var express = require('express');
 var fs = require("fs");
 var db = require("./database");
-var populate = require("./create_database");
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -65,8 +64,12 @@ app.get('/pets', (req, res) => {
 
 app.get('/transactions', (req, res) => {
 	console.log("GET request: transactions");
-	let transactions = db.getTransactions();
-	res.send(JSON.stringify(transactions));
+	db.getTransactions((err, transactions) => {
+		if(err)
+			res.send(false);
+		else
+			res.send(JSON.stringify(transactions));
+	});
 });
 
 app.get('/cart', (req, res) => {
@@ -82,6 +85,24 @@ app.get('/cart', (req, res) => {
 		}
 	});
 });
+
+var deleteCart = function(req, res){
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(!err)
+			db.getCart(user._id, (err, cart) => {
+				if(!err)
+					db.addCart({ _id: user._id, _rev: cart._rev, cart: [] }, (err, body) => {
+						if(!err)
+							res.send({ error: 0, message: "Carrinho destruído!" });
+					});
+			});
+	});
+}
+
+app.delete('/cart', (req, res) => {
+	console.log("DELETE request: cart");
+	deleteCart(req, res);
+})
 
 app.get('/items', (req, res) => {
 	console.log("GET request: items");
@@ -161,39 +182,51 @@ app.get('/service', (req, res) => {
 	});
 });
 
-app.get('/cart-clear', (req, res) => {
-	console.log("GET request: cart(clear)");
-	let user = db.getUser(req.cookies.auth, '_id');
-	let cart = {};
-	if(user) {
-		db.getCart(user.user_id).length = 0;
-	}
-	res.send({ message: "nice" });
-})
-
 app.post('/buy-product', (req, res) => {
 	console.log("POST request: buy-product");
-	let product_id = parseInt(req.body.product_id);
-	let product_quantity = parseInt(req.body.product_quantity);
-	let user = db.getUser(req.cookies.auth, '_id');
-	let cart = {};
-	let added = false;
-	if(user) {
-		cart = db.getCart(user.user_id);
-		cart.forEach((buyItem) => {
-			if(buyItem.product_id == product_id) {
-				buyItem.product_quantity = buyItem.product_quantity + product_quantity;
-				added = true;
-			}
-		});
-		if(!added) {
-			cart.push({
-				product_id: product_id,
-				product_quantity: product_quantity
+
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(!err){
+			let product_id = parseInt(req.body.product_id);
+			let product_quantity = parseInt(req.body.product_quantity);
+			let added = false;
+
+			db.getCart(user._id, (err, cart) => {
+				let items = cart.cart;
+
+				if(!err){
+					items.forEach((buyItem) => {
+						if(buyItem.product_id == product_id) {
+							buyItem.product_quantity = buyItem.product_quantity + product_quantity;
+							added = true;
+						}
+					});
+
+					if(!added) {
+						items.push({
+							product_id: product_id,
+							product_quantity: product_quantity
+						});
+					}
+
+					db.addCart({ _id: user._id, _rev: cart._rev, cart: items }, (err, body) => {
+						if(!err)
+							res.send({ error: 0, message: "Produto adicionado ao carrinho!" });
+					});
+				} else {
+					items = {
+						product_id: product_id,
+						product_quantity: product_quantity
+					};
+
+					db.addCart({ _id: user._id, cart: [items] }, (err, body) => {
+						if(!err)
+							res.send({ error: 0, message: "Produto adicionado ao carrinho!" });
+					});
+				}
 			});
 		}
-	}
-	res.send(JSON.stringify(cart));
+	});
 });
 
 app.delete('/login', (req, res) => {
@@ -426,50 +459,62 @@ app.post('/transaction', (req, res) => {
 	console.log("POST request: transaction");
 
 	let credit_card = req.body.credit_card;
-	let user = db.getUser(req.cookies.auth, '_id');
-	let cart = {};
-	if(user) {
-		cart = db.getCart(user.user_id);
-		cart.forEach((buyItem) => {
-			let transaction = {};
-			product = db.getProduct(buyItem.product_id);
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(!err){
+			db.getCart(user._id, (err, cart) => {
+				if(!err){
+					let items = cart.cart;
+					items.forEach((buyItem) => {
+						db.getProduct(buyItem.product_id, (err, product) => {
+							let transaction = {};
+							transaction['product_id'] = product.product_id;
+							transaction['price'] = product.product_price;
+							transaction['quantity'] = buyItem.product_quantity;
+							transaction['is_product'] = true;
 
-			transaction['product_id'] = product.product_id;
+							db.addTransaction(transaction, (err, transaction) => {
+								// done
+							});
 
-			transaction['price'] = product.product_price;
-			transaction['quantity'] = buyItem.product_quantity;
+							// Update each product on the transaction
+							product.product_stkamt = product.product_stkamt - buyItem.product_quantity;
+							product.product_soldamt = product.product_soldamt + buyItem.product_quantity;
+							db.addProduct(product, (err, product) => {
+								// done
+							});
+						});
+					});
+				}
 
-			transaction['is_product'] = true;
-			db.Transactions.push(transaction);
-
-			product.product_stkamt = product.product_stkamt - buyItem.product_quantity;
-			product.product_soldamt = product.product_soldamt + buyItem.product_quantity;
-		});
-		cart.length = 0;
-		res.send({ error: 0, message: "Compra realizada com sucesso!" });
-	}
-	else
-		res.send({ error: 2, message: "Operação não autorizada!" });
+				deleteCart(req, res);
+			});
+		} else {
+			res.send({ error: 2, message: "Operação não autorizada!" });
+		}
+	});
 });
 
 app.post('/transaction-service', (req, res) => {
 	console.log("POST request: transaction");
-	let user = db.getUser(req.cookies.auth, '_id');
-	if(user) {
-		let transaction = {};
-		service = db.getService(parseInt(req.body.service_id));
 
-		transaction['service_id'] = service.service_id;
-		transaction['quantity'] = 1;
-		transaction['price'] = service.service_price;
-		transaction['pet_id'] = parseInt(req.body.pet_id);
-		transaction['is_product'] = false;
-		db.Transactions.push(transaction);
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(!err) {
+			db.getService(parseInt(req.body.service_id), (err, service) => {
+				let transaction = {};
+				transaction['service_id'] = service.service_id;
+				transaction['quantity'] = 1;
+				transaction['price'] = service.service_price;
+				transaction['pet_id'] = parseInt(req.body.pet_id);
+				transaction['is_product'] = false;
 
-		res.send({ error: 0, message: "Compra realizada com sucesso!" });
-	}
-	else
-		res.send({ error: 2, message: "Operação não autorizada!" });
+				db.addTransaction(transaction, (err, transaction) => {
+					res.send({ error: 0, message: "Compra realizada com sucesso!" });
+				});
+			});
+		} else {
+			res.send({ error: 2, message: "Operação não autorizada!" });
+		}
+	});
 });
 
 app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
@@ -510,6 +555,5 @@ app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
 var server = app.listen(8081, () => {
 	var host = server.address().address;
 	var port = server.address().port;
-	populate.create();
 	console.log("Petzzaria Pet Shop listening at http://%s:%s", host, port);
 });

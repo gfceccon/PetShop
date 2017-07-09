@@ -1,33 +1,30 @@
-
-
 var admin = function() {
     var page = $(Templates.get(Templates.Admin));
     var prod_table = page.find('#product_transactions');
     var serv_table = page.find('#service_transactions');
 
     $.get('/transactions', function(result) {
-        if(typeof result == 'string') transactions = JSON.parse(result).transactions; else transactions = result;
-        if(typeof transactions != 'undefined' && transactions != false)
-        {
+        if(result !== false){
+            transactions = JSON.parse(result);
+            console.log(transactions);
+
             transactions.forEach(function(trans, index){
+                trans = trans.doc;
                 if(trans.is_product){
                     $.get('/product', { product_id: trans.product_id }, function(result){
-                        var product;
-                        if(typeof result == 'string')
-                            product = JSON.parse(result);
-                        else
-                            product = result;
+                        if(result !== false){
+                            let product = JSON.parse(result);
+                            let item = $(Templates.get(Templates.CartItem));
+                            item.find('.cart_product_img').attr('src', product.product_img);
+                            item.find('.cart_product_img').attr('width', product.img_width);
+                            item.find('.cart_product_img').attr('height', product.img_height);
+                            item.find('.cart_product_name').html(product.product_name);
+                            item.find('.cart_product_quantity').html(trans.quantity);
+                            item.find('.cart_product_price').html(trans.price.toFixed(2));
+                            item.find('.cart_product_remove').hide();
 
-                        let item = $(Templates.get(Templates.CartItem));
-                        item.find('.cart_product_img').attr('src', product.product_img);
-                        item.find('.cart_product_img').attr('width', product.img_width);
-                        item.find('.cart_product_img').attr('height', product.img_height);
-                        item.find('.cart_product_name').html(product.product_name);
-                        item.find('.cart_product_quantity').html(trans.quantity);
-                        item.find('.cart_product_price').html(trans.price.toFixed(2));
-                        item.find('.cart_product_remove').hide();
-
-                        prod_table.append(item);
+                            prod_table.append(item);
+                        }
                     });
                 } else {
                     $.get('/service', { service_id: trans.service_id }, function(result){

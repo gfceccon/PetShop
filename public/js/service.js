@@ -1,5 +1,3 @@
-
-
 var service = function() {
     var obj = $(this);
     var id = obj.attr('data-service');
