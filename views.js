@@ -1,6 +1,5 @@
-var nano = require('nano')('http://localhost:5984');
-
-var db = nano.db.use('cities');
+var nano = require('nano')('http://admin:admin@localhost:5984');
+var exports = module.exports = {};
 
 //getUser: id, username or email
 //getProducts
@@ -13,17 +12,52 @@ var db = nano.db.use('cities');
 //getIndexItemsByTags (no view), call products and services
 //getCart: user_id
 //getPets: user_id
-
-
-
-db.viewWithList('design', 'name_and_state', 'by_name', {name: "Sao Paulo"}, function(err, body) {
-  if (!err) {
-    console.log(typeof body);
-    var obj = JSON.parse(body);
-    obj = JSON.parse(JSON.stringify(obj));
-    console.log(obj);
-    obj.rows.forEach(function(doc) {
-      console.log(doc);
-    });
-  }
-});
+exports.userViews = function() {
+    nano.db.destroy('users/_design/queries', () => { nano.db.create('users/_design/queries', () => {
+        var db = nano.db.use('users');
+        db.insert(
+            {
+                "views": {
+                    all:
+                    {
+                        map: function(doc) {
+                            emit(doc.id, doc);
+                        }
+                    },
+                    count:
+                    {
+                        map: function(doc) {
+                            emit(doc.id, 1);
+                        },
+                        reduce: "_count"
+                    }
+                },
+                "lists": {
+                    by_field: function(doc, req) {
+                        var row;
+                        var field = req.query.field;
+                        var val = req.query.value;
+                        while(row = getRow()) {
+                            if(row.value[field] == val)
+                            {
+                                send(JSON.stringify(row.value));
+                                break;
+                            }
+                        }
+                    }
+                }
+            },
+            '_design/queries'
+        );
+    })});
+}
+exports.productViews = function() {
+}
+exports.serviceViews = function() {
+}
+exports.cartViews = function() {
+}
+exports.transactionViews = function() {
+}
+exports.petViews = function() {
+}
