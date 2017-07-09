@@ -46,48 +46,75 @@ exports.getTransactions = function() {
     return { transactions: this.Transactions };
 };
 
+var includeAll = function(items, callback) {
+    includeProducts(items, (err, result) => {
+        includeServices(items, (err, result) => {
+            if(!err) {
+                if(!items.length)
+                    callback(true, undefined);
+                else
+                    callback(false, items);
+            } else {
+                callback(true, undefined);
+            }
+
+        });
+    });
+};
+
 var includeProducts = function(items, callback) {
-    products.list({include_docs: true}, (err, body) => {
+    products.view('queries', 'all', (err, body) => {
         if(!err){
-            let all_products = body.rows;
-            all_products.forEach((product) => {
-                if(product.doc.product_stkamt > 0) {
+            if(typeof body == 'string' && body != '')
+                body = JSON.parse(body);
+            body.rows.forEach((product) => {
+                if(product.value.product_stkamt > 0) {
                     items.push({
                         isProduct: true,
                         isService: false,
-                        item: product.doc
+                        item: product.value
                     });
                 }
             });
-
-            includeServices(items, callback);
+            callback(false, items);
+        } else {
+            callback(true, undefined);
         }
     });
 };
 
 var includeServices = function(items, callback) {
-    services.list({include_docs: true}, (err, body) => {
+    services.view('queries', 'all', (err, body) => {
         if(!err){
-            let all_services = body.rows;
-            all_services.forEach((service) => {
+            if(typeof body == 'string' && body != '')
+                body = JSON.parse(body);
+            body.rows.forEach((service) => {
                 items.push({
                     isProduct: false,
                     isService: true,
-                    item: service.doc
+                    item: service.value
                 });
             });
-
-            if(!items.length)
-                callback(true, undefined);
-            else
-                callback(false, items);
+            callback(false, items);
+        } else {
+            callback(true, undefined);
         }
     });
 };
 
 exports.getIndexItems = function(page, pageSize, callback) {
     var items = [];
-    includeProducts(items, callback);
+    includeAll(items, callback);
+};
+
+exports.getIndexItemsByTag = function(tag, callback) {
+	var items = [];
+    includeByTag(tag, items, callback);
+};
+
+exports.getIndexItemsByString = function(str, callback) {
+    var items = [];
+    includeByString(str, items, callback);
 };
 
 exports.getProduct = function(product_id, callback) {
@@ -99,9 +126,28 @@ exports.getProduct = function(product_id, callback) {
     })
 };
 
-var includeProductTags = function(tag, items, callback) {
+var includeByTag = function(tags, items, callback) {
+    includeProductsByTags(tags, items, (err, result) => {
+        if(!err) {
+            includeServicesByTags(tags, items, (err, result) => {
+                if(!err) {
+                    if(!items.length)
+                        callback(true, undefined);
+                    else
+                        callback(false, items);
+                } else {
+                    callback(true, undefined);
+                }
+            });
+        } else {
+            callback(true, undefined);
+        }
+    });
+};
+
+var includeProductsByTags = function(tags, items, callback) {
     products.viewWithList('queries', 'all', 'by_tags',
-        {field: 'tags', tags: tag},
+        {field: 'product_tag', tags: tags},
         (err, body) => {
             if(!err) {
                 if(typeof body == 'string' && body != '')
@@ -113,14 +159,16 @@ var includeProductTags = function(tag, items, callback) {
 						item: product
 					});
                 });
-                includeServiceTags(tag, items, callback);
+                callback(false, items);
+            } else {
+                callback(true, undefined);
             }
         });
 };
 
-var includeServiceTags = function(tag, items, callback) {
+var includeServicesByTags = function(tags, items, callback) {
     services.viewWithList('queries', 'all', 'by_tags',
-        {field: 'tags', tags: tag},
+        {field: 'service_tag', tags: tags},
         (err, body) => {
             if(!err){
                 if(typeof body == 'string' && body != '')
@@ -136,36 +184,74 @@ var includeServiceTags = function(tag, items, callback) {
                     callback(true, undefined);
                 else
                     callback(false, items);
+            } else {
+                callback(true, undefined);
             }
         });
 };
 
-exports.getIndexItemsByTag = function(tag, callback) {
-	var items = [];
-    includeProductTags(tag, items, callback);
+var includeByString = function(str, items, callback) {
+    includeProductsByString(str, items, (err, result) => {
+        if(!err) {
+            includeServicesByString(str, items, (err, result) => {
+                if(!err) {
+                    if(!items.length)
+                        callback(true, undefined);
+                    else
+                        callback(false, items);
+                } else {
+                    callback(true, undefined);
+                }
+            });
+        } else {
+                callback(true, undefined);
+        }
+    });
 };
 
-exports.getIndexItembsByString = function(query) {
-    var items = [];
-    this.Products.forEach((product) => {
-        if((product.product_name.toLowerCase().search(query) >= 0) || (product.product_description.toLowerCase().search(query) >= 0) || (product.product_full_description.toLowerCase().search(query) >= 0)) {
-            items.push({
-                isProduct: true,
-                isService: false,
-                item: product.doc
-            });
-        }
-    });
-    this.Services.forEach((service) => {
-        if((service.service_name.toLowerCase().search(query) >= 0) || (service.service_description.toLowerCase().search(query) >= 0)) {
-            items.push({
-                isProduct: false,
-                isService: true,
-                item: service.doc
-            });
-        }
-    });
-    return items;
+var includeProductsByString = function(str, items, callback) {
+    products.viewWithList('queries', 'all', 'by_string',
+        {field: 'product_name', value: str},
+        (err, body) => {
+            if(!err) {
+                if(typeof body == 'string' && body != '')
+                    body = JSON.parse(body);
+                body.rows.forEach((product) => {
+                    items.push({
+						isProduct: true,
+						isService: false,
+						item: product
+					});
+                });
+                callback(false, items);
+            } else {
+                callback(true, undefined);
+            }
+        });
+};
+
+var includeServicesByString = function(str, items, callback) {
+    services.viewWithList('queries', 'all', 'by_string',
+        {field: 'service_name', value: str},
+        (err, body) => {
+            if(!err){
+                if(typeof body == 'string' && body != '')
+                    body = JSON.parse(body);
+                body.rows.forEach((service) => {
+                    items.push({
+						isProduct: false,
+						isService: true,
+						item: service
+					});
+                });
+                if(!items.length)
+                    callback(true, undefined);
+                else
+                    callback(false, items);
+            } else {
+                callback(true, undefined);
+            }
+        });
 };
 
 exports.getCart = function(user_id, callback) {

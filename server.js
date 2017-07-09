@@ -133,8 +133,12 @@ app.get('/items-by-search', (req, res) => {
 	console.log("GET request: items-by-search: " + req.query.query);
 	let page = req.query.page;
 	let pageSize = req.query.page_size;
-	let items = db.getIndexItembsByString(req.query.query.toLowerCase());
-	res.send(JSON.stringify(items));
+	db.getIndexItemsByString(req.query.query.toLowerCase(), (err, items) => {
+		if(err)
+			res.send(false)
+		else
+			res.send(JSON.stringify(items));
+	});
 });
 
 app.get('/product', (req, res) => {

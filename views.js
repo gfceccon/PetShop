@@ -13,27 +13,7 @@ var exports = module.exports = {};
 //getCart: user_id
 //getPets: user_id
 
-var fnby_tags = function(doc, req) {
-    var row;
-    var field = req.query.field;
-    var tags = req.query.tags.split(/\s*,\s*/);
-    var separator = "[";
-    var first = true;
-    var result = '{"rows": ';
-    while(row = getRow()) {
-        let include = true;
-        tags.forEach((tag) => {
-            if(row.value[field].indexOf(tag) < 0)
-                include = false;
-        });
-        if(include)
-            result = result + separator + JSON.stringify(row.value);
-    }
-    result = result + ']}';
-    send(result);
-};
-
-var objviews = {
+var objViews = {
     all:
     {
         map: function(doc) {
@@ -49,7 +29,7 @@ var objviews = {
     }
 };
 
-var fnequals = function(doc, req) {
+var fnEquals = function(doc, req) {
     var row;
     var field = req.query.field;
     var val = req.query.value;
@@ -62,27 +42,52 @@ var fnequals = function(doc, req) {
     }
 }
 
-var fncontains = function(doc, req) {
+var fnContains = function(doc, req) {
     var row;
     var field = req.query.field;
-    var val = req.query.value;
+    var str = req.query.value;
+    var separator = '';
+    var result = '{"rows": [';
     while(row = getRow()) {
-        if(row.value[field].indexOf(val) != -1)
-        {
-            send(JSON.stringify(row.value));
-            break;
+        if(row.value[field].toLowerCase().indexOf(str) < 0)
+            continue;
+        result = result + separator + JSON.stringify(row.value);
+        separator = ',';
+    }
+    result = result + ']}';
+    send(result);
+}
+
+var fnByTags = function(doc, req) {
+    var row;
+    var field = req.query.field;
+    var tags = req.query.tags.split(/\s*,\s*/);
+    var separator = '';
+    var result = '{"rows": [';
+    var include;
+    while(row = getRow()) {
+        include = true;
+        tags.forEach(function(tag) {
+            if(row.value[field].indexOf(tag) < 0)
+                include = false;
+        });
+        if(include) {
+            result = result + separator + JSON.stringify(row.value);
+            separator = ',';
         }
     }
-}
+    result = result + ']}';
+    send(result);
+};
 
 exports.userViews = function() {
     nano.db.destroy('users/_design/queries', () => { nano.db.create('users/_design/queries', () => {
         var db = nano.db.use('users');
         db.insert(
             {
-                "views": objviews,
+                "views": objViews,
                 "lists": {
-                    by_field: fnequals
+                    by_field: fnEquals
                 }
             },
             '_design/queries'
@@ -94,10 +99,10 @@ exports.productViews = function() {
         var db = nano.db.use('products');
         db.insert(
             {
-                "views": objviews,
+                "views": objViews,
                 "lists": {
-                    by_string: fncontains,
-                    by_tags: fnby_tags
+                    by_string: fnContains,
+                    by_tags: fnByTags
                 }
             },
             '_design/queries'
@@ -109,10 +114,10 @@ exports.serviceViews = function() {
         var db = nano.db.use('services');
         db.insert(
             {
-                "views": objviews,
+                "views": objViews,
                 "lists": {
-                    by_string: fncontains,
-                    by_tags: fnby_tags
+                    by_string: fnContains,
+                    by_tags: fnByTags
                 }
             },
             '_design/queries'
