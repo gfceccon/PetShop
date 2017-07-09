@@ -26,8 +26,6 @@ var fnby_tags = function(doc, req) {
             if(row.value[field].indexOf(tag) < 0)
                 include = false;
         });
-        row.isProduct = req.query.isProduct;
-        row.isService = req.query.isService;
         if(include)
             result = result + separator + JSON.stringify(row.value);
     }
