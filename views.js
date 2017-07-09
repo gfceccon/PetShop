@@ -26,6 +26,23 @@ var objViews = {
             emit(doc.id, 1);
         },
         reduce: "_count"
+    },
+    max:
+    {
+        map: function(doc) {
+            if(!isNaN(doc._id))
+                emit(doc.id, parseInt(doc._id));
+            else
+                emit(doc.id, 0);
+        },
+        reduce: function (key, values, rereduce) {
+            // Return the maximum numeric value.
+            var max = -Infinity;
+            for(var i = 0; i < values.length; i++)
+                if(typeof values[i] == 'number')
+                    max = Math.max(values[i], max);
+            return max;
+        }
     }
 };
 
