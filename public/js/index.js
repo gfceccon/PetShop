@@ -64,7 +64,6 @@ var frontPage = function() {
 var searchTag = function(tags) {
     var page = $(Templates.get(Templates.Index));
     $.get('/items-by-tag', { page: 0, pageSize: 14, tag: tags }, function(result){
-        console.log(result);
         if(result !== false)
             addItemsTo(JSON.parse(result), page);
     });

@@ -46,6 +46,12 @@ exports.addProduct = function(product, callback) {
     });
 };
 
+exports.addService = function(service, callback) {
+    services.insert(service, (err, body) => {
+        callback(err, body);
+    });
+};
+
 exports.getProducts = function(page, pageSize) {
 	return { products: this.Products };
 };
@@ -69,7 +75,6 @@ var includeAll = function(items, callback) {
             } else {
                 callback(true, undefined);
             }
-
         });
     });
 };
@@ -292,3 +297,21 @@ exports.getService = function(service_id, callback) {
             callback(false, body);
     })
 };
+
+exports.getNextProductId = function(callback) {
+    products.view('queries', 'max', (err, body) => {
+        if(err)
+            callback(true, undefined);
+        else
+            callback(false, body.rows[0].value + 1);
+    });
+}
+
+exports.getNextServiceId = function(callback) {
+    services.view('queries', 'max', (err, body) => {
+        if(err)
+            callback(true, undefined);
+        else
+            callback(false, body.rows[0].value + 1);
+    });
+}

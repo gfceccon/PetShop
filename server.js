@@ -52,7 +52,6 @@ app.get('/pets', (req, res) => {
 	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(!err){
 			db.getPets(user._id, (err, pets) => {
-				console.log(pets);
 				if(err)
 					res.send(false);
 				else
@@ -273,27 +272,34 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 
 	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(!err && user.is_admin) {
-			let new_product = {};
-			let tags = req.body.product_tag.split(/\s*,\s*/);
-			let list = [];
-			for (let tag of tags)
-				list.push(tag);
-
 			db.getNextProductId((err, id) => {
-				new_product['product_id'] = id;
-				new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
-				new_product['img_width'] = 128;
-				new_product['img_height'] = 128;
-				new_product['product_name'] = req.body.product_name;
-				new_product['product_price'] = parseFloat(req.body.product_price);
-				new_product['product_description'] = req.body.product_description;
-				new_product['product_full_description'] = req.body.product_full_description;
-				new_product['product_tag'] = list;
+				if(!err){
+					let new_product = {};
+					let tags = req.body.product_tag.split(/\s*,\s*/);
+					let list = [];
+					for (let tag of tags)
+						list.push(tag);
 
-				db.addProduct(new_product, (err, product) => {
-					if(!err)
-						res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
-				});
+					new_product['_id'] = id.toString();
+					new_product['product_id'] = id;
+					new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
+					new_product['img_width'] = 128;
+					new_product['img_height'] = 128;
+					new_product['product_name'] = req.body.product_name;
+					new_product['product_price'] = parseFloat(req.body.product_price);
+					new_product['product_description'] = req.body.product_description;
+					new_product['product_full_description'] = req.body.product_full_description;
+					new_product['product_stkamt'] = req.body.product_stkamt;
+					new_product['product_soldamt'] = req.body.product_soldamt;
+					new_product['product_tag'] = list;
+
+					db.addProduct(new_product, (err, product) => {
+						if(!err)
+							res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
+					});
+				} else {
+					res.send({ error: 1, message: "Operação não autorizada!" });
+				}
 			});
 		} else {
 			res.send({ error: 2, message: "Operação não autorizada!" });
@@ -304,32 +310,38 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 	console.log("POST request: new-service");
 
-	let user = db.getUser(req.cookies.auth, '_id');
-	let allow = false;
-	if(user && user.is_admin)
-		allow = true;
-	if(allow)
-	{
-		let new_service = {};
-		let tags = req.body.service_tag.split(/\s*,\s*/);
-		let list = [];
-		for (let tag of tags)
-			list.push(tag);
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(!err && user.is_admin) {
+			db.getNextServiceId((err, id) => {
+				if(!err){
+					let new_service = {};
+					let tags = req.body.service_tag.split(/\s*,\s*/);
+					let list = [];
+					for (let tag of tags)
+						list.push(tag);
 
-		new_service['service_id'] = db.Services.length + 1;
-		new_service['service_img'] = req.file.path.replace(/^.*public\//, "");
-		new_service['img_width'] = 128;
-		new_service['img_height'] = 128;
-		new_service['service_name'] = req.body.service_name;
-		new_service['service_price'] = parseFloat(req.body.service_price);
-		new_service['service_tag'] = list;
-		new_service['service_description'] = req.body.service_description;
-		db.Services.push(new_service);
+					new_service['_id'] = id.toString();
+					new_service['service_id'] = id;
+					new_service['service_img'] = req.file.path.replace(/^.*public\//, "");
+					new_service['img_width'] = 128;
+					new_service['img_height'] = 128;
+					new_service['service_name'] = req.body.service_name;
+					new_service['service_price'] = parseFloat(req.body.service_price);
+					new_service['service_description'] = req.body.service_description;
+					new_service['service_tag'] = list;
 
-		res.send({ error: 0, message: "Serviço cadastrado com sucesso!" });
-	}
-	else
-		res.send({ error: 2, message: "Operação não autorizada!" });
+					db.addService(new_service, (err, service) => {
+						if(!err)
+							res.send({ error: 0, message: "Serviço cadastrado com sucesso!" });
+					});
+				} else {
+					res.send({ error: 1, message: "Operação não autorizada!" });
+				}
+			});
+		} else {
+			res.send({ error: 2, message: "Operação não autorizada!" });
+		}
+	});
 });
 
 app.put('/edit-product', upload_product.single('product_img'), (req, res) => {
