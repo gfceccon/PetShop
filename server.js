@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require("fs");
 var db = require("./database");
+var populate = require("./create_database");
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
 
 app.get('/user', (req, res) => {
 	console.log("GET request: user");
-	db.getUser(req.cookies.auth, 'id', (err, user) => {
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(err)
 			res.send(false);
 		else
@@ -48,7 +49,7 @@ app.get('/user', (req, res) => {
 
 app.get('/pets', (req, res) => {
 	console.log("GET request: pets");
-	db.getUser(req.cookies.auth, 'id', (err, user) => {
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(!err){
 			db.getPets(user._id, (err, pets) => {
 				if(err)
@@ -70,7 +71,7 @@ app.get('/transactions', (req, res) => {
 
 app.get('/cart', (req, res) => {
 	console.log("GET request: cart");
-	db.getUser(req.cookies.auth, 'id', (err, user) => {
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(!err){
 			db.getCart(user._id, (err, cart) => {
 				if(err)
@@ -98,7 +99,7 @@ app.get('/items', (req, res) => {
 app.post('/login', (req, res) => {
 	console.log("POST request: login");
 
-	db.getUser(req.body.username, 'id', (err, user) => {
+	db.getUser(req.body.username, '_id', (err, user) => {
 		if(err){
 			res.send({ error: 1, message: "Usuário ou senha inválidos!" });
 		} else {
@@ -158,7 +159,7 @@ app.get('/service', (req, res) => {
 
 app.get('/cart-clear', (req, res) => {
 	console.log("GET request: cart(clear)");
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	let cart = {};
 	if(user) {
 		db.getCart(user.user_id).length = 0;
@@ -170,7 +171,7 @@ app.post('/buy-product', (req, res) => {
 	console.log("POST request: buy-product");
 	let product_id = parseInt(req.body.product_id);
 	let product_quantity = parseInt(req.body.product_quantity);
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	let cart = {};
 	let added = false;
 	if(user) {
@@ -198,41 +199,44 @@ app.delete('/login', (req, res) => {
 	res.status(204).send("No content");
 });
 
-var searchUserId = function(req, res) {
-	db.getUser(req.body.client_user, 'id', (err, user) => {
+var searchUserId = function(req, res, admin) {
+	db.getUser(req.body.client_user, '_id', (err, user) => {
 		if(!err){
 			res.send({ error: 1, message: "Este usuário já existe!" });
 		} else {
-			searchUserEmail(req, res);
+			searchUserEmail(req, res, admin);
 		}
 	});
 };
 
-var searchUserEmail = function(req, res) {
-	db.getUser(req.body.client_email, 'email', (err, user) => {
+var searchUserEmail = function(req, res, admin) {
+	db.getUser(req.body.client_email, 'user_email', (err, user) => {
 		if(!err){
 			res.send({ error: 2, message: "Este email já está sendo utilizado!" });
 		} else {
-			addNewUser(req, res);
+			addNewUser(req, res, admin);
 		}
 	});
 };
 
-var addNewUser = function(req, res) {
+var addNewUser = function(req, res, admin) {
 	let new_user = {};
 	new_user['user_name'] = req.body.client_name;
 	new_user['user_password'] = req.body.client_password;
 	new_user['user_tel'] = req.body.client_tel;
 	new_user['user_email'] = req.body.client_email;
 	new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
-	new_user['is_admin'] = false;
+	new_user['is_admin'] = admin;
 
 	let user_address = {};
-	user_address['street'] = req.body.client_street;
-	user_address['num'] = req.body.client_num;
-	user_address['city'] = req.body.client_city;
-	user_address['state'] = req.body.client_state;
-	user_address['zip'] = req.body.client_zip;
+	if(!admin)
+	{
+		user_address['street'] = req.body.client_street;
+		user_address['num'] = req.body.client_num;
+		user_address['city'] = req.body.client_city;
+		user_address['state'] = req.body.client_state;
+		user_address['zip'] = req.body.client_zip;
+	}
 	new_user['user_address'] = user_address;
 
 	db.addUser(new_user, req.body.client_user, (err, body) => {
@@ -242,83 +246,64 @@ var addNewUser = function(req, res) {
 			console.log(err);
 			console.log(body);
 		}
-	})
+	});
 }
 
 app.post('/new-client', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-client");
-	searchUserId(req, res);
+	searchUserId(req, res, false);
 });
 
-app.post('/new-admin', upload_user.single('admin_img'), (req, res) => {
+app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
 	console.log("POST request: new-admin");
 
-	let user = db.getUser(req.cookies.auth, 'id');
-	let allow = false;
-	if(user && user.is_admin)
-		allow = true;
-	if(allow)
-	{
-		if(db.getUser(req.body.client_user, 'username')){
-			res.send({ error: 1, message: "Este usuário já existe!" });
-		} else if(db.getUser(req.body.client_email, 'email')){
-			res.send({ error: 2, message: "Este email já está sendo utilizado!" });
-		} else {
-			let new_user = {};
-			new_user['user_id'] = db.Users.length + 1;
-			new_user['user_name'] = req.body.admin_name;
-			new_user['user_username'] = req.body.admin_user;
-			new_user['user_password'] = req.body.admin_password;
-			new_user['user_tel'] = req.body.admin_tel;
-			new_user['user_email'] = req.body.admin_email;
-			new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
-			new_user['is_admin'] = true;
-			new_user['user_address'] = {};
-			db.Users.push(new_user);
-
-			res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
-		}
-	}
-	else
-		res.send({ error: 3, message: "Operação não autorizada!" });
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(err)
+			res.send({ error: 1, message: "Operação não autorizada!" });
+		else if(user && user.is_admin)
+			searchUserId(req, res, true);
+		else
+			res.send({ error: 3, message: "Operação não autorizada!" });
+	});
 });
 
 app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 	console.log("POST request: new-product");
 
-	let user = db.getUser(req.cookies.auth, 'id');
-	let allow = false;
-	if(user && user.is_admin)
-		allow = true;
-	if(allow)
-	{
-		let new_product = {};
-		let tags = req.body.product_tag.split(/\s*,\s*/);
-		let list = [];
-		for (let tag of tags)
-			list.push(tag);
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(user && user.is_admin)
+		{
+			let new_product = {};
+			let tags = req.body.product_tag.split(/\s*,\s*/);
+			let list = [];
+			for (let tag of tags)
+				list.push(tag);
 
-		new_product['product_id'] = db.Products.length + 1;
-		new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
-		new_product['img_width'] = 128;
-		new_product['img_height'] = 128;
-		new_product['product_name'] = req.body.product_name;
-		new_product['product_price'] = parseFloat(req.body.product_price);
-		new_product['product_description'] = req.body.product_description;
-		new_product['product_full_description'] = req.body.product_full_description;
-		new_product['product_tag'] = list;
-		db.Products.push(new_product);
+			db.getNextProductId((err, id) => {
+				new_product['product_id'] = id;
+				new_product['product_img'] = req.file.path.replace(/^.*public\//, "");
+				new_product['img_width'] = 128;
+				new_product['img_height'] = 128;
+				new_product['product_name'] = req.body.product_name;
+				new_product['product_price'] = parseFloat(req.body.product_price);
+				new_product['product_description'] = req.body.product_description;
+				new_product['product_full_description'] = req.body.product_full_description;
+				new_product['product_tag'] = list;
+				db.addProduct(new_product, (err, product) => {
+					
+				});
 
-		res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
-	}
-	else
-		res.send({ error: 2, message: "Operação não autorizada!" });
+			});
+		}
+		else
+			res.send({ error: 2, message: "Operação não autorizada!" });
+	});
 });
 
 app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 	console.log("POST request: new-service");
 
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	let allow = false;
 	if(user && user.is_admin)
 		allow = true;
@@ -349,7 +334,7 @@ app.post('/new-service', upload_service.single('service_img'), (req, res) => {
 app.put('/edit-product', upload_product.single('product_img'), (req, res) => {
 	console.log("PUT request: edit-product");
 
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	let allow = false;
 	if(user && user.is_admin)
 		allow = true;
@@ -388,7 +373,7 @@ app.put('/edit-product', upload_product.single('product_img'), (req, res) => {
 app.put('/edit-service', upload_service.single('service_img'), (req, res) => {
 	console.log("PUT request: edit-service");
 
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	let allow = false;
 	if(user && user.is_admin)
 		allow = true;
@@ -428,7 +413,7 @@ app.post('/transaction', (req, res) => {
 	console.log("POST request: transaction");
 
 	let credit_card = req.body.credit_card;
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	let cart = {};
 	if(user) {
 		cart = db.getCart(user.user_id);
@@ -456,7 +441,7 @@ app.post('/transaction', (req, res) => {
 
 app.post('/transaction-service', (req, res) => {
 	console.log("POST request: transaction");
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	if(user) {
 		let transaction = {};
 		service = db.getService(parseInt(req.body.service_id));
@@ -477,7 +462,7 @@ app.post('/transaction-service', (req, res) => {
 app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
 	console.log("POST request: new-pet");
 
-	let user = db.getUser(req.cookies.auth, 'id');
+	let user = db.getUser(req.cookies.auth, '_id');
 	if(user != false)
 	{
 		let new_pet = {};
@@ -512,6 +497,6 @@ app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
 var server = app.listen(8081, () => {
 	var host = server.address().address;
 	var port = server.address().port;
-
+	populate.create();
 	console.log("Petzzaria Pet Shop listening at http://%s:%s", host, port);
 });

@@ -163,7 +163,7 @@ exports.create = function() {
             console.log(err);
         var users = nano.use('users');
         Users.forEach(function(user){
-            users.insert(user, user.user_id.toString());
+            users.insert(user, user.user_username);
         });
         Users = null;
         views.userViews();

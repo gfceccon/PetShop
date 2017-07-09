@@ -6,27 +6,25 @@ var services = nano.use('services');
 var carts = nano.use('carts');
 var pets = nano.use('pets');
 
-exports.Transactions = [
-    { product_id: 1, price: 123.90, quantity: 1, is_product: true },
-    { service_id: 1, pet_id: 1, price: 13.90, quantity: 1, is_product: false }
-];
-
 exports.getUser = function(user, field, callback) {
-    users.list({include_docs: true}, (err, body) => {
-        if(!err){
-            let all_users = body.rows;
-            let filtered_list = [];
-
-            if(field == 'id')
-                filtered_list = all_users.filter((u) => { return u.doc._id == user; });
-            else if(field == 'email')
-                filtered_list = all_users.filter((u) => { return u.doc.user_email == user; });
-
-            if(!filtered_list.length)
+    if(typeof user == 'undefined')
+        callback(true, undefined);
+    else
+        users.viewWithList('queries', 'all', 'by_field', {field: field, value: user}, (err, body) => {
+            if(typeof body == 'string' && body != '')
+                body = JSON.parse(body);
+            if(err || body == '')
                 callback(true, undefined);
             else
-                callback(false, filtered_list[0].doc);
-        }
+                callback(false, body);
+        });
+};
+
+exports.getUserCount = function(callback) {
+    users.view('queries', 'count', (err, body) => {
+        if(typeof body == 'string' && body != '')
+            body = JSON.parse(body);
+        callback(err, body.value)
     });
 };
 
@@ -102,74 +100,36 @@ exports.getProduct = function(product_id, callback) {
 };
 
 var includeProductTags = function(tag, items, callback) {
-    products.list({include_docs: true}, (err, body) => {
-        if(!err){
-            let all_products = body.rows;
-            all_products.forEach((product) => {
-                if(tag.constructor === Array) {
-        			var add = true;
-        			tag.forEach((current_tag) => {
-        				if(product.doc.product_tag.indexOf(current_tag) < 0) {
-        					add = false;
-        				}
-        			});
-        			if(add)
-        				items.push({
-                            isProduct: true,
-                            isService: false,
-                            item: product.doc
-                        });
-        		} else {
-        			if(product.doc.product_tag.indexOf(tag) >= 0) {
-        				items.push({
-                            isProduct: true,
-                            isService: false,
-                            item: product.doc
-                        });
-        			}
-        		}
-            });
-
-            includeServiceTags(tag, items, callback);
-        }
-    });
+    products.viewWithList('queries', 'all', 'by_tags',
+        {field: 'tags', tags: tag},
+        (err, body) => {
+            if(!err) {
+                if(typeof body == 'string' && body != '')
+                    body = JSON.parse(body);
+                body.rows.forEach((product) => {
+                    items.push(product);
+                });
+                includeServiceTags(tag, items, callback);
+            }
+        });
 };
 
 var includeServiceTags = function(tag, items, callback) {
-    services.list({include_docs: true}, (err, body) => {
-        if(!err){
-            let all_services = body.rows;
-            all_services.forEach((service) => {
-        		if(tag.constructor === Array) {
-        			var add = true;
-        			tag.forEach((current_tag) => {
-        				if(service.doc.service_tag.indexOf(current_tag) < 0) {
-        					add = false;
-        				}
-        			});
-        			if(add)
-        				items.push({
-                            isProduct: false,
-                            isService: true,
-                            item: service.doc
-                        });
-        		} else {
-        			if(service.doc.service_tag.indexOf(tag) >= 0) {
-        				items.push({
-                            isProduct: false,
-                            isService: true,
-                            item: service.doc
-                        });
-        			}
-        		}
-        	});
-
-            if(!items.length)
-                callback(true, undefined);
-            else
-                callback(false, items);
-        }
-    });
+    services.viewWithList('queries', 'all', 'by_tags',
+        {field: 'tags', tags: tag},
+        (err, body) => {
+            if(!err){
+                if(typeof body == 'string' && body != '')
+                    body = JSON.parse(body);
+                body.rows.forEach((service) => {
+                    items.push(service);
+                });
+                if(!items.length)
+                    callback(true, undefined);
+                else
+                    callback(false, items);
+            }
+        });
 };
 
 exports.getIndexItemsByTag = function(tag, callback) {

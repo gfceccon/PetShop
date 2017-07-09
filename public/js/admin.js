@@ -82,39 +82,39 @@ var newPet = function() {
 
 var adminPost = function(form) {
 
-    if (!$('#admin_name').val()){
+    if (!$('#client_name').val()){
         $('#form_return').html("Preencha um nome!");
-        $('#admin_name').focus();
+        $('#client_name').focus();
         return false;
     }
 
-    if (!$('#admin_img').val()){
+    if (!$('#client_img').val()){
         $('#form_return').html("Escolha uma imagem!");
-        $('#admin_img').focus();
+        $('#client_img').focus();
         return false;
     }
 
-    if (!$('#admin_user').val()){
+    if (!$('#client_user').val()){
         $('#form_return').html("Preencha um usuário!");
-        $('#admin_user').focus();
+        $('#client_user').focus();
         return false;
     }
 
-    if (!$('#admin_password').val()){
+    if (!$('#client_password').val()){
         $('#form_return').html("Preencha uma senha!");
-        $('#admin_password').focus();
+        $('#client_password').focus();
         return false;
     }
 
-    if ($('#admin_confirm').val() != $('#admin_password').val()){
+    if ($('#client_confirm').val() != $('#client_password').val()){
         $('#form_return').html("Senhas não são iguais!");
-        $('#admin_password').focus();
+        $('#client_password').focus();
         return false;
     }
 
-    if (!$('#admin_email').val()){
+    if (!$('#client_email').val()){
         $('#form_return').html("Preencha um email!");
-        $('#admin_email').focus();
+        $('#client_email').focus();
         return false;
     }
 
@@ -126,7 +126,7 @@ var adminPost = function(form) {
         async: false,
         success: function(result){
             if(!result.error)
-                $('#admin_reset').click();
+                $('#client_reset').click();
 
             $('#form_return').html(result.message);
         },
