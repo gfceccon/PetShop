@@ -1,0 +1,33 @@
+<div class="content">
+    <table>
+        <thead>
+            <td colspan="2">Produto</td>
+            <td>Quantidade</td>
+            <td>Preço</td>
+            <td>Ações</td>
+        </thead>
+        <tbody id="cart">
+        </tbody>
+    </table>
+
+    <form id="transaction" class="login" onsubmit="return transactionPost(this);">
+        <div class="fieldset-container">
+            <fieldset>
+                <legend>Finalizar Compra</legend>
+                <div style="display:flex; flex-flow: row nowrap;">
+                    <div class="form-labels">
+                        <label for="credit_card">Número do Cartão:</label>
+                    </div>
+                    <div class="form-inputs">
+                        <input id="credit_card" type="number" name="credit_card">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <span style="text-align: center;color: red" id="form_return"></span>
+        <div class="button-container">
+            <button id="buy" type="submit">Comprar</button>
+            <button id="clear_cart" type="button" onclick="clearCart();" href="#">Limpar Carrinho</button>
+        </div>
+    </form>
+</div>
