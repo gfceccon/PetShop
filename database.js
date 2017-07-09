@@ -107,7 +107,11 @@ var includeProductTags = function(tag, items, callback) {
                 if(typeof body == 'string' && body != '')
                     body = JSON.parse(body);
                 body.rows.forEach((product) => {
-                    items.push(product);
+                    items.push({
+						isProduct: true,
+						isService: false,
+						item: product
+					});
                 });
                 includeServiceTags(tag, items, callback);
             }
@@ -122,7 +126,11 @@ var includeServiceTags = function(tag, items, callback) {
                 if(typeof body == 'string' && body != '')
                     body = JSON.parse(body);
                 body.rows.forEach((service) => {
-                    items.push(service);
+                    items.push({
+						isProduct: false,
+						isService: true,
+						item: service
+					});
                 });
                 if(!items.length)
                     callback(true, undefined);
