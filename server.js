@@ -52,6 +52,7 @@ app.get('/pets', (req, res) => {
 	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(!err){
 			db.getPets(user._id, (err, pets) => {
+				console.log(pets);
 				if(err)
 					res.send(false);
 				else
@@ -221,6 +222,7 @@ var searchUserEmail = function(req, res, admin) {
 
 var addNewUser = function(req, res, admin) {
 	let new_user = {};
+	new_user['_id'] = req.body.client_user;
 	new_user['user_name'] = req.body.client_name;
 	new_user['user_password'] = req.body.client_password;
 	new_user['user_tel'] = req.body.client_tel;
@@ -228,24 +230,19 @@ var addNewUser = function(req, res, admin) {
 	new_user['user_img'] = req.file.path.replace(/^.*public\//, "");
 	new_user['is_admin'] = admin;
 
-	let user_address = {};
-	if(!admin)
-	{
+	if(!admin) {
+		let user_address = {};
 		user_address['street'] = req.body.client_street;
 		user_address['num'] = req.body.client_num;
 		user_address['city'] = req.body.client_city;
 		user_address['state'] = req.body.client_state;
 		user_address['zip'] = req.body.client_zip;
+		new_user['user_address'] = user_address;
 	}
-	new_user['user_address'] = user_address;
 
-	db.addUser(new_user, req.body.client_user, (err, body) => {
-		if(!err){
-			res.send({ error: 0, message: "Cliente cadastrado com sucesso!" });
-		} else {
-			console.log(err);
-			console.log(body);
-		}
+	db.addUser(new_user, (err, body) => {
+		if(!err)
+			res.send({ error: 0, message: "Usuário cadastrado com sucesso!" });
 	});
 }
 
@@ -260,7 +257,7 @@ app.post('/new-admin', upload_user.single('client_img'), (req, res) => {
 	db.getUser(req.cookies.auth, '_id', (err, user) => {
 		if(err)
 			res.send({ error: 1, message: "Operação não autorizada!" });
-		else if(user && user.is_admin)
+		else if(user.is_admin)
 			searchUserId(req, res, true);
 		else
 			res.send({ error: 3, message: "Operação não autorizada!" });
@@ -271,8 +268,7 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 	console.log("POST request: new-product");
 
 	db.getUser(req.cookies.auth, '_id', (err, user) => {
-		if(user && user.is_admin)
-		{
+		if(!err && user.is_admin) {
 			let new_product = {};
 			let tags = req.body.product_tag.split(/\s*,\s*/);
 			let list = [];
@@ -289,14 +285,15 @@ app.post('/new-product', upload_product.single('product_img'), (req, res) => {
 				new_product['product_description'] = req.body.product_description;
 				new_product['product_full_description'] = req.body.product_full_description;
 				new_product['product_tag'] = list;
-				db.addProduct(new_product, (err, product) => {
-					
-				});
 
+				db.addProduct(new_product, (err, product) => {
+					if(!err)
+						res.send({ error: 0, message: "Produto cadastrado com sucesso!" });
+				});
 			});
-		}
-		else
+		} else {
 			res.send({ error: 2, message: "Operação não autorizada!" });
+		}
 	});
 });
 
@@ -462,36 +459,36 @@ app.post('/transaction-service', (req, res) => {
 app.post('/new-pet', upload_pet.single('pet_img'), (req, res) => {
 	console.log("POST request: new-pet");
 
-	let user = db.getUser(req.cookies.auth, '_id');
-	if(user != false)
-	{
-		let new_pet = {};
+	db.getUser(req.cookies.auth, '_id', (err, user) => {
+		if(!err){
+			db.getPets(user._id, (err, pets) => {
+				let new_pet = {};
+				new_pet['pet_id'] = pets.pets.length + 1;
+				new_pet['pet_img'] = req.file.path.replace(/^.*public\//, "");
+				new_pet['img_width'] = 128;
+				new_pet['img_height'] = 128;
+				new_pet['pet_name'] = req.body.pet_name;
+				new_pet['pet_breed'] = req.body.pet_breed;
+				new_pet['pet_age'] = parseInt(req.body.pet_age);
+				new_pet['pet_status'] = 'Em casa';
 
-		let user_pets = db.getPets(user.user_id);
-		let exists = true;
-		if(!user_pets)
-		{
-			user_pets = { user_id: user.user_id, pets: [] };
-			exists = false;
+				if(err){
+					db.addPet({ _id: user._id, pets: [new_pet] }, (err, body) => {
+						if(!err)
+							res.send({ error: 0, message: "Pet cadastrado com sucesso!" });
+					});
+				} else {
+					pets.pets.push(new_pet);
+					db.addPet({ _id: user._id, _rev: pets._rev, pets: pets.pets }, (err, body) => {
+						if(!err)
+							res.send({ error: 0, message: "Pet cadastrado com sucesso!" });
+					});
+				}
+			});
+		} else {
+			res.send({ error: 1, message: "Nenhum usuário logado!" });
 		}
-
-		new_pet['pet_id'] = user_pets.pets.length + 1;
-		new_pet['pet_img'] = req.file.path.replace(/^.*public\//, "");
-		new_pet['img_width'] = 128;
-		new_pet['img_height'] = 128;
-		new_pet['pet_name'] = req.body.pet_name;
-		new_pet['pet_breed'] = req.body.pet_breed;
-		new_pet['pet_age'] = parseInt(req.body.pet_age);
-		new_pet['pet_status'] = 'Em casa';
-		user_pets.pets.push(new_pet);
-
-		if(!exists)
-			db.Pets.push(user_pets);
-
-		res.send({ error: 0, message: "Pet cadastrado com sucesso!" });
-	}
-	else
-		res.send({ error: 1, message: "Nenhum usuário logado!" });
+	});
 });
 
 var server = app.listen(8081, () => {
