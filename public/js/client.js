@@ -106,6 +106,7 @@ var userPets = function() {
     $.get('/pets', function(result){
         if(result !== false){
             pets = JSON.parse(result);
+            console.log(pets);
             pets.forEach(function(pet, index){
                 var user_pet = $(Templates.get(Templates.UserPet));
                 user_pet.find('.user_pet_img').attr('src', pet.pet_img);

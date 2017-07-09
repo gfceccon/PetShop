@@ -28,8 +28,20 @@ exports.getUserCount = function(callback) {
     });
 };
 
-exports.addUser = function(user, id, callback) {
-    users.insert(user, id, (err, body) => {
+exports.addUser = function(user, callback) {
+    users.insert(user, (err, body) => {
+        callback(err, body);
+    });
+};
+
+exports.addPet = function(pet, callback) {
+    pets.insert(pet, (err, body) => {
+        callback(err, body);
+    });
+};
+
+exports.addProduct = function(product, callback) {
+    products.insert(product, (err, body) => {
         callback(err, body);
     });
 };

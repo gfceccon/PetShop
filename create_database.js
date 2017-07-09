@@ -4,9 +4,8 @@ var views = require("./views");
 
 var Users = [
 	{
-		user_id: 1,
 		user_name: 'John Doe',
-		user_username: 'john',
+		_id: 'john',
 		user_password: 'john',
 		user_img: 'img/',
 		user_tel: '34954820',
@@ -21,9 +20,8 @@ var Users = [
 		is_admin: false
 	},
 	{
-		user_id: 2,
 		user_name: 'Emily Hawkins',
-		user_username: 'emily',
+		_id: 'emily',
 		user_password: '12345',
 		user_img: 'img/',
 		user_tel: '284971920',
@@ -38,9 +36,8 @@ var Users = [
 		is_admin: false
 	},
 	{
-		user_id: 3,
 		user_name: 'Administrador',
-		user_username: 'admin',
+		_id: 'admin',
 		user_password: 'admin',
 		user_img: 'img/',
 		user_tel: '90654280',
@@ -94,7 +91,7 @@ var Products = [
 
 var Carts = [
 	{
-		user_id: 1,
+		_id: 'john',
 		cart: [
 			{ product_id: 1, product_quantity: 1 },
 			{ product_id: 2, product_quantity: 1 },
@@ -102,7 +99,7 @@ var Carts = [
 		]
 	},
 	{
-		user_id: 2,
+		_id: 'emily',
 		cart: [
 			{ product_id: 1, product_quantity: 1 },
 			{ product_id: 3, product_quantity: 1 }
@@ -112,7 +109,7 @@ var Carts = [
 
 var Pets = [
 	{
-		user_id: 1,
+		_id: 'john',
 		pets: [
 			{ pet_id: 1, pet_name: 'Garfield', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Malhado', pet_age: 2, pet_status: 'Em casa' },
 			{ pet_id: 2, pet_name: 'Lara', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Persa', pet_age: 3, pet_status: 'Tosa' },
@@ -120,7 +117,7 @@ var Pets = [
 		]
 	},
 	{
-		user_id: 2,
+		_id: 'emily',
 		pets: [
 			{ pet_id: 4, pet_name: 'James', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Siames', pet_age: 4, pet_status: 'Em casa' },
 			{ pet_id: 5, pet_name: 'Tom', pet_img: 'img/pet/cat64.png', img_width: 64, img_height: 64, pet_breed: 'Gato Malhado', pet_age: 1, pet_status: 'Banho' }
@@ -163,7 +160,7 @@ exports.create = function() {
             console.log(err);
         var users = nano.use('users');
         Users.forEach(function(user){
-            users.insert(user, user.user_username);
+            users.insert(user, user._id);
         });
         Users = null;
         views.userViews();
@@ -187,7 +184,7 @@ exports.create = function() {
     nano.db.destroy('carts', (err, body) => { nano.db.create('carts', (err, body) => {
         var carts = nano.use('carts');
         Carts.forEach(function(cart){
-            carts.insert(cart, cart.user_id.toString());
+            carts.insert(cart, cart.user_id);
         });
         Carts = null;
         views.cartViews();
@@ -195,7 +192,7 @@ exports.create = function() {
     nano.db.destroy('pets', (err, body) => { nano.db.create('pets', (err, body) => {
         var pets = nano.use('pets');
         Pets.forEach(function(pet){
-            pets.insert(pet, pet.user_id.toString());
+            pets.insert(pet, pet.user_id);
         });
         Pets = null;
         views.petViews();
